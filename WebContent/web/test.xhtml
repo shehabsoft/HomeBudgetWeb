@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" 	>
+	
+	<h:head>
+	<script>
+	function calculatePiListener(data) {
+	    var statusElement = document.getElementById("status");
+	    if (data.status === "begin")
+	        statusElement.innerHTML = "Sent request. Waiting for response...";
+	    else if (data.status === "complete")
+	        statusElement.innerHTML = "Response received";
+	    else if (data.status === "success")
+	        statusElement.innerHTML = "Rendered successfully";
+	}
+	 
+	function calculatePiError(data) {
+	    var statusElement = document.getElementById("status");
+	    statusElement.innerHTML = "<b>Error</b> <i>" + data.status + " "
+	            + data.description + "</i>";
+	}
+
+	</script>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		
+			    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Home Budget by Shehab eldin tarek</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap core CSS     -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Animation library for notifications   -->
+    <link href="assets/css/animate.min.css" rel="stylesheet" />
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet" />
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="assets/css/demo.css" rel="stylesheet" />
+    <!--     Fonts and icons     -->
+	 <link rel="stylesheet" type="text/css" media="screen"
+     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css' />
+    <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+	</h:head>
+	<h:body>
+	 <h:form >
+	   <div class="col-md-5">
+                                                <div class="form-group"> <label>English Description</label> <input type="text" class="form-control" placeholder="" value="#{purchaces.englishDescription}"/> </div>
+                                            </div>
+            <h:panelGrid columns="2">
+                <h:commandButton value="add" action="#{purchaces.testWebService}">
+                    <f:ajax event="action" execute="@this" render="piValueText"
+                            onevent="calculatePiListener" onerror="calculatePiError" />
+                </h:commandButton>
+                <h:outputText id="piValueText" value="#{valueCalculator.hasPiValue ? valueCalculator.piValue : ''}" />
+            </h:panelGrid> <br/>
+             
+            <h:outputText id="status" style="font-style: italic;"/>
+        </h:form>
+	</h:body>
+	
+	
+	</html>

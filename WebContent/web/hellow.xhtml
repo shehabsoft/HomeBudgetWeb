@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Hello World</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            Enter your name
+            <h:inputText value="#{bean.input}" />
+            <h:commandButton value="submit" action="#{bean.submit}" />
+        </h:form>
+        <h:outputText value="#{bean.output}" />
+    </h:body>
+</html>
