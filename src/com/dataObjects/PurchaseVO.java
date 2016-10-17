@@ -1,5 +1,6 @@
 package com.dataObjects;
 
+import java.util.Date;
 
 public class PurchaseVO {
 	
@@ -9,9 +10,11 @@ public class PurchaseVO {
 	
 	private String englishDescription;
 
+
+
 	private int categoryId;
 	private int locationId;
-	
+	private String creationDate;
 	private double price;
 	 private String categoryName;
 	 private String  locationName;
@@ -24,7 +27,12 @@ public class PurchaseVO {
 			this.locationName = locationName;
 		}
 	
-
+		public String getCreationDate() {
+			return creationDate;
+		}
+		public void setCreationDate(String creationDate) {
+			this.creationDate = creationDate;
+		}
 	public int getId() {
 		return Id;
 	}
