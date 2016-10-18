@@ -6,14 +6,15 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
  <link rel="stylesheet" type="text/css" href="assets/css/design.css"/>
   <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+  <script src="assets/js/jquery.datetimepicker.full.js"></script>
  <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" src="assets/js/monthly.js"></script>
+	
 <meta charset="utf-8" />
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 	<title>Home Budget by Shehab eldin tarek</title>
-
+     <link rel="stylesheet" type="text/css" href="./assets/css/jquery.datetimepicker.css"/>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -29,7 +30,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/monthly.css"/>
+
     <!--  Google Maps Plugin    -->
    
     <!--     Fonts and icons     -->
@@ -39,16 +40,14 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
     
    <script>
 $(document).ready(function() {
-    $('#myTable').DataTable();
-    $('#mycalendar2').monthly({
-		mode: 'picker',
-		target: '#mytarget',
-		setWidth: '250px',
-		startHidden: true,
-		showTrigger: '#mytarget',
-		stylePast: true,
-		disablePast: true
-	});
+	$('#datetimepicker').datetimepicker({
+		dayOfWeekStart : 1,
+		lang:'en',
+		disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
+		startDate:	'2016/01/05'
+		});
+		$('#datetimepicker').datetimepicker({value:'2015/04/15 05:03',step:10});
+
 } );
     </script>
 </h:head>
@@ -71,7 +70,7 @@ $(document).ready(function() {
                             <p>Dashboard</p>
                         </a>
                     </li>
-                      <li   >
+                    <li  class="active" >
                         <a href="monthlyBudget.jsf"> <i class="pe-7s-user"></i>
                             <p>Monthly Budget</p>
                         </a>
@@ -102,7 +101,7 @@ $(document).ready(function() {
                             <p> Locations </p>
                         </a>
                     </li>
-                    <li class="active">
+                    <li >
                         <a href="table.jsf"> <i class="pe-7s-note2"></i>
                             <p>Sales List</p>
                         </a>
@@ -131,8 +130,8 @@ $(document).ready(function() {
                 </ul>
     	</div>
     </div>
-    <div class="main-panel">
-    <nav class="navbar navbar-default navbar-fixed">
+        <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
@@ -141,7 +140,7 @@ $(document).ready(function() {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Sales List</a>
+                    <a class="navbar-brand" href="#">Profile</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -201,78 +200,99 @@ $(document).ready(function() {
                 </div>
             </div>
         </nav>
-        
+
+
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                         <div class="card">
-                        
                             <div class="header">
-                            
-                                <h4 class="title">Striped Table with Hover</h4>
-                                <p class="category">Here is a subtitle for this table</p>
+                                <h4 class="title">Open Monthly Budget</h4>
                             </div>
-                            <div style="display:inline-block; width:250px;">
-			<input type="text" id="mytarget" value="Select Date"/>
-			<div class="monthly" id="mycalendar2"></div>
-		</div>
-                           <h:form  id="todoForm" prependId="false">
-                           <h:panelGroup id="panel">
-		                       <div class="display content table-responsive table-full-width">
-								          <h:dataTable value="#{purchace.purchaseList}" var="o" id="myTable"
-				 				    			styleClass="table table-hover table-striped"
-								    			headerClass="order-table-header"
-								    			rowClasses="order-table-odd-row,order-table-even-row" 
-								    		>
-								
-								    	
-		
-								    			<h:column>
-								    				<f:facet name="header">Arabic Description</f:facet>
-								    				#{o.arabicDescription}
-								    			</h:column>
-									           <h:column>
-								    				<f:facet name="header">English Description</f:facet>
-								    				#{o.englishDescription}
-								    			</h:column>
-								    			<h:column>
-								    				<f:facet name="header">Price</f:facet>
-								    				#{o.price}
-								    			</h:column>
-								    			<h:column>
-								    				<f:facet name="header">Category</f:facet>
-								    				#{o.categoryName}
-								    			</h:column>
-								    			<h:column>
-								    				<f:facet name="header">Location</f:facet>
-								    				#{o.locationName}
-								    			</h:column>
-								    			<h:column>
-								    				<f:facet name="header">Creation Date</f:facet>
-								    				
-								    				
-								    				#{o.creationDate}
-								    			</h:column>
-								
-								    		
-								
-								    		</h:dataTable>
-								    		</div>
-								    		
-								    		  <h:commandButton value="Refersh"    class="btn btn-info btn-fill pull-right" 
-																					style="width:100px"  action="#{purchace.refesh}">
-										                    <f:ajax   execute="todoForm" render="myTable" />
-										        </h:commandButton>
-										        </h:panelGroup>
-										    </h:form>
-								    	</div>
-								           </div>
-								    		</div>
-								    		</div>
-								    		</div>
-								    		
-								    		 <footer class="footer">
+                            <div class="content">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                         <label>Select Start Date</label>
+                                        <div class="form-group" style="display:inline-block;">
+											<input type="text" value="" id="datetimepicker"/>
+										</div>
+                            </div>
+                            <div class="row">
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>Expenses Categories List</label>
+                                                	<h:selectManyCheckbox value="#{categoryView.categoryId}" >
+											   			<f:selectItems value="#{categoryView.categoryList}"  var="n"
+   															itemLabel="#{n.englishDescription}" itemValue="#{n.id}"/>
+											   		</h:selectManyCheckbox>
+                                            </div>
+                                        </div>
+                                          <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label>Income Categories List</label>
+                                                	<h:selectManyCheckbox value="#{categoryView.categoryIncomeId}" >
+											   			<f:selectItems value="#{categoryView.categoryIncomeList}"  var="n"
+   															itemLabel="#{n.englishDescription}" itemValue="#{n.id}"/>
+											   		</h:selectManyCheckbox>
+                                            </div>
+                                        </div>
+                                      
+                                </div>
+
+                               
+
+                                    
+
+                                    
+
+                                    
+
+                                    <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
+                                    <div class="clearfix"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="assets/img/back.jpg" alt="..."/>
+                            </div>
+                            <div class="content">
+                                <div class="author">
+                                     <a href="#">
+                                    <img class="avatar border-gray" src="assets/img/faces/face-3.jpg" alt="..."/>
+
+                                      <h4 class="title">shehab eldin <br />
+                                         <small>Tarek</small>
+                                      </h4>
+                                    </a>
+                                </div>
+                                <p class="description text-center"> "Lamborghini Mercy <br></br>
+                                                    Your chick she so thirsty <br></br>
+                                                    I'm in that two seat Lambo"
+                                </p>
+                            </div>
+                            <hr></hr>
+                            <div class="text-center">
+                                <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
+                                <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
+                                <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i></button>
+
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="footer">
             <div class="container-fluid">
                 <nav class="pull-left">
                     <ul>
@@ -299,12 +319,12 @@ $(document).ready(function() {
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                   <a href="http://www.creative-tim.com">shehab soft</a>, made with love for a better web
+                   2016 <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
                 </p>
             </div>
         </footer>
-								    		
-		  </div>
+
+    </div>
 	  </div>
 
 	</h:body>
