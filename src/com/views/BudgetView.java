@@ -8,12 +8,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.rpc.ServiceException;
@@ -40,16 +43,43 @@ import util.TransactionServiceParser;
 
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class BudgetView {
 
 	
 	public BudgetView()
 	{
-		this.categoryList=getBudgetCategories();
+		 categoryList=getExpensesCategories();
+	     categoryIncomeList=getBudgetCategories();
 	}
+	
 	public String message;
 	private Boolean status;
+	private List<CategoryVO> categoryIncomeList=new ArrayList<CategoryVO>();
+	private String[] categoryId;
+	private String startDate; 
+	
+	private String[] categoryIncomeId;
+
+	public List<CategoryVO> getCategoryIncomeList() {
+		return categoryIncomeList;
+	}
+	public String[] getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(String[] categoryId) {
+		this.categoryId = categoryId;
+	}
+	public void setCategoryIncomeList(List<CategoryVO> categoryIncomeList) {
+		this.categoryIncomeList = categoryIncomeList;
+	}
+	
+	public String[] getCategoryIncomeId() {
+		return categoryIncomeId;
+	}
+	public void setCategoryIncomeId(String[] categoryIncomeId) {
+		this.categoryIncomeId = categoryIncomeId;
+	}
 	public Boolean getStatus() {
 		return status;
 	}
@@ -57,7 +87,12 @@ public class BudgetView {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
 
 	private String englishDescription;
 	private String arabicDescription;
@@ -177,7 +212,7 @@ public class BudgetView {
 				e.printStackTrace();
 			}
 			
-		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>1</serviceCode><arabicDescription>"+getArabicDescription()+"</arabicDescription> <englishDescription>"+getEnglishDescription()+"</englishDescription><limitValue>"+getLimitValue()+"</limitValue><planedValue>"+getPlanedValue()+"</planedValue><actualValue>"+getActualValue()+"</actualValue><categoryStatus>"+getCategoryStatus()+"</categoryStatus><categoryType>"+getCategoryTypeId()+"</categoryType></createTransaction>]]>");
+		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>4</serviceCode><startDate>"+getStartDate()+"</startDate><incomeCategoriesId>"+Arrays.toString(getCategoryIncomeId())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(getCategoryId())+"</expenseCategoriesId></createTransaction>]]>");
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
 		
@@ -203,11 +238,8 @@ public class BudgetView {
 	}
 	public void reset()
 	{
-		setActualValue(0);
-		setPlanedValue(0);
-		setArabicDescription("");
-		setEnglishDescription("");
-		setLimitValue(0);
+		setStartDate("");
+		
 		
 	}
 	public ArrayList<CategoryVO> getExpensesCategories()

@@ -63,6 +63,12 @@ $(document).ready(function() {
                         </a>
                     </li>
                     <li>
+                  
+                        <a href="monthlyBudget.jsf"> <i class="pe-7s-user"></i>
+                            <p>Monthly Budget</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="user.jsf"> <i class="pe-7s-user"></i>
                             <p>User Profile</p>
                         </a>
@@ -203,7 +209,7 @@ $(document).ready(function() {
                            <h:form  id="todoForm" prependId="false">
                            <h:panelGroup id="panel">
 		                       <div class="display content table-responsive table-full-width">
-								          <h:dataTable value="#{budgetView.categoryList}" var="o" id="myTable"
+								          <h:dataTable value="#{budgetView.categoryIncomeList}" var="o" id="myTable"
 				 				    			styleClass="table table-hover table-striped"
 								    			headerClass="order-table-header"
 								    			rowClasses="order-table-odd-row,order-table-even-row" 
