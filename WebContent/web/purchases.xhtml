@@ -221,11 +221,11 @@
                                   
                                         <div class="row">
                                             <div class="col-md-5">
-                                                <div class="form-group"> <label>Arabic Description</label> <h:inputText  type="text" required="true" onblur="validateArabicDescription(this)" id="arabicDescription" class="form-control" placeholder="" value="#{purchace.arabicDescription}"/>  </div>
+                                                <div class="form-group"> <label>Arabic Description</label> <h:inputText  type="text" required="true" onblur="validateArabicDescription(this)" id="arabicDescription" class="form-control" placeholder="" value="#{purchaceView.arabicDescription}"/>  </div>
                                              <div class="col-md-9" id="arabicDescriptionMessage" style="color:red" ></div>
                                             </div>
                                             <div class="col-md-5">
-                                                <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{purchace.englishDescription}"/> </div>
+                                                <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{purchaceView.englishDescription}"/> </div>
                                             <div class="col-md-8" id="englishDescriptionMessage"  style="color:red" ></div>
                                             </div>
                                             
@@ -233,11 +233,11 @@
                                        <div class="row"> 
                                             <div class="col-md-5">
                                                 <div class="col-md-8"> <label>location</label> <h:selectOneMenu id="locationId" class="form-control" value="#{purchace.locationId}">
-   														<f:selectItems value="#{purchace.locationList}" />
+   														<f:selectItems value="#{purchaceView.locationList}" />
    													</h:selectOneMenu></div>
    												     <div class="col-md-4">
                                                  <h:commandButton value="Refersh"    class="btn btn-info btn-fill pull-right" 
-																					style="width:100px"  actionListener="#{purchace.getLocations}">
+																					style="width:100px"  actionListener="#{purchaceView.getLocations}">
 										                    <f:ajax event="action" execute="@this" render="locationId"
 										                            onevent="function(data) { demo.validate(data)}"  />
 										                </h:commandButton>
@@ -257,13 +257,13 @@
                                            <div class="col-md-5">
                                                 <div class="col-md-8"> <label for="exampleInputEmail1">Category</label>
                                                 
-                                                	<h:selectOneMenu id="categoryId" class="form-control" value="#{purchace.categoryId}">
-   														<f:selectItems value="#{purchace.categoryList}" />
+                                                	<h:selectOneMenu id="categoryId" class="form-control" value="#{purchaceView.categoryId}">
+   														<f:selectItems value="#{purchaceView.categoryList}" />
    													</h:selectOneMenu>
                                                  </div>
                                                  <div class="col-md-4">
                                                  <h:commandButton value="Refersh"    class="btn btn-info btn-fill pull-right" 
-																					style="width:100px"  actionListener="#{purchace.getAllCategories}">
+																					style="width:100px"  actionListener="#{purchaceView.getAllCategories}">
 										                    <f:ajax event="action" execute="@this" render="categoryId"
 										                            onevent="function(data) { demo.validate(data)}"  />
 										                </h:commandButton>
@@ -282,7 +282,7 @@
                                                 
 										            <h:panelGrid columns="2">
 										                <h:commandButton value="Add"  type="submit"  class="btn btn-info btn-fill pull-right" 
-																					style="width:150px"  action="#{purchace.addPurchase}">
+																					style="width:150px"  action="#{purchaceView.addPurchase}">
 										                    <f:ajax event="action" execute="arabicDescription englishDescription price details categoryId locationId" render="piValueText arabicDescription englishDescription price details categoryId locationId"
 										                            onevent="function(data) { demo.validate(data,'success')}" onerror="function(data) {  demo.validate(data,'failure')}"  />
 										                </h:commandButton>
