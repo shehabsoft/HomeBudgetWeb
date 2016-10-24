@@ -1,4 +1,4 @@
-package com.models;
+package com.models.Documents;
 
 
 import java.util.List;

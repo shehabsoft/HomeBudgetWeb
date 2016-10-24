@@ -31,7 +31,7 @@ import com.TransactionServiceSoapBindingStub;
 
 import com.dataObjects.CategoryVO;
 import com.google.gson.Gson;
-import com.models.CategoriesKeyBasedDocument;
+import com.models.Documents.CategoriesKeyBasedDocument;
 
 import util.BusinessException;
 import util.TransactionServiceParser;

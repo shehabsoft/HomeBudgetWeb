@@ -25,9 +25,9 @@ import com.dataObjects.CategoryVO;
 import com.dataObjects.LocationVO;
 import com.dataObjects.PurchaseVO;
 import com.google.gson.Gson;
-import com.models.CategoriesKeyBasedDocument;
-import com.models.LocationKeyBasedDocument;
-import com.models.PurchasesKeyBasedDocument;
+import com.models.Documents.CategoriesKeyBasedDocument;
+import com.models.Documents.LocationKeyBasedDocument;
+import com.models.Documents.PurchasesKeyBasedDocument;
 
 import util.BusinessException;
 import util.TransactionServiceParser;

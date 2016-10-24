@@ -36,7 +36,7 @@ import com.TransactionServiceSoapBindingStub;
 import com.dataObjects.CategoryVO;
 import com.dataObjects.PurchaseVO;
 import com.google.gson.Gson;
-import com.models.CategoriesKeyBasedDocument;
+import com.models.Documents.CategoriesKeyBasedDocument;
 
 import util.BusinessException;
 import util.TransactionServiceParser;
@@ -212,7 +212,7 @@ public class BudgetView {
 				e.printStackTrace();
 			}
 			
-		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>4</serviceCode><startDate>"+getStartDate()+"</startDate><incomeCategoriesId>"+Arrays.toString(getCategoryIncomeId())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(getCategoryId())+"</expenseCategoriesId></createTransaction>]]>");
+		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>5</serviceCode><name>"+getStartDate()+"</name><incomeCategoriesId>"+Arrays.toString(getCategoryIncomeId())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(getCategoryId())+"</expenseCategoriesId></createTransaction>]]>");
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
 		
@@ -236,6 +236,7 @@ public class BudgetView {
 	
 	
 	}
+	
 	public void reset()
 	{
 		setStartDate("");
