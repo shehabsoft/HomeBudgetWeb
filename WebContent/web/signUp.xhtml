@@ -45,6 +45,64 @@
 	});
 </script>
     <script>
+ 
+
+    function ckeck() {
+    	 
+        var uname = document.getElementById("signUp:userName");
+        var errorFlage=false;
+        if (  ""==uname.value)
+        {
+        	document.getElementById('error').style.display="block";
+       	    document.getElementById('errorMessage').style.display="block";
+			 document.getElementById('errorMessage').innerHTML="You Should Enter English Name  Description ";
+			 errorFlage=true;
+        }
+        var email = document.getElementById("signUp:Email");
+        ValidateEmailPattern(email);
+        if (  ""== email.value)
+        {
+        	
+        	document.getElementById('error').style.display="block";
+       	    document.getElementById('errorMessage').style.display="block";
+        	document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Enter Email Address";
+        	errorFlage=true;
+        }
+        var address = document.getElementById("signUp:address");
+        if (""==address.value)
+        {
+        	
+        	document.getElementById('error').style.display="block";
+       	    document.getElementById('errorMessage').style.display="block";
+        	document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Enter  Address";
+        	errorFlage=true;
+        }
+       var mobilenumber= document.getElementById("signUp:mobilenumber");
+      validateNumber(mobilenumber,'mobileMessage')
+       if ( mobilenumber.value == ""||mobilenumber.value==0)
+       {
+       	
+       	document.getElementById('error').style.display="block";
+      	document.getElementById('errorMessage').style.display="block";
+       	document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Enter Mobile Number";
+       	errorFlage=true;
+       }
+       errorFlage= validatePasswordMatch();
+        if(errorFlage==true)
+        	{
+          	document.getElementById('error').style.display="block";
+        	document.getElementById('errorMessage').style.display="block";
+        	return false;
+        	}else
+        	{
+        	return true;
+        	}
+       
+    }
+
+    
+     
+    
     function validateEnglishName(englishValue,ID)
 	{
 		
@@ -58,7 +116,8 @@
 			{
 			  document.getElementById('error').style.display="block";
 			 document.getElementById(ID).innerHTML="You Should Enter English Name  Description ";
-		    return false;
+			 document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"Invalid Email Pattern...";
+			 return false;
 			 }
 		
 	
@@ -66,24 +125,28 @@
 		
 	}
     function ValidateEmailPattern(email)
-    {
-    	var text=email.value;
-    	var arregex = /\S+@\S+\.\S+/;
-    	if(arregex.test(text))
-		   {
-    		 document.getElementById('emailMessage').innerHTML="";
-  		   return true;
-		   }else
-			   {
-			   document.getElementById('emailMessage').innerHTML="You Should Enter Valid Email  ";
-			   document.getElementById('error').style.display="block";
-			   return false;
-			   }
-    	
-    	
+    {       
+    
+    	 
+			var text=email.value;
+			var arregex = /\S+@\S+\.\S+/;
+			if(arregex.test(text))
+				{
+				    document.getElementById('emailMessage').innerHTML="";
+				  	 return true;
+				}else
+				{
+			
+				document.getElementById('emailMessage').innerHTML="You Should Enter Valid Email  ";
+				return false;
+				}
+    	    		
+    	    
     }
     function validateEmail(data,status)
     {
+    	
+    	
     	 switch(data.status) {
     	  case "begin":
          	 $("#ckeckMail").modal('show');
@@ -92,13 +155,21 @@
           case "complete":
               break;
           case "success":
-        	  setTimeout(closeWaiting, 3000);
+        	 setTimeout(closeWaiting, 4000);
     	 }
     	
     }
-function validatePassword()
+function validatePasswordMatch()
 {
-
+	var password = document.getElementById("signUp:passwordinput");
+	var passwordRe = document.getElementById("signUp:confirm_password");
+	if(password.value!=passwordRe.value)
+		{
+		 document.getElementById('passwordMessage').innerHTML="The Password Should Matchs  ";
+		 document.getElementById('error').style.display="block";
+		 document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"The Password Should Matchs";
+		 return true;
+		}
 	   
 }
 function validateNumber(number,ID)
@@ -112,8 +183,10 @@ function validateNumber(number,ID)
 	   }else
 		   {
 		 document.getElementById(ID).innerHTML="Invalid Mobile Number Pattern ";
+		 
 		 document.getElementById('error').style.display="block";
-		   return false;
+		 document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"Invalid Mobile Number Pattern";
+		   return true;
 		   }
 	
 }
@@ -124,7 +197,6 @@ function validateNumber(number,ID)
 	function validate(data,status)
 	{
 	
-		
 		
 		 switch(data.status) {
          case "begin":
@@ -163,12 +235,14 @@ function validateNumber(number,ID)
  function closeWaiting()
  {
 	 $("#ckeckMail").modal('hide');
+	 document.getElementById('errorMessage').innerHTML="";
  }
 
  function alertFunc() {
 	 document.getElementById("successMessage").style.display="none";
 	 document.getElementById("errorMessage").style.display="none";
 	 $("#myModal").modal('hide');
+	 document.getElementById('errorMessage').innerHTML="";
  }
  function showError(error)
  {
@@ -192,7 +266,7 @@ function validateNumber(number,ID)
 			
 			<!-- Form Name -->
 			<legend>Sign Up In Smart Home Budget</legend>
-		<h:form name="signUp">
+		<h:form id="signUp"  onsubmit="return ckeck()" >
 			<!-- Text input-->
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="Name">Name</label>  
@@ -212,7 +286,7 @@ function validateNumber(number,ID)
 			     <h:panelGroup id="emailMessage" class="col-md-7" >
 		 			<h:outputFormat style="color:red" value="#{userView.emailExitMessage}"></h:outputFormat>	
 		 			</h:panelGroup>		
-				<h:commandButton value="Check Mail"  type="submit"  class="btn btn-info btn-fill pull-right" actionListener="#{userView.checkEmail}" 
+				<h:commandButton value="Check Mail"  type="submit"  class="btn btn-info btn-fill pull-right" actionListener="#{userView.checkEmail}" onclick=""
 																							style="width:150px"  > 
 					<f:ajax event="action" execute="Email" render="emailMessage" onclick=""
 		 				 onevent="function(data) {validateEmail(data,'success')}" onerror="function(data) {  validateEmail(data,'failure')}" /> 
@@ -233,17 +307,17 @@ function validateNumber(number,ID)
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="confirm_password">Confirm Password</label>
 			  <div class="col-md-5">
-			    <h:inputSecret id="confirm_password" name="confirm_password" required="true" onblur="validatePassword()"  type="password" placeholder="Re-type password" class="form-control input-md" value="#{userView.rePassword}"/>
+			    <h:inputSecret id="confirm_password" name="confirm_password" required="true" onblur="validatePasswordMatch()"  type="password" placeholder="Re-type password" class="form-control input-md" value="#{userView.rePassword}"/>
 			     <div class="col-md-8" id="passwordMessage"  style="color:red" ></div> 
 			  </div>
 			</div>
 			
 			<!-- Multiple Radios (inline) -->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="gender">Gender</label>
+			  <label class="col-md-4 control-label" for="genderId">Gender</label>
 			  <div class="col-md-5"> 
 			    
-			      <h:selectOneRadio type="radio" name="gender"  required="true"  id="gender" value="#{userView.genderId}" >
+			      <h:selectOneRadio type="radio" name="gender"  required="true"  id="genderId" value="#{userView.genderId}" >
 			      
 			         	<f:selectItem itemValue="1" itemLabel="Male" />
 				   	    <f:selectItem itemValue="2" itemLabel="Female" />
@@ -255,7 +329,7 @@ function validateNumber(number,ID)
 			  
 			</div>
 				<div class="form-group">
-			  <label class="col-md-4 control-label" for="gender">Status</label>
+			  <label class="col-md-4 control-label" for="status">Status</label>
 			  <div class="col-md-5"> 
 			    
 			      <h:selectOneRadio type="radio" name="status"   required="true" id="status" value="#{userView.statusId}" >
@@ -319,8 +393,8 @@ function validateNumber(number,ID)
                                             <div class="form-group">
                                             
 												<h:commandButton value="Sign Up"  type="submit"  class="btn btn-info btn-fill pull-right" actionListener="#{userView.add}" 
-																							style="width:150px"  > 
-												                    <f:ajax event="action" execute="currencyId mobilenumber countryId address status gender passwordinput Email userName" render="currencyId mobilenumber countryId address status gender passwordinput Email userName" onclick=""
+																							style="width:150px" onclick="ckeck()" > 
+												                    <f:ajax event="action" execute="currencyId mobilenumber countryId address status genderId passwordinput Email userName" render="currencyId mobilenumber countryId address status genderId passwordinput Email userName" onclick=""
 		 										                            onevent="function(data) { validate(data,'success')}" onerror="function(data) {  validate(data,'failure')}" /> 
 		 										  </h:commandButton> 
 		 								
@@ -345,10 +419,7 @@ function validateNumber(number,ID)
                 	 <div id="error" >Please Solve Errors Before Submit</div>	
                   <span><b> Success - </b> Registeration Done Successfully "</span>
                     </div>
-                    <div class="alert alert-danger" id="errorMessage">
-                                    <button type="button" aria-hidden="true" class="close">×</button>
-                                    <span id="Error"><b> Danger - </b> There is an Error</span>
-                                </div>
+                    
             </div>
         </div>
     </div>
@@ -366,7 +437,10 @@ function validateNumber(number,ID)
       
 				<p>You Can Wait..............</p>
                 <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
-           
+           <div class="alert alert-danger" id="errorMessage">
+                                    <button type="button" aria-hidden="true" class="close">×</button>
+                                   
+                                </div>
             </div>
         </div>
     </div>
