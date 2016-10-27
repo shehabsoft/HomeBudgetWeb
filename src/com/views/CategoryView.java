@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.rpc.ServiceException;
@@ -40,7 +42,7 @@ import util.TransactionServiceParser;
 
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class CategoryView {
 
 	
@@ -246,15 +248,27 @@ public class CategoryView {
 			URL url = new URL(serviceUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			Gson gson2 = new Gson();
-			// String body="objectName="+className;
-
-			conn.setRequestMethod("GET");
+			String userId="userId=37";
+			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("userId", userId);
+
 			conn.setDoOutput(true);
-		    conn.setUseCaches(false);
-		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
-		    String output = "";
-		    output = br.readLine();
+			conn.setUseCaches(false);
+
+			byte[] bytes = userId.getBytes();
+			OutputStream out = conn.getOutputStream();
+			out.write(bytes);
+			if (conn.getResponseCode() != 200) {
+
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ conn.getResponseCode());
+			}
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					(conn.getInputStream())));
+			String output = "";
+			System.out.println("Output from Server .... \n");
+			output = br.readLine();
 		    Object obj = gson2.fromJson(output, CategoriesKeyBasedDocument.class);
 		    CategoriesKeyBasedDocument categoriesKeyBasedDocument=(CategoriesKeyBasedDocument)obj;
 		    ArrayList<CategoryVO>categoryVOs=(ArrayList<CategoryVO>)categoriesKeyBasedDocument.getCategoryVO();
