@@ -58,7 +58,10 @@ public class BudgetView {
 	private List<CategoryVO> categoryIncomeList=new ArrayList<CategoryVO>();
 	private String[] categoryId;
 	private String startDate; 
+	private String endDate; 
 	
+	
+
 	private String[] categoryIncomeId;
 
 	public List<CategoryVO> getCategoryIncomeList() {
@@ -73,7 +76,12 @@ public class BudgetView {
 	public void setCategoryIncomeList(List<CategoryVO> categoryIncomeList) {
 		this.categoryIncomeList = categoryIncomeList;
 	}
-	
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 	public String[] getCategoryIncomeId() {
 		return categoryIncomeId;
 	}
@@ -212,7 +220,7 @@ public class BudgetView {
 				e.printStackTrace();
 			}
 			
-		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>5</serviceCode><name>"+getStartDate()+"</name><incomeCategoriesId>"+Arrays.toString(getCategoryIncomeId())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(getCategoryId())+"</expenseCategoriesId></createTransaction>]]>");
+		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>5</serviceCode><startDate>"+getStartDate()+"</startDate><endDate>"+getEndDate()+"</endDate><incomeCategoriesId>"+Arrays.toString(getCategoryIncomeId())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(getCategoryId())+"</expenseCategoriesId></createTransaction>]]>");
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
 		

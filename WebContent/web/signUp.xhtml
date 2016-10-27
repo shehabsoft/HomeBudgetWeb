@@ -42,6 +42,7 @@
 		 document.getElementById("successMessage").style.display="none";
 		 document.getElementById("errorMessage").style.display="none";
 		 document.getElementById('error').style.display="none";
+		 document.getElementById('errorMailMessage').style.display="none";
 	});
 </script>
     <script>
@@ -53,102 +54,92 @@
         var errorFlage=false;
         if (  ""==uname.value)
         {
-        	document.getElementById('error').style.display="block";
-       	    document.getElementById('errorMessage').style.display="block";
-			 document.getElementById('errorMessage').innerHTML="You Should Enter English Name  Description ";
-			 errorFlage=true;
+        document.getElementById('error').style.display="block";
+       	document.getElementById('errorMessage').style.display="block";
+		document.getElementById('errorMessage').innerHTML="You Should Enter English Name  Description ";
+		errorFlage=true;
         }
         var email = document.getElementById("signUp:Email");
         ValidateEmailPattern(email);
         if (  ""== email.value)
         {
-        	
-        	document.getElementById('error').style.display="block";
-       	    document.getElementById('errorMessage').style.display="block";
-        	document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Enter Email Address";
-        	errorFlage=true;
+        document.getElementById('error').style.display="block";
+       	document.getElementById('errorMessage').style.display="block";
+        document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Enter Email Address";
+        errorFlage=true;
         }
         var address = document.getElementById("signUp:address");
         if (""==address.value)
         {
         	
-        	document.getElementById('error').style.display="block";
-       	    document.getElementById('errorMessage').style.display="block";
-        	document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Enter  Address";
-        	errorFlage=true;
+        document.getElementById('error').style.display="block";
+       	document.getElementById('errorMessage').style.display="block";
+        document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Enter  Address";
+        errorFlage=true;
         }
        var mobilenumber= document.getElementById("signUp:mobilenumber");
-      validateNumber(mobilenumber,'mobileMessage')
+       validateNumber(mobilenumber,'mobileMessage')
        if ( mobilenumber.value == ""||mobilenumber.value==0)
        {
-       	
-       	document.getElementById('error').style.display="block";
+      	document.getElementById('error').style.display="block";
       	document.getElementById('errorMessage').style.display="block";
        	document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Enter Mobile Number";
        	errorFlage=true;
        }
        errorFlage= validatePasswordMatch();
-        if(errorFlage==true)
-        	{
-          	document.getElementById('error').style.display="block";
-        	document.getElementById('errorMessage').style.display="block";
+       if(errorFlage==true)
+        {
+          document.getElementById('error').style.display="block";
+          document.getElementById('errorMessage').style.display="block";
         	return false;
-        	}else
-        	{
+        }else
+        {
         	return true;
-        	}
+        }
+        
        
     }
-
-    
-     
-    
     function validateEnglishName(englishValue,ID)
 	{
-		
 		var text=englishValue.value;
 	    var arregex =/^[-_ a-zA-Z0-9]+$/;
 	   if(arregex.test(text))
 		   {
-		   document.getElementById(ID).innerHTML="";
-		   return true;
+		   	 document.getElementById(ID).innerHTML="";
+		     return true;
 		   }else
 			{
-			  document.getElementById('error').style.display="block";
+			 document.getElementById('error').style.display="block";
 			 document.getElementById(ID).innerHTML="You Should Enter English Name  Description ";
 			 document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"Invalid Email Pattern...";
 			 return false;
 			 }
-		
-	
-		
-		
 	}
     function ValidateEmailPattern(email)
     {       
-    
-    	 
-			var text=email.value;
-			var arregex = /\S+@\S+\.\S+/;
+		var text=email.value;
+		var arregex = /\S+@\S+\.\S+/;
 			if(arregex.test(text))
 				{
-				    document.getElementById('emailMessage').innerHTML="";
-				  	 return true;
+				 document.getElementById('emailMessage').innerHTML="";
+				 return true;
 				}else
 				{
-			
 				document.getElementById('emailMessage').innerHTML="You Should Enter Valid Email  ";
 				return false;
 				}
-    	    		
-    	    
-    }
+   }
     function validateEmail(data,status)
     {
-    	
-    	
-    	 switch(data.status) {
+     switch(data.status) {
     	  case "begin":
+    		  var email = document.getElementById("signUp:Email");
+    		  if(email.value=="")
+    			  {
+    			  document.getElementById('error').style.display="block";
+    		      document.getElementById('errorMailMessage').style.display="block";
+    		      document.getElementById('errorMailMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Enter Email Address";
+    			  }
          	 $("#ckeckMail").modal('show');
          	 
               break;
@@ -168,9 +159,8 @@ function validatePasswordMatch()
 		 document.getElementById('passwordMessage').innerHTML="The Password Should Matchs  ";
 		 document.getElementById('error').style.display="block";
 		 document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"The Password Should Matchs";
-		 return true;
 		}
-	   
+	return true;
 }
 function validateNumber(number,ID)
 {
@@ -179,29 +169,21 @@ function validateNumber(number,ID)
 	if(arregex.test(numberValue))
 	   {
 		 document.getElementById(ID).innerHTML="";
-		  return true;
+		 return true;
 	   }else
 		   {
 		 document.getElementById(ID).innerHTML="Invalid Mobile Number Pattern ";
-		 
 		 document.getElementById('error').style.display="block";
 		 document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"Invalid Mobile Number Pattern";
-		   return true;
+		 return true;
 		   }
 	
 }
-
-
-
-
-	function validate(data,status)
-	{
-	
-		
+function validate(data,status)
+{
 		 switch(data.status) {
          case "begin":
-        	 $("#myModal").modal('show');
-        	 
+        	 $("#myModal").modal('show'); 
              break;
          case "complete":
              break;
@@ -217,20 +199,15 @@ function validateNumber(number,ID)
             	 {
         	 document.getElementById("successMessage").style.display="block";
             	 }
-        	 setTimeout(alertFunc, 3000);
+        	setTimeout(alertFunc, 3000);
         	 break;
          case "serverError":
         	 document.getElementById("successMessage").style.display="none";
         	 document.getElementById("errorMessage").style.display="block";
         	 showError(data.errorMessage);
         	 break;
-        
-		
 		 }
-	
-    
-    
-	}
+}
 
  function closeWaiting()
  {
@@ -416,9 +393,14 @@ function validateNumber(number,ID)
                 <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
                 <div class="alert alert-success" id="successMessage" style="display:none">
                 
-                	 <div id="error" >Please Solve Errors Before Submit</div>	
+                
                   <span><b> Success - </b> Registeration Done Successfully "</span>
                     </div>
+                    	 <div id="error" >Please Solve Errors Before Submit</div>	
+                    	    <div class="alert alert-danger" id="errorMessage">
+                                    <button type="button" aria-hidden="true" class="close">×</button>
+                                   
+                                </div>
                     
             </div>
         </div>
@@ -437,8 +419,8 @@ function validateNumber(number,ID)
       
 				<p>You Can Wait..............</p>
                 <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
-           <div class="alert alert-danger" id="errorMessage">
-                                    <button type="button" aria-hidden="true" class="close">×</button>
+           <div class="alert alert-danger" id="errorMailMessage">
+                                   
                                    
                                 </div>
             </div>

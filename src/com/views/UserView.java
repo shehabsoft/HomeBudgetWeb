@@ -165,7 +165,7 @@ public class UserView {
 			}
 			
 			
-		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>5</serviceCode><name>"+getName()+"</name><password>"+getPassword()+"</password><email>"+getEmail()+"</email><address>"+getAddress()+"</address><currencyId>"+getCurrencyId()+"</currencyId><countryId>"+getCountryId()+"</countryId><genderId>"+getGenderId()+"</genderId><statusId>"+getStatusId()+"</statusId><mobileNumber>"+getMobile_number()+"</mobileNumber></createTransaction>]]>");
+		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>4</serviceCode><name>"+getName()+"</name><password>"+getPassword()+"</password><email>"+getEmail()+"</email><address>"+getAddress()+"</address><currencyId>"+getCurrencyId()+"</currencyId><countryId>"+getCountryId()+"</countryId><genderId>"+getGenderId()+"</genderId><statusId>"+getStatusId()+"</statusId><mobileNumber>"+getMobile_number()+"</mobileNumber></createTransaction>]]>");
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
 		

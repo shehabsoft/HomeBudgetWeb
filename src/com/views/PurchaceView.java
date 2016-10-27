@@ -176,7 +176,7 @@ public class PurchaceView {
 				e.printStackTrace();
 			}
 			
-		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>2</serviceCode><arabicDescription>"+getArabicDescription()+"</arabicDescription> <englishDescription>"+getEnglishDescription()+"</englishDescription><price>"+getPrice()+"</price><categoryId>"+getCategoryId()+"</categoryId><locationId>"+getLocationId()+"</locationId><details>"+getDetials()+"</details></createTransaction>]]>");
+		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>2</serviceCode><userId>37</userId><arabicDescription>"+getArabicDescription()+"</arabicDescription> <englishDescription>"+getEnglishDescription()+"</englishDescription><price>"+getPrice()+"</price><categoryId>"+getCategoryId()+"</categoryId><locationId>"+getLocationId()+"</locationId><details>"+getDetials()+"</details></createTransaction>]]>");
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
 		

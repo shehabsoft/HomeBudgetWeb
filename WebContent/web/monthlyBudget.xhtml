@@ -36,6 +36,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
   <script>
   $( function() {
     $("#datepicker").datepicker();
+    $("#datepickerend").datepicker();
   } );
   </script>
 </h:head>
@@ -207,8 +208,8 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                             </div>
                                             
                                            
-                                        </div>
-                                          <div class="col-md-6">
+                              </div>
+                               <div class="col-md-6">
                                             <div class="form-group">
                                                 
                                                <h:inputText id="datepicker" class="input-sm" value="#{budgetView.startDate}"/>
@@ -218,7 +219,26 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                             </div>
                                             </div>
                                             
-                                        </div>
+                               </div>
+                                <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label style="color:black">Select End Date</label>
+                                              
+                                            </div>
+                                            
+                                           
+                              </div>
+                               <div class="col-md-6">
+                                            <div class="form-group">
+                                                
+                                               <h:inputText id="datepickerend" class="input-sm" value="#{budgetView.endDate}"/>
+                                                <div class="form-group  pe-7s-date">
+                                                
+                                              
+                                            </div>
+                                            </div>
+                                            
+                               </div>
 		                            
 				            </div>
 				             <div class="row">
@@ -246,7 +266,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                         </div>
                                </div>
                                     
-                                          <div class="row panel-footer">
+                                         
 		                      
 												              
 												     
@@ -262,16 +282,15 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 										            
 										            </div>
 										            
-								<div class="col-md-5">
-                                            <div class="form-group">
+								<div class="col-md-4">
+                                         
 												<h:commandButton value="Open"  type="submit"  class="btn btn-info btn-fill pull-right" actionListener="#{budgetView.add}" 
 																							style="width:150px"  > 
-												                    <f:ajax event="action" execute="categoryIncomeId datepicker expenseBudgetId" render="datepicker piValueText" onclick=""
+												                    <f:ajax event="action" execute="categoryIncomeId datepicker expenseBudgetId datepickerend" render="datepicker piValueText" onclick=""
 		 										                            onevent="function(data) { demo.validate(data,'success')}" onerror="function(data) {  demo.validate(data,'failure')}" /> 
 		 										  </h:commandButton> 
-		 										  </div>
+		 										
 		 							</div>
-										            </div>
 										            </div>
                                     <div class="clearfix"></div>
 			          </div>
