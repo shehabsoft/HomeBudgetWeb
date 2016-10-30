@@ -35,9 +35,11 @@ import com.TransactionServiceServiceLocator;
 import com.TransactionServiceSoapBindingStub;
 
 import com.dataObjects.CategoryVO;
+import com.dataObjects.MonthlyBudgetVO;
 import com.dataObjects.PurchaseVO;
 import com.google.gson.Gson;
 import com.models.Documents.CategoriesKeyBasedDocument;
+import com.models.Documents.MonthlyBudgetKeyBasedDocument;
 
 import util.BusinessException;
 import util.TransactionServiceParser;
@@ -49,19 +51,31 @@ public class BudgetView {
 
 	
 	public BudgetView()
-	{
-		 categoryList=categoryView.getExpensesCategories();
-	     categoryIncomeList=getBudgetCategories();
+	{	
+		 categoryList=categoryView.getCategoryList();
+	     categoryIncomeList=categoryView.getCategoryIncomeList();
+	     monthlyBudgetVO=getActiveMonthlyBudgetByUserId();
+	     monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalIncomes())*100);
+	     System.out.println(monthlyBudgetVO.getCompletedRatio());
+	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
 	}
-	
+	private String style;
 	public String message;
 	private Boolean status;
+	private MonthlyBudgetVO monthlyBudgetVO;
 	private List<CategoryVO> categoryIncomeList=new ArrayList<CategoryVO>();
 	private String[] categoryId;
 	private String startDate; 
 	private String endDate; 
 	
 	
+
+	public MonthlyBudgetVO getMonthlyBudgetVO() {
+		return monthlyBudgetVO;
+	}
+	public void setMonthlyBudgetVO(MonthlyBudgetVO monthlyBudgetVO) {
+		this.monthlyBudgetVO = monthlyBudgetVO;
+	}
 
 	private String[] categoryIncomeId;
 
@@ -88,6 +102,12 @@ public class BudgetView {
 	}
 	public void setCategoryIncomeId(String[] categoryIncomeId) {
 		this.categoryIncomeId = categoryIncomeId;
+	}
+	public String getStyle() {
+		return style;
+	}
+	public void setStyle(String style) {
+		this.style = style;
 	}
 	public Boolean getStatus() {
 		return status;
@@ -194,7 +214,11 @@ public class BudgetView {
 	
 	public void refesh() throws Exception
 	{
-		this.categoryList=getBudgetCategories();
+		 categoryList=categoryView.getExpensesCategories();
+		 monthlyBudgetVO=getActiveMonthlyBudgetByUserId();
+		 monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalIncomes())*100);
+	     System.out.println(monthlyBudgetVO.getCompletedRatio());
+	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
 	}
 	public List<CategoryVO> getCategoryList() {
 		return categoryList;
@@ -252,13 +276,12 @@ public class BudgetView {
 		
 		
 	}
-	
-	public ArrayList<CategoryVO> getBudgetCategories()
+	public MonthlyBudgetVO getActiveMonthlyBudgetByUserId()
 	{
 		try {
 
 			
-			String serviceUrl = "http://localhost:8080/WebServices/getData" + "/" + "GetBudgetCategories";
+			String serviceUrl = "http://localhost:8080/WebServices/getData" + "/" + "getActiveMonthlyBudgetByUserId";
 			URL url = new URL(serviceUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			Gson gson2 = new Gson();
@@ -283,16 +306,17 @@ public class BudgetView {
 			String output = "";
 			System.out.println("Output from Server .... \n");
 		    output = br.readLine();
-		    Object obj = gson2.fromJson(output, CategoriesKeyBasedDocument.class);
-		    CategoriesKeyBasedDocument categoriesKeyBasedDocument=(CategoriesKeyBasedDocument)obj;
-		    ArrayList<CategoryVO>categoryVOs=(ArrayList<CategoryVO>)categoriesKeyBasedDocument.getCategoryVO();
-		    return categoryVOs;
+		    Object obj = gson2.fromJson(output, MonthlyBudgetKeyBasedDocument.class);
+		    MonthlyBudgetKeyBasedDocument monthlyBudgetKeyBasedDocument=(MonthlyBudgetKeyBasedDocument)obj;
+		    MonthlyBudgetVO monthlyBudgetVO=(MonthlyBudgetVO)monthlyBudgetKeyBasedDocument.getMonthlyBudgetVO();
+		    return monthlyBudgetVO;
 
 	}catch(Exception e)
 		{
 		return null;
 		}
 		}
+
     
 	
 }

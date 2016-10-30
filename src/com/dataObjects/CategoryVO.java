@@ -11,7 +11,7 @@ public class CategoryVO {
 
 	private int parentCategoryId;
 	
-	private double limit_value;
+	private double limitValue;
 	
 	private double planedValue;
 	
@@ -23,6 +23,14 @@ public class CategoryVO {
 
 	public void setId(int id) {
 		Id = id;
+	}
+
+	public double getLimitValue() {
+		return limitValue;
+	}
+
+	public void setLimitValue(double limitValue) {
+		this.limitValue = limitValue;
 	}
 
 	public String getArabicDescription() {
@@ -49,13 +57,7 @@ public class CategoryVO {
 		this.parentCategoryId = parentCategoryId;
 	}
 
-	public double getLimit_value() {
-		return limit_value;
-	}
 
-	public void setLimit_value(double limit_value) {
-		this.limit_value = limit_value;
-	}
 
 	public double getPlanedValue() {
 		return planedValue;

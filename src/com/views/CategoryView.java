@@ -288,14 +288,26 @@ public class CategoryView {
 			URL url = new URL(serviceUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			Gson gson2 = new Gson();
-			// String body="objectName="+className;
-
-			conn.setRequestMethod("GET");
+			String userId="userId=37";
+			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("userId", userId);
+
 			conn.setDoOutput(true);
-		    conn.setUseCaches(false);
-		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
-		    String output = "";
+			conn.setUseCaches(false);
+
+			byte[] bytes = userId.getBytes();
+			OutputStream out = conn.getOutputStream();
+			out.write(bytes);
+			if (conn.getResponseCode() != 200) {
+
+				throw new RuntimeException("Failed : HTTP error code : "
+						+ conn.getResponseCode());
+			}
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					(conn.getInputStream())));
+			String output = "";
+			System.out.println("Output from Server .... \n");
 		    output = br.readLine();
 		    Object obj = gson2.fromJson(output, CategoriesKeyBasedDocument.class);
 		    CategoriesKeyBasedDocument categoriesKeyBasedDocument=(CategoriesKeyBasedDocument)obj;

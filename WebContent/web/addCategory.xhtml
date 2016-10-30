@@ -104,7 +104,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                             <p>Dashboard</p>
                         </a>
                     </li>
-                      <li   >
+                    <li  >
                         <a href="monthlyBudget.jsf"> <i class="pe-7s-user"></i>
                             <p>Monthly Budget</p>
                         </a>
@@ -114,28 +114,26 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                             <p>User Profile</p>
                         </a>
                     </li>
-                 
                          <li >
                         <a href="budgets.jsf"> <i class="pe-7s-cart"></i>
                             <p> Budget Categories</p>
                         </a>
                     </li>
-              
-                      <li>
-                    <a class="active" href="categories.jsf">
+             
+                     <li class="active">
+                    <a  href="categories.jsf">
                         <i class="pe-7s-cart"></i>
-                        <p>  Expenses Categories </p>
+                        <p> Expenses  Categories</p>
                     </a>
                      </li>
-                   
-                      <li  class="active">
+                     
+                         <li>
                         <a href="locations.jsf"> <i class="pe-7s-culture"></i>
                             <p> Locations </p>
                         </a>
                     </li>
-                  
-					
-             
+                   
+			
                     <li>
                         <a href="salesList.jsf"> <i class="pe-7s-note2"></i>
                             <p>Sales List</p>
@@ -168,7 +166,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
         <div class="main-panel">
             <nav class="navbar navbar-default navbar-fixed">
                 <div class="container-fluid">
-                    <div class="navbar-header"> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">                        <span class="sr-only">Toggle navigation</span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                    </button> <a class="navbar-brand" href="#">Locations</a> </div>
+                    <div class="navbar-header"> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">                        <span class="sr-only">Toggle navigation</span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                    </button> <a class="navbar-brand" href="#">Categories</a> </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-left">
                             <li>
@@ -216,35 +214,85 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                             <div class="card">
                            
                                 <div class="header">
-                                    <h4 class="title">Add  Location</h4> </div>
+                                    <h4 class="title">Create  Category</h4> </div>
                                     <h:form > 
                                     <div class="content">
                                     
                                         <div class="row">
                                           <div class="col-md-5">
-                                                <div class="form-group"> <label>Arabic Description</label> <h:inputText  type="text" required="true" onblur="validateArabicDescription(this)" id="arabicDescription" class="form-control" placeholder="" value="#{locationView.arabicDescription}"> 
+                                                <div class="form-group"> <label>Arabic Description</label> <h:inputText  type="text" required="true" onblur="validateArabicDescription(this)" id="arabicDescription" class="form-control" placeholder="" value="#{categoryView.arabicDescription}"> 
                                            
                                                 </h:inputText>
                                                     <div class="col-md-9" id="arabicDescriptionMessage" style="color:red" ></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
-                                                <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{locationView.englishDescription}"></h:inputText>
+                                                <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{categoryView.englishDescription}"></h:inputText>
                                                   <div class="col-md-8" id="englishDescriptionMessage"  style="color:red" ></div>
                                            
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
-                                       
+                                        <div class="row">  
+                                            
+                                            <div class="col-md-5">
+                                                <div class="form-group"> <label for="exampleInputEmail1">Category Status</label> </div>
+                                                
+                                     
+											   		<h:selectOneMenu id="categoryStatus" class="form-control" value="#{categoryView.categoryStatus}">
+   														<f:selectItems value="#{categoryView.categoryStatusList}" />
+   													</h:selectOneMenu>
+											   		
+                                            </div>
+                                                 <div class="col-md-5">
+                                                <div class="form-group"> <label for="exampleInputEmail1">Category Type</label> </div>
+                                                
+                                     
+											   		<h:selectOneMenu id="categoryTypeId" class="form-control" value="#{categoryView.categoryTypeId}">
+   														<f:selectItems value="#{categoryView.categoryTypeList}" />
+   													</h:selectOneMenu>
+											   		
+                                            </div>
+                                      </div>
+                                        <div class="row">      
+                                            <div class="col-md-5">
+											<div class="form-group"> <label for="Limit">Limit Value</label>
+											
+										
+												<h:inputText type="text" id="limitValue" onblur="validateNumber(this,'LimitValueMessage')"  required="true"    class="form-control" value="#{categoryView.limitValue}"/>
+												     
+												 <div class="col-md-8" id="LimitValueMessage"  style="color:red" ></div>
+											
+											</div>
+											</div>
+											<div class="col-md-5">
+											<div class="form-group"> <label for="Actual">Actual Value</label>
+												
+												<h:inputText type="text" id="actualValue" class="form-control" onblur="validateNumber(this,'ActualValueMessage')" required="true" value="#{categoryView.actualValue}"/>
+												    
+												 <div class="col-md-8" id="ActualValueMessage"  style="color:red" ></div>
+											</div>
+											</div>
+											<div class="col-md-5">
+											<div class="form-group"> <label for="Planed">Planed Value</label>
+												
+												<h:inputText type="text" id="planedValue" class="form-control" onblur="validateNumber(this,'PlanedValueMessage')" required="true" value="#{categoryView.planedValue}"/>
+												     
+												<div class="col-md-8" id="PlanedValueMessage"  style="color:red" ></div>
+											</div>
+											</div>
+											  <div id="wait" style="display:none;width:69px;height:89px;top:50%;left:50%;padding:2px;"><img src='assets/img/demo_wait.gif' width="64" height="64" /><br>Loading..M</br></div>
+                                        
+										</div>
                                         
                                        
                                                
 
 										            <h:panelGrid columns="2"> 
-										                <h:commandButton value="Add Location"  type="submit"  class="btn btn-info btn-fill pull-right" action="#{locationView.add}" 
+										                <h:commandButton value="Add Category"  type="submit"  class="btn btn-info btn-fill pull-right" action="#{categoryView.add}" 
 																					style="width:150px"  > 
-										                    <f:ajax event="action" execute="englishDescription arabicDescription " render="piValueText englishDescription arabicDescription  " onclick=""
+										                    <f:ajax event="action" execute="englishDescription arabicDescription  limitValue planedValue actualValue categoryStatus categoryTypeId" render="piValueText englishDescription arabicDescription  limitValue planedValue actualValue categoryStatus" onclick=""
  										                            onevent="function(data) { demo.validate(data,'success')}" onerror="function(data) {  demo.validate(data,'failure')}" /> 
  										                </h:commandButton> 
 										              
@@ -255,7 +303,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 			                                			 
 			                                			 <div class="col-md-9">
 			                                			 <h:panelGroup id="piValueText" class="col-md-9" >
-													        <h:outputFormat rendered="#{locationView.status}" class="form-control col-md-9" value="#{locationView.message}"/>
+													        <h:outputFormat rendered="#{categoryView.status}" class="form-control col-md-9" value="#{categoryView.message}"/>
 													        
 													    </h:panelGroup>
 													    </div>
