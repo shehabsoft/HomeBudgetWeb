@@ -2,9 +2,8 @@ package com.dataObjects;
 
 import java.util.Date;
 
-public class PurchaseVO {
+public class PurchaseVO extends DataObjectVO{
 	
-	private int Id;
 	
 	private String arabicDescription;
 	
@@ -33,13 +32,7 @@ public class PurchaseVO {
 		public void setCreationDate(String creationDate) {
 			this.creationDate = creationDate;
 		}
-	public int getId() {
-		return Id;
-	}
 
-	public void setId(int id) {
-		Id = id;
-	}
 	public String getCategoryName() {
 		return categoryName;
 	}

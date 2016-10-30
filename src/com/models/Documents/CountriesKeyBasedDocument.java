@@ -8,7 +8,7 @@ import com.dataObjects.CountryVO;
 import com.dataObjects.CurrencyVO;
 import com.dataObjects.PurchaseVO;
 
-public class CountriesKeyBasedDocument {
+public class CountriesKeyBasedDocument extends KeyBasedDocument{
 
 	private List<CountryVO>CountryVO;
 

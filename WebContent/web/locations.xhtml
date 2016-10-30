@@ -222,14 +222,14 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                     
                                         <div class="row">
                                           <div class="col-md-5">
-                                                <div class="form-group"> <label>Arabic Description</label> <h:inputText  type="text" required="true" onblur="validateArabicDescription(this)" id="arabicDescription" class="form-control" placeholder="" value="#{locationView.arabicDescription}"> 
+                                                <div class="form-group"> <label>Arabic Description</label> <h:inputText  type="text" required="true" onblur="validateArabicDescription(this)" id="arabicDescription" class="form-control" placeholder="" value="#{locationView.locationVO.arabicName}"> 
                                            
                                                 </h:inputText>
                                                     <div class="col-md-9" id="arabicDescriptionMessage" style="color:red" ></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
-                                                <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{locationView.englishDescription}"></h:inputText>
+                                                <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{locationView.locationVO.englishName}"></h:inputText>
                                                   <div class="col-md-8" id="englishDescriptionMessage"  style="color:red" ></div>
                                            
                                                   

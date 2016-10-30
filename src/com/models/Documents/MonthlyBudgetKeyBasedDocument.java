@@ -6,7 +6,7 @@ import java.util.List;
 import com.dataObjects.CategoryVO;
 import com.dataObjects.MonthlyBudgetVO;
 
-public class MonthlyBudgetKeyBasedDocument {
+public class MonthlyBudgetKeyBasedDocument extends KeyBasedDocument{
 
 	private MonthlyBudgetVO MonthlyBudgetVO;
 

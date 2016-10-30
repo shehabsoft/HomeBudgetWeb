@@ -6,7 +6,7 @@ import java.util.List;
 import com.dataObjects.CategoryVO;
 import com.dataObjects.PurchaseVO;
 
-public class PurchasesKeyBasedDocument {
+public class PurchasesKeyBasedDocument  extends KeyBasedDocument{
 
 	private List<PurchaseVO>PurchaseVO;
 

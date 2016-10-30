@@ -1,9 +1,9 @@
 package com.dataObjects;
 
 
-public class LocationVO {
+public class LocationVO extends DataObjectVO{
 	
-	private int Id;
+
 	
 	private String arabicName;
 	
@@ -11,10 +11,6 @@ public class LocationVO {
 
 
 
-
-	public int getId() {
-		return Id;
-	}
 
 
 
@@ -47,9 +43,6 @@ public class LocationVO {
 
 
 
-	public void setId(int id) {
-		Id = id;
-	}
 
 	
 	

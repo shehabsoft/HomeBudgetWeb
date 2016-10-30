@@ -47,21 +47,25 @@ import util.TransactionServiceParser;
 
 @ManagedBean
 @SessionScoped
-public class BudgetView {
+public class BudgetView extends JSFView {
 
 	
 	public BudgetView()
 	{	
+		super();
+		 try {
 		 categoryList=categoryView.getCategoryList();
 	     categoryIncomeList=categoryView.getCategoryIncomeList();
-	     monthlyBudgetVO=getActiveMonthlyBudgetByUserId();
+		 monthlyBudgetVO=getActiveMonthlyBudgetByUserId();
 	     monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalIncomes())*100);
-	     System.out.println(monthlyBudgetVO.getCompletedRatio());
+	     System.out.println("Ratio: "+monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
+		 } catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	private String style;
-	public String message;
-	private Boolean status;
 	private MonthlyBudgetVO monthlyBudgetVO;
 	private List<CategoryVO> categoryIncomeList=new ArrayList<CategoryVO>();
 	private String[] categoryId;
@@ -109,13 +113,7 @@ public class BudgetView {
 	public void setStyle(String style) {
 		this.style = style;
 	}
-	public Boolean getStatus() {
-		return status;
-	}
 
-	public void setStatus(Boolean status) {
-		this.status = status;
-	}
 	public String getStartDate() {
 		return startDate;
 	}
@@ -123,11 +121,6 @@ public class BudgetView {
 		this.startDate = startDate;
 	}
 
-	private String englishDescription;
-	private String arabicDescription;
-	private double limitValue;
-	private double planedValue;
-	private double actualValue;
 	private String categoryStatus;
 	public int getCategoryTypeId() {
 		return categoryTypeId;
@@ -168,49 +161,15 @@ public class BudgetView {
 		BudgetView.categoryTypeList = categoryTypeList;
 	}
 
-	
-	public String getEnglishDescription() {
-		return englishDescription;
-	}
-	public void setEnglishDescription(String englishDescription) {
-		this.englishDescription = englishDescription;
-	}
-	public String getArabicDescription() {
-		return arabicDescription;
-	}
-	public void setArabicDescription(String arabicDescription) {
-		this.arabicDescription = arabicDescription;
-	}
-	public double getLimitValue() {
-		return limitValue;
-	}
-	public void setLimitValue(double limitValue) {
-		this.limitValue = limitValue;
-	}
-	public double getPlanedValue() {
-		return planedValue;
-	}
-	public void setPlanedValue(double planedValue) {
-		this.planedValue = planedValue;
-	}
-	public double getActualValue() {
-		return actualValue;
-	}
-	public void setActualValue(double actualValue) {
-		this.actualValue = actualValue;
-	}
+
+
 	public String getCategoryStatus() {
 		return categoryStatus;
 	}
 	public void setCategoryStatus(String categoryStatus) {
 		this.categoryStatus = categoryStatus;
 	}	
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
+
 	
 	public void refesh() throws Exception
 	{
@@ -231,27 +190,15 @@ public class BudgetView {
 	@Action
 	public void add() throws BusinessException
 	{
-		String content="";
 		String responseMessage="";
-		try {
-			
-			TransactionService transactionService=null;
-			TransactionServiceServiceLocator  serviceServiceLocator=new TransactionServiceServiceLocator();
-			try {
-				 transactionService=	serviceServiceLocator.getTransactionService();
-				
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>5</serviceCode><startDate>"+getStartDate()+"</startDate><endDate>"+getEndDate()+"</endDate><incomeCategoriesId>"+Arrays.toString(getCategoryIncomeId())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(getCategoryId())+"</expenseCategoriesId></createTransaction>]]>");
+		try
+		{
+	    String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>5</serviceCode><startDate>"+getStartDate()+"</startDate><endDate>"+getEndDate()+"</endDate><incomeCategoriesId>"+Arrays.toString(getCategoryIncomeId())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(getCategoryId())+"</expenseCategoriesId></createTransaction>]]>";
+		String response=callTransactionService(requestData);
+		System.out.println("Call Transaction Service For Location .....");
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
-		
 		System.out.print(responseMessage);	
-		 
-         
 		} catch (Exception e) {
 			// TODO Auto-generated catch block	
 			if(e instanceof BusinessException)
@@ -259,15 +206,10 @@ public class BudgetView {
 				System.out.println(e);
 				throw new BusinessException(e.toString());
 			}
-			
-			
-		
 		}
-		status=true;
-		message= responseMessage;
+		setStatus(true);;
+		setMessage(responseMessage);
 		reset();
-	
-	
 	}
 	
 	public void reset()
@@ -276,44 +218,30 @@ public class BudgetView {
 		
 		
 	}
-	public MonthlyBudgetVO getActiveMonthlyBudgetByUserId()
+	public MonthlyBudgetVO getActiveMonthlyBudgetByUserId() throws  Exception
 	{
 		try {
 
-			
-			String serviceUrl = "http://localhost:8080/WebServices/getData" + "/" + "getActiveMonthlyBudgetByUserId";
-			URL url = new URL(serviceUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			Gson gson2 = new Gson();
-			String userId="userId=37";
-			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Content-Type", "application/json");
-			conn.setRequestProperty("userId", userId);
-
-			conn.setDoOutput(true);
-			conn.setUseCaches(false);
-
-			byte[] bytes = userId.getBytes();
-			OutputStream out = conn.getOutputStream();
-			out.write(bytes);
-			if (conn.getResponseCode() != 200) {
-
-				throw new RuntimeException("Failed : HTTP error code : "
-						+ conn.getResponseCode());
-			}
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					(conn.getInputStream())));
-			String output = "";
-			System.out.println("Output from Server .... \n");
-		    output = br.readLine();
-		    Object obj = gson2.fromJson(output, MonthlyBudgetKeyBasedDocument.class);
+			String output =callPostWebService("getActiveMonthlyBudgetByUserId");
+			System.out.println("Call getActiveMonthlyBudgetByUserId .....");
+			Gson gson=new Gson();
+		    Object obj = gson.fromJson(output, MonthlyBudgetKeyBasedDocument.class);
 		    MonthlyBudgetKeyBasedDocument monthlyBudgetKeyBasedDocument=(MonthlyBudgetKeyBasedDocument)obj;
 		    MonthlyBudgetVO monthlyBudgetVO=(MonthlyBudgetVO)monthlyBudgetKeyBasedDocument.getMonthlyBudgetVO();
 		    return monthlyBudgetVO;
 
 	}catch(Exception e)
 		{
-		return null;
+		             setStatus(false);
+					if(e instanceof BusinessException)
+					{
+						System.out.println(e);
+						throw new BusinessException(e.toString());
+					}else
+					{
+						System.out.println(e);
+						throw new Exception(e);
+					}
 		}
 		}
 

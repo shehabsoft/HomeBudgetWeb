@@ -7,7 +7,7 @@ import com.dataObjects.CategoryVO;
 import com.dataObjects.CurrencyVO;
 import com.dataObjects.PurchaseVO;
 
-public class CurrenciesKeyBasedDocument {
+public class CurrenciesKeyBasedDocument extends KeyBasedDocument{
 
 	private List<CurrencyVO>CurrencyVO;
 

@@ -248,7 +248,7 @@ function validate(data,status)
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="Name">Name</label>  
 			  <div class="col-md-5">
-			  <h:inputText id="userName" name="Name" type="text" onblur="validateEnglishName(this,'englishMessage')" class="form-control input-md"  requiredMessage="dsfdffdgdfg"   required="true"  value="#{userView.name}"></h:inputText>
+			  <h:inputText id="userName" name="Name" type="text" onblur="validateEnglishName(this,'englishMessage')" class="form-control input-md"  requiredMessage="dsfdffdgdfg"   required="true"  value="#{userView.userVO.name}"></h:inputText>
 			    <div class="col-md-8" id="englishMessage"  style="color:red" > </div> 
 			     
 			  </div>
@@ -256,7 +256,7 @@ function validate(data,status)
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="Name">Email</label>  
 			  <div class="col-md-4">
-			  <h:inputText id="Email" name="Email" type="text" onblur="ValidateEmailPattern(this)"    class="form-control input-md" required="true"  value="#{userView.email}"></h:inputText>
+			  <h:inputText id="Email" name="Email" type="text" onblur="ValidateEmailPattern(this)"    class="form-control input-md" required="true"  value="#{userView.userVO.email}"></h:inputText>
 			    <div class="col-md-8" id="emailMessage"  style="color:red" ></div> 
 			    </div>
 			    <div class="col-md-3">     
@@ -275,7 +275,7 @@ function validate(data,status)
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="passwordinput">Password</label>
 			  <div class="col-md-5">
-			    <h:inputSecret id="passwordinput"  required="true " name="passwordinput" type="password" placeholder="" class="form-control input-md" value="#{userView.password}" />
+			    <h:inputSecret id="passwordinput"  required="true " name="passwordinput" type="password" placeholder="" class="form-control input-md" value="#{userView.userVO.password}" />
 			    <span class="help-block">max 16 characters</span>
 			  </div>
 			</div>
@@ -284,7 +284,7 @@ function validate(data,status)
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="confirm_password">Confirm Password</label>
 			  <div class="col-md-5">
-			    <h:inputSecret id="confirm_password" name="confirm_password" required="true" onblur="validatePasswordMatch()"  type="password" placeholder="Re-type password" class="form-control input-md" value="#{userView.rePassword}"/>
+			    <h:inputSecret id="confirm_password" name="confirm_password" required="true" onblur="validatePasswordMatch()"  type="password" placeholder="Re-type password" class="form-control input-md" value="#{userView.userVO.rePassword}"/>
 			     <div class="col-md-8" id="passwordMessage"  style="color:red" ></div> 
 			  </div>
 			</div>
@@ -294,7 +294,7 @@ function validate(data,status)
 			  <label class="col-md-4 control-label" for="genderId">Gender</label>
 			  <div class="col-md-5"> 
 			    
-			      <h:selectOneRadio type="radio" name="gender"  required="true"  id="genderId" value="#{userView.genderId}" >
+			      <h:selectOneRadio type="radio" name="gender"  required="true"  id="genderId" value="#{userView.userVO.genderId}" >
 			      
 			         	<f:selectItem itemValue="1" itemLabel="Male" />
 				   	    <f:selectItem itemValue="2" itemLabel="Female" />
@@ -309,7 +309,7 @@ function validate(data,status)
 			  <label class="col-md-4 control-label" for="status">Status</label>
 			  <div class="col-md-5"> 
 			    
-			      <h:selectOneRadio type="radio" name="status"   required="true" id="status" value="#{userView.statusId}" >
+			      <h:selectOneRadio type="radio" name="status"   required="true" id="status" value="#{userView.userVO.statusId}" >
 			      
 			         	<f:selectItem itemValue="1" itemLabel="Single" />
 				   	    <f:selectItem itemValue="2" itemLabel="Married" />
@@ -325,7 +325,7 @@ function validate(data,status)
 			  <label class="col-md-4 control-label" for="address">Address</label>
 			  <div class="col-md-4">                     
 			<div class="col-md-10">
-               <h:inputText type="text" class="form-control" required="true" onblur="validateEnglishName(this,'addressMessage')" id="address" value="#{userView.address}"/>
+               <h:inputText type="text" class="form-control" required="true" onblur="validateEnglishName(this,'addressMessage')" id="address" value="#{userView.userVO.address}"/>
              <div class="col-md-8" id="addressMessage"  style="color:red" ></div> 
       </div>
 			  </div>
@@ -335,7 +335,7 @@ function validate(data,status)
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="country">Country</label>
 			  <div class="col-md-5">
-			    <h:selectOneMenu id="countryId" class="form-control" value="#{userView.countryId}">
+			    <h:selectOneMenu id="countryId" class="form-control" value="#{userView.userVO.countryId}">
    														<f:selectItems value="#{userView.countryList}" var="n" 
    														
    														itemLabel="#{n.englishName}" itemValue="#{n.id}"
@@ -348,7 +348,7 @@ function validate(data,status)
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="mobilenumber">Mobile Number</label>  
 			  <div class="col-md-5">
-			  <h:inputText id="mobilenumber" name="mobilenumber"   onblur="validateNumber(this,'mobileMessage')"  required="true" type="text" placeholder="Mobile Number" class="form-control input-md" value="#{userView.mobile_number}"/>
+			  <h:inputText id="mobilenumber" name="mobilenumber"   onblur="validateNumber(this,'mobileMessage')"  required="true" type="text" placeholder="Mobile Number" class="form-control input-md" value="#{userView.userVO.mobile_number}"/>
 			     <div class="col-md-8" id="mobileMessage"  style="color:red" ></div> 
 			  </div>
 			</div>
@@ -356,7 +356,7 @@ function validate(data,status)
 			  <label class="col-md-4 control-label" for="mobilenumber">Prefered Currency ($)</label>  
 			  <div class="col-md-5">
 			 <label ></label>
-                                                	<h:selectOneMenu  value="#{userView.currencyId}" class="form-control col-md-9" id="currencyId" required="true">
+                                                	<h:selectOneMenu  value="#{userView.userVO.currencyId}" class="form-control col-md-9" id="currencyId" required="true">
 											   			<f:selectItems value="#{userView.currencyList}"  var="n"
    															itemLabel="#{n.name}" itemValue="#{n.id}"/>
 											   		</h:selectOneMenu>

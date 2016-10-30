@@ -143,7 +143,7 @@ public class PurchaceView {
 		this.message = message;
 	}
 	@Action
-	public void getAllCategories()
+	public void getAllCategories() throws Exception
 	{
 		categoryVOs=categoryView.getExpensesCategories();
 		for(CategoryVO categoryVO:categoryVOs)

@@ -5,10 +5,9 @@ import java.util.List;
 
 
 
-public class MonthlyBudgetVO {
+public class MonthlyBudgetVO extends DataObjectVO{
 	
-	private int Id;
-	
+
 	private String startDate;
 	private String endDate;
 	private String incomeCategoriesId;
@@ -65,19 +64,6 @@ public class MonthlyBudgetVO {
 
 	public void setExpenseCategoriesId(String expenseCategoriesId) {
 		this.expenseCategoriesId = expenseCategoriesId;
-	}
-
-
-
-
-
-	public int getId() {
-		return Id;
-	}
-
-
-	public void setId(int id) {
-		Id = id;
 	}
 
 

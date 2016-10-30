@@ -1,21 +1,14 @@
 package com.dataObjects;
 
 
-public class CountryVO {
+public class CountryVO extends DataObjectVO{
 	
-	private int Id;
+
 	
 	private String arabicName;
 	
 	private String englishName;
 
-	public int getId() {
-		return Id;
-	}
-
-	public void setId(int id) {
-		Id = id;
-	}
 
 	public String getArabicName() {
 		return arabicName;

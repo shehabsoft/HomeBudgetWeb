@@ -7,7 +7,7 @@ import com.dataObjects.CategoryVO;
 import com.dataObjects.LocationVO;
 import com.dataObjects.PurchaseVO;
 
-public class LocationKeyBasedDocument {
+public class LocationKeyBasedDocument extends KeyBasedDocument {
 
 	private List<LocationVO>LocationVO;
 

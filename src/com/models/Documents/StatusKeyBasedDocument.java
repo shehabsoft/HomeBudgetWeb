@@ -8,7 +8,7 @@ import com.dataObjects.LocationVO;
 import com.dataObjects.PurchaseVO;
 import com.dataObjects.StatusVO;
 
-public class StatusKeyBasedDocument {
+public class StatusKeyBasedDocument extends KeyBasedDocument{
 
 	private  StatusVO StatusVO;
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.dataObjects.CategoryVO;
 
-public class CategoriesKeyBasedDocument {
+public class CategoriesKeyBasedDocument extends KeyBasedDocument {
 
 	private List<CategoryVO>CategoryVO;
 

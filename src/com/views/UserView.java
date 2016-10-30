@@ -31,6 +31,7 @@ import com.dataObjects.CurrencyVO;
 import com.dataObjects.LocationVO;
 import com.dataObjects.PurchaseVO;
 import com.dataObjects.StatusVO;
+import com.dataObjects.UserVO;
 import com.google.gson.Gson;
 import com.models.Documents.CategoriesKeyBasedDocument;
 import com.models.Documents.CountriesKeyBasedDocument;
@@ -44,7 +45,7 @@ import util.TransactionServiceParser;
 
 @ManagedBean
 @SessionScoped
-public class UserView {
+public class UserView extends JSFView {
 
 
 	public List<CurrencyVO> getCurrencyList() {
@@ -62,35 +63,28 @@ public class UserView {
 	public void setCountryList(ArrayList<CountryVO> countryList) {
 		this.countryList = countryList;
 	}
-
-	private String name;
-	private String email;
-	private String address;
-	private String password;
-	private String rePassword;
-	private String emailExitMessage;
-
-
-	private int statusId;
-	private int currencyId;
-	private int countryId;
-	public int getCountryId() {
-		return countryId;
-	}
-
-	public void setCountryId(int countryId) {
-		this.countryId = countryId;
-	}
-    private boolean emailExit=false;
-	private int genderId;
-	private int mobile_number;
+    private UserVO userVO;
 	
+
+
+	
+    private boolean emailExit=false;
+	private String emailExitMessage="";
 	private List<CurrencyVO> currencyList=new ArrayList<CurrencyVO>();
     private ArrayList<CountryVO> countryList=new ArrayList<CountryVO>();
 	
 
+	public UserVO getUserVO() {
+		return userVO;
+	}
+
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
+	}
+
 	public UserView() throws Exception
 	{
+		userVO=new UserVO();
 		currencyList=getAllCurrencies();
 		for(CurrencyVO currencyVO:currencyList)
 		{
@@ -118,18 +112,7 @@ public class UserView {
 		return currencyMap;
 	}
 	
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getRePassword() {
-		return rePassword;
-	}
-	public void setRePassword(String rePassword) {
-		this.rePassword = rePassword;
-	}
+	
 	
 	public void setCategoryList(Map<String, Object> categoryList) {
 		this.currencyMap = categoryList;
@@ -150,27 +133,12 @@ public class UserView {
 	
 		String content="";
 		String responseMessage="";
-		
-		
-	
 		try {
-			TransactionService transactionService=null;
-			TransactionServiceServiceLocator  serviceServiceLocator=new TransactionServiceServiceLocator();
-			try {
-				 transactionService=	serviceServiceLocator.getTransactionService();
-				
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-		String response=	transactionService.createTransaction("<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>4</serviceCode><name>"+getName()+"</name><password>"+getPassword()+"</password><email>"+getEmail()+"</email><address>"+getAddress()+"</address><currencyId>"+getCurrencyId()+"</currencyId><countryId>"+getCountryId()+"</countryId><genderId>"+getGenderId()+"</genderId><statusId>"+getStatusId()+"</statusId><mobileNumber>"+getMobile_number()+"</mobileNumber></createTransaction>]]>");
+		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>4</serviceCode><name>"+userVO.getName()+"</name><password>"+userVO.getPassword()+"</password><email>"+userVO.getEmail()+"</email><address>"+userVO.getAddress()+"</address><currencyId>"+userVO.getCurrencyId()+"</currencyId><countryId>"+userVO.getCountryId()+"</countryId><genderId>"+userVO.getGenderId()+"</genderId><statusId>"+userVO.getStatusId()+"</statusId><mobileNumber>"+userVO.getMobile_number()+"</mobileNumber></createTransaction>]]>";
+		String response=callTransactionService(requestData);
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
-		
 		System.out.print(responseMessage);	
-		 
 		status=true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block	
@@ -181,9 +149,6 @@ public class UserView {
 				System.out.println(e);
 				throw new BusinessException(e.toString());
 			}
-			
-			
-		
 		}finally
 		{
 			if(!status)
@@ -198,57 +163,12 @@ public class UserView {
 	}
 	public void reset()
 	{
-		setName("");
-		setEmail("");
-		setAddress("");
-		setMobile_number(0);
-		setPassword("");
-		setRePassword("");
+		setUserVO(null);
 		
 		
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public int getStatusId() {
-		return statusId;
-	}
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
-	}
-	public int getCurrencyId() {
-		return currencyId;
-	}
-	public void setCurrencyId(int currencyId) {
-		this.currencyId = currencyId;
-	}
-	public int getGenderId() {
-		return genderId;
-	}
-	public void setGenderId(int genderId) {
-		this.genderId = genderId;
-	}
-	public int getMobile_number() {
-		return mobile_number;
-	}
-	public void setMobile_number(int mobile_number) {
-		this.mobile_number = mobile_number;
-	}
+	
+	
 	public Boolean getStatus() {
 		return status;
 	}
@@ -262,59 +182,38 @@ public class UserView {
 	public ArrayList<CurrencyVO> getAllCurrencies() throws Exception
 	{
 		try {
-			String serviceUrl = "http://localhost:8080/WebServices/getData" + "/" + "GetAllCurrencies";
-			URL url = new URL(serviceUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			Gson gson2 = new Gson();
-			// String body="objectName="+className;
-
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Content-Type", "application/json");
-			conn.setDoOutput(true);
-		    conn.setUseCaches(false);
-		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
 		    String output = "";
-		    output = br.readLine();
-		    Object obj = gson2.fromJson(output, CurrenciesKeyBasedDocument.class);
+		    Gson gson= new Gson();
+		    System.out.println("Call GetAllCurrencies..........");
+		    output = callGetWebService("GetAllCurrencies");
+		    System.out.println("Output.........."+output);
+		    Object obj = gson.fromJson(output, CurrenciesKeyBasedDocument.class);
 		    CurrenciesKeyBasedDocument currenciesKeyBasedDocument=(CurrenciesKeyBasedDocument)obj;
 		    ArrayList<CurrencyVO>currenciesVos=(ArrayList<CurrencyVO>)currenciesKeyBasedDocument.getCurrencyVO();
 		    return currenciesVos;
 
 	}catch(Exception e)
-		
-		{
+	{
 		   throw new Exception(e);
-		}
-		}
+	}
+	}
 	public ArrayList<CountryVO> getAllCountries() throws Exception
 	{
 		try {
-
-			
-			String serviceUrl = "http://localhost:8080/WebServices/getData" + "/" + "getAllCountries";
-			URL url = new URL(serviceUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			Gson gson2 = new Gson();
-			// String body="objectName="+className;	
-
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Content-Type", "application/json");
-			conn.setDoOutput(true);
-		    conn.setUseCaches(false);
-		    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
-		    String output = "";
-		    output = br.readLine();
-		    Object obj = gson2.fromJson(output, CountriesKeyBasedDocument.class);
+			String output = "";
+		    Gson gson= new Gson();
+		    System.out.println("Call getAllCountries..........");
+		    output = callGetWebService("getAllCountries");
+		    Object obj = gson.fromJson(output, CountriesKeyBasedDocument.class);
 		    CountriesKeyBasedDocument countriesKeyBasedDocument=(CountriesKeyBasedDocument)obj;
 		    ArrayList<CountryVO>locationsVOs=(ArrayList<CountryVO>)countriesKeyBasedDocument.getCountryVO();
 		    return locationsVOs;
 
 	}catch(Exception e)
-		
-		{
+	{
 		   throw new Exception(e);
-		}
-		}
+	}
+	}
 
 	@Action
 	public void checkEmail() throws IOException
@@ -323,10 +222,10 @@ public class UserView {
 		URL url = new URL(serviceUrl);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		Gson gson2 = new Gson();
-		String mail="mail="+getEmail();
+		String mail="mail="+userVO.getEmail();
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Content-Type", "application/json");
-		conn.setRequestProperty("email", getEmail());
+		conn.setRequestProperty("email", userVO.getEmail());
 
 		conn.setDoOutput(true);
 		conn.setUseCaches(false);

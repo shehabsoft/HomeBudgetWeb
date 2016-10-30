@@ -1,6 +1,6 @@
 package com.dataObjects;
 
-public class StatusVO {
+public class StatusVO extends DataObjectVO{
 private String statusMessage;
 private boolean flage;
 public String getStatusMessage() {

@@ -2,9 +2,8 @@ package com.dataObjects;
 
 import java.util.Date;
 
-public class CurrencyVO {
-	
-	private int Id;
+public class CurrencyVO extends DataObjectVO {
+
 	
 	private String name;
 	
@@ -20,13 +19,6 @@ public class CurrencyVO {
 		this.name = name;
 	}
 
-	public int getId() {
-		return Id;
-	}
-
-	public void setId(int id) {
-		Id = id;
-	}
 	
 
 

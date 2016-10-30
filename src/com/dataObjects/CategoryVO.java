@@ -1,9 +1,8 @@
 package com.dataObjects;
 
 
-public class CategoryVO {
+public class CategoryVO extends DataObjectVO{
 	
-	private int Id;
 	
 	private String arabicDescription;
 	
@@ -17,12 +16,15 @@ public class CategoryVO {
 	
 	private double actualValue;
 
-	public int getId() {
-		return Id;
+	private int categoryTypeId;
+
+
+	public int getCategoryTypeId() {
+		return categoryTypeId;
 	}
 
-	public void setId(int id) {
-		Id = id;
+	public void setCategoryTypeId(int categoryTypeId) {
+		this.categoryTypeId = categoryTypeId;
 	}
 
 	public double getLimitValue() {
