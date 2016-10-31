@@ -26,6 +26,7 @@ import com.TransactionServiceService;
 import com.TransactionServiceServiceLocator;
 import com.TransactionServiceSoapBindingStub;
 import com.dataObjects.CategoryVO;
+import com.dataObjects.Constants;
 import com.dataObjects.CountryVO;
 import com.dataObjects.CurrencyVO;
 import com.dataObjects.LocationVO;
@@ -134,7 +135,7 @@ public class UserView extends JSFView {
 		String content="";
 		String responseMessage="";
 		try {
-		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>4</serviceCode><name>"+userVO.getName()+"</name><password>"+userVO.getPassword()+"</password><email>"+userVO.getEmail()+"</email><address>"+userVO.getAddress()+"</address><currencyId>"+userVO.getCurrencyId()+"</currencyId><countryId>"+userVO.getCountryId()+"</countryId><genderId>"+userVO.getGenderId()+"</genderId><statusId>"+userVO.getStatusId()+"</statusId><mobileNumber>"+userVO.getMobile_number()+"</mobileNumber></createTransaction>]]>";
+		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_USER_SERVICE+"</serviceCode><name>"+userVO.getName()+"</name><password>"+userVO.getPassword()+"</password><email>"+userVO.getEmail()+"</email><address>"+userVO.getAddress()+"</address><currencyId>"+userVO.getCurrencyId()+"</currencyId><countryId>"+userVO.getCountryId()+"</countryId><genderId>"+userVO.getGenderId()+"</genderId><statusId>"+userVO.getStatusId()+"</statusId><mobileNumber>"+userVO.getMobile_number()+"</mobileNumber></createTransaction>]]>";
 		String response=callTransactionService(requestData);
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);

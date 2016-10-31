@@ -217,18 +217,18 @@
                                   
                                         <div class="row">
                                             <div class="col-md-5">
-                                                <div class="form-group"> <label>Arabic Description</label> <h:inputText  type="text" required="true" onblur="validateArabicDescription(this)" id="arabicDescription" class="form-control" placeholder="" value="#{purchaceView.arabicDescription}"/>  </div>
+                                                <div class="form-group"> <label>Arabic Description</label> <h:inputText  type="text" required="true" onblur="validateArabicDescription(this)" id="arabicDescription" class="form-control" placeholder="" value="#{purchaceView.purchaseVO.arabicDescription}"/>  </div>
                                              <div class="col-md-9" id="arabicDescriptionMessage" style="color:red" ></div>
                                             </div>
                                             <div class="col-md-5">
-                                                <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{purchaceView.englishDescription}"/> </div>
+                                                <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{purchaceView.purchaseVO.englishDescription}"/> </div>
                                             <div class="col-md-8" id="englishDescriptionMessage"  style="color:red" ></div>
                                             </div>
                                             
                                         </div>
                                        <div class="row"> 
                                             <div class="col-md-5">
-                                                <div class="col-md-8"> <label>location</label> <h:selectOneMenu id="locationId" class="form-control" value="#{purchaceView.locationId}">
+                                                <div class="col-md-8"> <label>location</label> <h:selectOneMenu id="locationId" class="form-control" value="#{purchaceView.purchaseVO.locationId}">
    														<f:selectItems value="#{purchaceView.locationList}" />
    													</h:selectOneMenu></div>
    												     <div class="col-md-4">
@@ -244,7 +244,7 @@
 											<div class="col-md-5">
 											<div class="form-group"> <label for="exampleInputEmail1">Price</label>
 												
-											<h:inputText type="text" id="price" class="form-control" onblur="validateNumber(this,'PriceValueMessage')" required="true" value="#{purchaceView.price}"/>
+											<h:inputText type="text" id="price" class="form-control" onblur="validateNumber(this,'PriceValueMessage')" required="true" value="#{purchaceView.purchaseVO.price}"/>
 												 <div class="col-md-8" id="PriceValueMessage"  style="color:red" ></div> 
 												
 											</div>
@@ -253,7 +253,7 @@
                                            <div class="col-md-5">
                                                 <div class="col-md-8"> <label for="exampleInputEmail1">Category</label>
                                                 
-                                                	<h:selectOneMenu id="categoryId" class="form-control" value="#{purchaceView.categoryId}">
+                                                	<h:selectOneMenu id="categoryId" class="form-control" value="#{purchaceView.purchaseVO.categoryId}">
    														<f:selectItems value="#{purchaceView.categoryList}" />
    													</h:selectOneMenu>
                                                  </div>
@@ -269,7 +269,7 @@
                                         
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-group"> <label>Details</label><h:inputTextarea rows="5" id="details" class="form-control" value="#{purchaceView.detials}"></h:inputTextarea>  </div>
+                                                <div class="form-group"> <label>Details</label><h:inputTextarea rows="5" id="details" class="form-control" value="#{purchaceView.purchaseVO.details}"></h:inputTextarea>  </div>
                                             </div>
                                            
                                          

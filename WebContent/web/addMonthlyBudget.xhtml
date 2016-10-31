@@ -244,7 +244,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                                 <label >Expenses Categories List</label>
                                                 
                                                 	<h:selectManyListbox value="#{budgetView.categoryId}"  class="col-md-9" id="expenseBudgetId" required="true">
-											   			<f:selectItems value="#{budgetView.categoryList}"  var="n"
+											   			<f:selectItems value="#{budgetView.categoryAllList}"  var="n"
    															itemLabel="#{n.englishDescription}" itemValue="#{n.id}"/>
 											   		</h:selectManyListbox>
 											   		
@@ -255,11 +255,12 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                             <div class="form-group" >
                                                 <label >Income Categories List</label>
                                                 	<h:selectManyListbox value="#{budgetView.categoryIncomeId}" class="col-md-9" id="categoryIncomeId" required="true">
-											   			<f:selectItems value="#{budgetView.categoryIncomeList}"  var="n"
+											   			<f:selectItems value="#{budgetView.categoryAllIncomeList}"  var="n"
    															itemLabel="#{n.englishDescription}" itemValue="#{n.id}"/>
 											   		</h:selectManyListbox>
                                             </div>
                                         </div>
+                                        	    
                                </div>
                                     
                                          
@@ -285,8 +286,23 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 												                    <f:ajax event="action" execute="categoryIncomeId datepicker expenseBudgetId datepickerend" render="datepicker piValueText" onclick=""
 		 										                            onevent="function(data) { demo.validate(data,'success')}" onerror="function(data) {  demo.validate(data,'failure')}" /> 
 		 										  </h:commandButton> 
+		 										  
 		 										
 		 							</div>
+		 							<DIV class="col-md-4">
+		 							 <a href="addCategory.jsf" style="margin-left:1px" class="btn btn-info btn-fill pull-right">Add New Category</a>
+		 							
+		 							
+		 							</DIV>
+		 							<div class="col-md-2" style="width:18.667%">
+		 							  <h:commandButton value="Refersh"    class="btn btn-info btn-fill pull-right" 
+																					style="margin-left:10px"  actionListener="#{categoryView.refesh}">
+										                    <f:ajax event="action" execute="@this" render="categoryIncomeId expenseBudgetId"
+										                            onevent="function(data) { demo.validate(data)}"  />
+									</h:commandButton>
+		 							
+									</div>
+		 							
 										            </div>
                                     <div class="clearfix"></div>
 			          </div>

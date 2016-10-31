@@ -31,9 +31,11 @@ import com.TransactionServiceServiceLocator;
 import com.TransactionServiceSoapBindingStub;
 
 import com.dataObjects.CategoryVO;
+import com.dataObjects.Constants;
 import com.dataObjects.LocationVO;
 import com.google.gson.Gson;
 import com.models.Documents.CategoriesKeyBasedDocument;
+import com.models.Documents.LocationKeyBasedDocument;
 
 import util.BusinessException;
 import util.TransactionServiceParser;
@@ -44,16 +46,23 @@ import util.TransactionServiceParser;
 public class LocationView extends JSFView {
 
 	private LocationVO locationVO;
+	private ArrayList<LocationVO> locationVOs=new ArrayList<LocationVO>();
 	public LocationView()
 	{
 		locationVO=new LocationVO();
+		try {
+			locationVOs=getAllLocations();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
 	}
 	@Action
 	public void add() throws BusinessException
 	{
 		String responseMessage="";
 		try {
-			String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>3</serviceCode><arabicDescription>"+locationVO.getArabicName()+"</arabicDescription> <englishDescription>"+locationVO.getEnglishName()+"</englishDescription></createTransaction>]]>";
+			String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_LOCATION_SERVICE+"</serviceCode><arabicDescription>"+locationVO.getArabicName()+"</arabicDescription> <englishDescription>"+locationVO.getEnglishName()+"</englishDescription></createTransaction>]]>";
 		    String response= callTransactionService(requestData);
 		    TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		    responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
@@ -94,7 +103,31 @@ public class LocationView extends JSFView {
 	}
 
 
+	public ArrayList<LocationVO> getLocationVOs() {
+		return locationVOs;
+	}
+	public void setLocationVOs(ArrayList<LocationVO> locationVOs) {
+		this.locationVOs = locationVOs;
+	}
+	public ArrayList<LocationVO> getAllLocations() throws Exception
+	{
+		try {
 
+			String output = "";
+			System.out.println("Calling .........GetAllLocations.");
+			output=callGetWebService("GetAllLocations");
+			System.out.println("Output ..."+output);
+			Gson gson=new Gson();
+		    Object obj = gson.fromJson(output, LocationKeyBasedDocument.class);
+		    LocationKeyBasedDocument locationKeyBasedDocument=(LocationKeyBasedDocument)obj;
+		    ArrayList<LocationVO>locationsVOs=(ArrayList<LocationVO>)locationKeyBasedDocument.getLocationVO();
+		    return locationsVOs;
+
+	}catch(Exception e)
+		{
+		   throw new Exception(e);
+		}
+		}
 
 
     

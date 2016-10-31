@@ -17,6 +17,7 @@ public class PurchaseVO extends DataObjectVO{
 	private double price;
 	 private String categoryName;
 	 private String  locationName;
+	 private String details;
 
 
 		public String getLocationName() {
@@ -37,6 +38,12 @@ public class PurchaseVO extends DataObjectVO{
 		return categoryName;
 	}
 
+	public String getDetails() {
+		return details;
+	}
+	public void setDetails(String details) {
+		this.details = details;
+	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
