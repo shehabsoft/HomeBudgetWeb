@@ -57,7 +57,7 @@ public class CategoryView extends JSFView {
 		categoryList=getExpensesCategories();
 		categoryIncomeList=getBudgetCategories();
 		categoryAllList=getAllExpensesCategories();
-		categoryIncomeList=getAllBudgetCategories();
+		categoryAllIncomeList=getAllBudgetCategories();
     	}
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
@@ -163,7 +163,7 @@ public class CategoryView extends JSFView {
 	{
 		String responseMessage="";
 		try {
-			String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_CATEGORY_SERVICE+"</serviceCode><arabicDescription>"+categoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+categoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+categoryVO.getLimitValue()+"</limitValue><planedValue>"+categoryVO.getPlanedValue()+"</planedValue><actualValue>"+categoryVO.getActualValue()+"</actualValue><categoryStatus>"+categoryVO.getCategoryStatus()+"</categoryStatus><categoryType>"+categoryVO.getCategoryTypeId()+"</categoryType></createTransaction>]]>";
+			String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_CATEGORY_SERVICE+"</serviceCode><userId>37</userId><arabicDescription>"+categoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+categoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+categoryVO.getLimitValue()+"</limitValue><planedValue>"+categoryVO.getPlanedValue()+"</planedValue><actualValue>"+categoryVO.getActualValue()+"</actualValue><categoryStatus>"+categoryVO.getCategoryStatus()+"</categoryStatus><categoryType>"+categoryVO.getCategoryTypeId()+"</categoryType></createTransaction>]]>";
 	        String response=callTransactionService(requestData);
 		    TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		    responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
@@ -187,7 +187,7 @@ public class CategoryView extends JSFView {
 	{
 		if(getCategoryVO()!=null)
 		{
-		 setCategoryVO(null);
+		 setCategoryVO(new CategoryVO());
 		}
 		
 	}

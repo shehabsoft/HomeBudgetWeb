@@ -157,7 +157,7 @@ public class PurchaceView extends JSFView  {
 	}
 	public void reset()
 	{
-		setPurchaseVO(null);
+		setPurchaseVO(new PurchaseVO());
 		
 		
 	}

@@ -190,10 +190,10 @@ public class BudgetView extends JSFView {
 	
 	public void refesh() throws Exception
 	{
-		 categoryList=categoryView.getCategoryList();
-	     categoryIncomeList=categoryView.getCategoryIncomeList();
-	     categoryAllList=categoryView.getCategoryAllIncomeList();
-	     categoryAllIncomeList=categoryView.getCategoryAllList();
+		 categoryList=categoryView.getExpensesCategories();
+	     categoryIncomeList=categoryView.getBudgetCategories();
+	     categoryAllIncomeList=categoryView.getAllBudgetCategories();
+	     categoryAllList=categoryView.getAllExpensesCategories();
 		 monthlyBudgetVO=getActiveMonthlyBudgetByUserId();
 		 monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalIncomes())*100);
 	     System.out.println(monthlyBudgetVO.getCompletedRatio());
@@ -235,6 +235,7 @@ public class BudgetView extends JSFView {
 	public void reset()
 	{
 		setStartDate("");
+		setEndDate("");
 		
 		
 	}
