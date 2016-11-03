@@ -17,6 +17,8 @@ import java.util.concurrent.CancellationException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.rpc.ServiceException;
@@ -157,7 +159,94 @@ public class CategoryView extends JSFView {
 	public void setCategoryList(List<CategoryVO> categoryList) {
 		this.categoryList = categoryList;
 	}
+	@Action
+	public void showEditPage(ActionEvent event) throws BusinessException
+	{
+		int categoryId = (Integer)event.getComponent().getAttributes().get("categoryId");
+		int categoryTypeId = (Integer)event.getComponent().getAttributes().get("categoryTypeId");
+		System.out.println("Category ID :"+categoryId);
+		System.out.println("Category Type ID :"+categoryTypeId);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "editCategory.xhtml");
+	    if(categoryTypeId==Constants.CATEGORY_TYPE_EXPENSES_ID)
+	    {
+			for(CategoryVO categoryVO:categoryList)
+		    {
+		    	if(categoryVO.getId()==categoryId)
+		    	{
+		    		this.categoryVO=categoryVO;
+		    		break;
+		    	}
+		    }
+	    }else
+	    {
+	    	for(CategoryVO categoryVO:categoryIncomeList)
+		    {
+		    	if(categoryVO.getId()==categoryId)
+		    	{
+		    		this.categoryVO=categoryVO;
+		    		break;
+		    	}
+		    }
+	    }
+	}
+	@Action
+	public void edit() throws BusinessException
+	{
+		edit(this.categoryVO);
+	}
+	public boolean edit(CategoryVO selectedCategoryVO ) throws BusinessException
+	{
+		
+		String responseMessage="";
+		String requestData="";
+		try {
+	
 
+	
+		System.out.println("Calling Transaction Service Form Purchhase View(Edit Purchase)");
+		if(selectedCategoryVO.getCategoryTypeId()==Constants.CATEGORY_TYPE_EXPENSES_ID)
+		{
+		 requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_CATEGORY_EXPENSES_SERVICE+"</serviceCode><userId>37</userId><categoryId>"+selectedCategoryVO.getId()+"</categoryId><arabicDescription>"+selectedCategoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+selectedCategoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+selectedCategoryVO.getLimitValue()+"</limitValue><planedValue>"+selectedCategoryVO.getPlanedValue()+"</planedValue><categoryStatus>"+selectedCategoryVO.getCategoryStatus()+"</categoryStatus></createTransaction>]]>";	
+		}else
+		{
+		 requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_CATEGORY_REVENUES_SERVICE+"</serviceCode><userId>37</userId><categoryId>"+selectedCategoryVO.getId()+"</categoryId><arabicDescription>"+selectedCategoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+selectedCategoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+selectedCategoryVO.getLimitValue()+"</limitValue><planedValue>"+selectedCategoryVO.getPlanedValue()+"</planedValue><actualValue>"+selectedCategoryVO.getActualValue()+"</actualValue><categoryStatus>"+selectedCategoryVO.getCategoryStatus()+"</categoryStatus></createTransaction>]]>";	
+		}
+		System.out.println("Request Data "+requestData);
+		String response=callTransactionService(requestData);
+		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
+		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
+		System.out.println("response  Data "+responseMessage);
+		System.out.print(responseMessage);	
+		 
+		setStatus(true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block	
+			setStatus(false);
+			
+			if(e instanceof BusinessException)
+			{
+				System.out.println(e);
+				throw new BusinessException(e.toString());
+			}
+			
+			
+		
+		}finally
+		{
+			if(!getStatus())
+			{
+				setMessage("Error");
+			}
+			
+		}
+		
+		setMessage(responseMessage);
+
+		
+		
+		return true;
+	}
+	
 	@Action
 	public void add() throws BusinessException
 	{
@@ -179,7 +268,6 @@ public class CategoryView extends JSFView {
 		}
 		setStatus(true);
 		setMessage(responseMessage);
-		reset();
 	
 	
 	}

@@ -100,36 +100,36 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                 <div class="logo"> <a href="http://www.creative-tim.com" class="simple-text">                    Home Budegt                </a> </div>
                 <ul class="nav">
                     <li>
-                        <a href="Dashboard.jsf"> <i class="pe-7s-graph"></i>
+                        <a href="Dashboard.jsf" onclick="showWaiting()"> <i class="pe-7s-graph"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                       <li   >
-                        <a href="monthlyBudget.jsf"> <i class="pe-7s-user"></i>
+                        <a href="monthlyBudget.jsf" onclick="showWaiting()"> <i class="pe-7s-user"></i>
                             <p>Monthly Budget</p>
                         </a>
                     </li>
                     <li>
-                        <a href="user.jsf"> <i class="pe-7s-user"></i>
+                        <a href="user.jsf" onclick="showWaiting()"> <i class="pe-7s-user"></i>
                             <p>User Profile</p>
                         </a>
                     </li>
                  
                          <li >
-                        <a href="budgets.jsf"> <i class="pe-7s-cart"></i>
+                        <a href="budgets.jsf" onclick="showWaiting()"> <i class="pe-7s-cart"></i>
                             <p> Budget Categories</p>
                         </a>
                     </li>
               
                       <li>
-                    <a class="active" href="categories.jsf">
+                    <a class="active" href="categories.jsf" onclick="showWaiting()">
                         <i class="pe-7s-cart"></i>
                         <p>  Expenses Categories </p>
                     </a>
                      </li>
                    
                       <li  class="active">
-                        <a href="locations.jsf"> <i class="pe-7s-culture"></i>
+                        <a href="locations.jsf" onclick="showWaiting()"> <i class="pe-7s-culture"></i>
                             <p> Locations </p>
                         </a>
                     </li>
@@ -137,7 +137,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 					
              
                     <li>
-                        <a href="salesList.jsf"> <i class="pe-7s-note2"></i>
+                        <a href="salesList.jsf" onclick="showWaiting()"> <i class="pe-7s-note2"></i>
                             <p>Sales List</p>
                         </a>
                     </li>
@@ -297,9 +297,24 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 		
     </div>
 	
-	<div>
 	
-	
+	<div id="ckeckMail" class="modal fade " >
+    <div class="modal-dialog ">
+        <div class="modal-content alert alert-info alert-with-icon">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Waiting.....</h4>
+            </div>
+            <div class="modal-body">
+         
+    
+      
+			
+                <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
+        
+            </div>
+        </div>
+    </div>
 	
 	
 	
@@ -324,7 +339,13 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 <script src="assets/js/light-bootstrap-dashboard.js"></script>
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 <script src="assets/js/demo.js"></script>
-  
+  <script>
+  	function showWaiting()
+	{
+		 $("#ckeckMail").modal('show');
+	}	
+	</script>
+   
    
     
 <script type="text/javascript">

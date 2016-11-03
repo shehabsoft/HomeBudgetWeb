@@ -100,48 +100,42 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                 <div class="logo"> <a href="http://www.creative-tim.com" class="simple-text">                    Home Budegt                </a> </div>
                 <ul class="nav">
                     <li>
-                        <a href="Dashboard.jsf"> <i class="pe-7s-graph"></i>
+                        <a href="Dashboard.jsf" onclick="showWaiting()"> <i class="pe-7s-graph"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                      <li   >
-                        <a href="monthlyBudget.jsf"> <i class="pe-7s-user"></i>
+                    <li  >
+                        <a href="monthlyBudget.jsf" onclick="showWaiting()"> <i class="pe-7s-user"></i>
                             <p>Monthly Budget</p>
                         </a>
                     </li>
                     <li>
-                        <a href="user.jsf"> <i class="pe-7s-user"></i>
+                        <a href="user.jsf" onclick="showWaiting()"> <i class="pe-7s-user"></i>
                             <p>User Profile</p>
                         </a>
                     </li>
-              
-                    
-                     <li >
-                    <a  href="categories.jsf">
-                        <i class="pe-7s-cart"></i>
-                        <p> Expenses Categories</p>
-                    </a>
-                    
-                     </li>
-                        <li class="active">
-                        <a href="incomes.jsf"> <i class="pe-7s-wallet"></i>
-                            <p> Incomes Categories </p>
+                         <li >
+                        <a href="budgets.jsf" onclick="showWaiting()"> <i class="pe-7s-cart"></i>
+                            <p> Budget Categories</p>
                         </a>
                     </li>
+             
+                     <li class="active">
+                    <a  href="categories.jsf" onclick="showWaiting()">
+                        <i class="pe-7s-cart"></i>
+                        <p> Expenses  Categories</p>
+                    </a>
+                     </li>
+                     
                          <li>
-                        <a href="locations.jsf"> <i class="pe-7s-culture"></i>
+                        <a href="locations.jsf" onclick="showWaiting()"> <i class="pe-7s-culture"></i>
                             <p> Locations </p>
                         </a>
                     </li>
                    
-					 <li>
-                    <a href="bills.html">
-                        <i class="pe-7s-news-paper"></i>
-                        <p> Bills</p>
-                    </a>
-                </li>
+			
                     <li>
-                        <a href="salesList.jsf"> <i class="pe-7s-note2"></i>
+                        <a href="salesList.jsf" onclick="showWaiting()"> <i class="pe-7s-note2"></i>
                             <p>Sales List</p>
                         </a>
                     </li>
@@ -172,7 +166,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
         <div class="main-panel">
             <nav class="navbar navbar-default navbar-fixed">
                 <div class="container-fluid">
-                    <div class="navbar-header"> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">                        <span class="sr-only">Toggle navigation</span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                    </button> <a class="navbar-brand" href="#">Income Categories</a> </div>
+                    <div class="navbar-header"> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">                        <span class="sr-only">Toggle navigation</span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                    </button> <a class="navbar-brand" href="#">Categories</a> </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-left">
                             <li>
@@ -220,23 +214,23 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                             <div class="card">
                            
                                 <div class="header">
-                                    <h4 class="title">Create  Income Category</h4> </div>
+                                    <h4 class="title">Edit  Category</h4> </div>
                                     <h:form > 
                                     <div class="content">
                                     
                                         <div class="row">
                                           <div class="col-md-5">
-                                                <div class="form-group"> <label>Arabic Description</label> <h:inputText  type="text" required="true" onblur="validateArabicDescription(this)" id="arabicDescription" class="form-control" placeholder="" value="#{categoryView.arabicDescription}"> 
+                                                <div class="form-group"> <label>Arabic Description</label> <h:inputText  type="text" required="true" onblur="validateArabicDescription(this)" id="arabicDescription" class="form-control" placeholder="" value="#{categoryView.categoryVO.arabicDescription}"> 
                                            
                                                 </h:inputText>
                                                     <div class="col-md-9" id="arabicDescriptionMessage" style="color:red" ></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
-                                                <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{categoryView.englishDescription}"></h:inputText>
+                                                <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{categoryView.categoryVO.englishDescription}"></h:inputText>
                                                   <div class="col-md-8" id="englishDescriptionMessage"  style="color:red" ></div>
                                            
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
@@ -246,16 +240,27 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                                 <div class="form-group"> <label for="exampleInputEmail1">Category Status</label> </div>
                                                 
                                      
-											   		<h:selectOneMenu id="categoryStatus" class="form-control" value="#{categoryView.categoryStatus}">
-   														<f:selectItems value="#{categoryView.categoryList}" />
+											   		<h:selectOneMenu id="categoryStatus" class="form-control" value="#{categoryView.categoryVO.categoryStatus}">
+   														<f:selectItems value="#{categoryView.categoryStatusList}" />
    													</h:selectOneMenu>
 											   		
                                             </div>
+                                                 <div class="col-md-5">
+                                                <div class="form-group"> <label for="exampleInputEmail1">Category Type</label> </div>
+                                                
+                                     
+											   		<h:selectOneMenu disabled="true" id="categoryTypeId" class="form-control" value="#{categoryView.categoryVO.categoryTypeId}">
+   														<f:selectItems value="#{categoryView.categoryTypeList}" />
+   													</h:selectOneMenu>
+											   		
+                                            </div>
+                                      </div>
+                                        <div class="row">      
                                             <div class="col-md-5">
 											<div class="form-group"> <label for="Limit">Limit Value</label>
 											
 										
-												<h:inputText type="text" id="limitValue" onblur="validateNumber(this,'LimitValueMessage')"  required="true"    class="form-control" value="#{categoryView.limitValue}"/>
+												<h:inputText type="text" id="limitValue" onblur="validateNumber(this,'LimitValueMessage')"  required="true"    class="form-control" value="#{categoryView.categoryVO.limitValue}"/>
 												     
 												 <div class="col-md-8" id="LimitValueMessage"  style="color:red" ></div>
 											
@@ -264,7 +269,8 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 											<div class="col-md-5">
 											<div class="form-group"> <label for="Actual">Actual Value</label>
 												
-												<h:inputText type="text" id="actualValue" class="form-control" onblur="validateNumber(this,'ActualValueMessage')" required="true" value="#{categoryView.actualValue}"/>
+												<h:inputText type="text" id="actualValueExpenses" rendered="#{categoryView.categoryVO.categoryTypeId eq 2}" disabled="true"  class="form-control" onblur="validateNumber(this,'ActualValueMessage')" required="true" value="#{categoryView.categoryVO.actualValue}"/>
+												<h:inputText type="text" id="actualValue" disabled="false" rendered="#{categoryView.categoryVO.categoryTypeId eq 1}" class="form-control" onblur="validateNumber(this,'ActualValueMessage')" required="true" value="#{categoryView.categoryVO.actualValue}"/>
 												    
 												 <div class="col-md-8" id="ActualValueMessage"  style="color:red" ></div>
 											</div>
@@ -272,7 +278,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 											<div class="col-md-5">
 											<div class="form-group"> <label for="Planed">Planed Value</label>
 												
-												<h:inputText type="text" id="planedValue" class="form-control" onblur="validateNumber(this,'PlanedValueMessage')" required="true" value="#{categoryView.planedValue}"/>
+												<h:inputText type="text" id="planedValue" class="form-control" onblur="validateNumber(this,'PlanedValueMessage')" required="true" value="#{categoryView.categoryVO.planedValue}"/>
 												     
 												<div class="col-md-8" id="PlanedValueMessage"  style="color:red" ></div>
 											</div>
@@ -285,9 +291,9 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                                
 
 										            <h:panelGrid columns="2"> 
-										                <h:commandButton value="Add Category"  type="submit"  class="btn btn-info btn-fill pull-right" action="#{categoryView.add}" 
+										                <h:commandButton value="Edit Category"  type="submit"  class="btn btn-info btn-fill pull-right" action="#{categoryView.edit}" 
 																					style="width:150px"  > 
-										                    <f:ajax event="action" execute="englishDescription arabicDescription  limitValue planedValue actualValue categoryStatus" render="piValueText englishDescription arabicDescription  limitValue planedValue actualValue categoryStatus" onclick=""
+										                    <f:ajax event="action" execute="englishDescription arabicDescription  limitValue planedValue actualValue categoryStatus categoryTypeId" render="piValueText englishDescription arabicDescription  limitValue planedValue actualValue categoryStatus" onclick=""
  										                            onevent="function(data) { demo.validate(data,'success')}" onerror="function(data) {  demo.validate(data,'failure')}" /> 
  										                </h:commandButton> 
 										              
@@ -342,6 +348,10 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 	
 	
 	
+	
+	
+	
+	
 	<div id="ckeckMail" class="modal fade " >
     <div class="modal-dialog ">
         <div class="modal-content alert alert-info alert-with-icon">
@@ -359,10 +369,6 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
             </div>
         </div>
     </div>
-	
-	
-	
-	
 	
 	
 		
