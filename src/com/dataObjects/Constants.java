@@ -7,6 +7,8 @@ public interface  Constants {
 	static int ADD_LOCATION_SERVICE=3;
 	static int ADD_USER_SERVICE=4;
 	static int ADD_BUDGET_SERVICE=5;
+	static  int EDIT_PURCHASE_SERVICE=6;
+	
 	static String CATEGORY_STATUS_VALUE_ACTIVE="2";
 	static String CATEGORY_STATUS_VALUE_SUSPENDED="1";
 	static String CATEGORY_STATUS_VALUE_CANCELED="3";

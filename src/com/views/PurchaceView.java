@@ -14,6 +14,8 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.xml.rpc.ServiceException;
 import javax.xml.ws.Action;
 
@@ -155,6 +157,73 @@ public class PurchaceView extends JSFView  {
 		setMessage(responseMessage);
 		reset();
 	}
+	
+	@Action
+	public void showEditPage(ActionEvent event) throws BusinessException
+	{
+		int purchaseId = (Integer)event.getComponent().getAttributes().get("purchaseId");
+		System.out.println(purchaseId);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "editPurchase.xhtml");
+	    for(PurchaseVO purchaseVo:purchaseList)
+	    {
+	    	if(purchaseVo.getId()==purchaseId)
+	    	{
+	    		this.purchaseVO=purchaseVo;
+	    		break;
+	    	}
+	    }
+	}
+	@Action
+	public void edit() throws BusinessException
+	{
+		edit(purchaseVO);
+	}
+	public boolean edit(PurchaseVO selectedPurchaseVO) throws BusinessException
+	{
+		
+		String responseMessage="";
+		try {
+	
+
+	
+		System.out.println("Calling Transaction Service Form Purchhase View(Edit Purchase)");
+		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_PURCHASE_SERVICE+"</serviceCode><userId>37</userId><purchaseId>"+purchaseVO.getId()+"</purchaseId><arabicDescription>"+purchaseVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+purchaseVO.getEnglishDescription()+"</englishDescription><price>"+purchaseVO.getPrice()+"</price><categoryId>"+purchaseVO.getCategoryId()+"</categoryId><locationId>"+purchaseVO.getLocationId()+"</locationId><details>"+purchaseVO.getDetails()+"</details></createTransaction>]]>";	
+		System.out.println("Request Data "+requestData);
+		String response=callTransactionService(requestData);
+		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
+		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
+		System.out.println("response  Data "+responseMessage);
+		System.out.print(responseMessage);	
+		 
+		setStatus(true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block	
+			setStatus(false);
+			
+			if(e instanceof BusinessException)
+			{
+				System.out.println(e);
+				throw new BusinessException(e.toString());
+			}
+			
+			
+		
+		}finally
+		{
+			if(!getStatus())
+			{
+				setMessage("Error");
+			}
+			
+		}
+		
+		setMessage(responseMessage);
+		reset();
+		
+		
+		return true;
+	}
+	
 	public void reset()
 	{
 		setPurchaseVO(new PurchaseVO());

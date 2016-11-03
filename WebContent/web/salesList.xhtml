@@ -239,6 +239,15 @@ $(document).ready(function() {
 								    				
 								    				#{o.creationDate}
 								    			</h:column>
+								    			<h:column>
+								    				<f:facet name="header">Edit</f:facet>
+								    				
+								    				
+								    				  <h:commandButton value="edit"  style=""  class="btn btn-info btn-fill pull-right" 
+																					 actionListener="#{purchaceView.showEditPage}">
+										                  <f:attribute name="purchaseId" value="#{o.id}" />
+										        </h:commandButton>
+								    			</h:column>
 								
 								    		
 								
