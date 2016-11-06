@@ -268,7 +268,7 @@ public class CategoryView extends JSFView {
 		}
 		setStatus(true);
 		setMessage(responseMessage);
-	
+		 reset();
 	
 	}
 	public void reset()

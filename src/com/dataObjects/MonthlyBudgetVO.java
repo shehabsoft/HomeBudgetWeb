@@ -16,6 +16,53 @@ public class MonthlyBudgetVO extends DataObjectVO{
 	private double totalIncomes;
 	private String creationDate;
 	private double completedRatio;
+	private int categoryExpenseId;
+	private int categoryIncomeId;
+	private String[] categoryIncomeIds;
+	private String[] categoryExpenseIds;
+	
+
+
+	public int getCategoryExpenseId() {
+		return categoryExpenseId;
+	}
+
+
+	public void setCategoryExpenseId(int categoryExpenseId) {
+		this.categoryExpenseId = categoryExpenseId;
+	}
+
+
+	public int getCategoryIncomeId() {
+		return categoryIncomeId;
+	}
+
+
+	public void setCategoryIncomeId(int categoryIncomeId) {
+		this.categoryIncomeId = categoryIncomeId;
+	}
+
+
+	public String[] getCategoryIncomeIds() {
+		return categoryIncomeIds;
+	}
+
+
+	public void setCategoryIncomeIds(String[] categoryIncomeIds) {
+		this.categoryIncomeIds = categoryIncomeIds;
+	}
+
+
+	public String[] getCategoryExpenseIds() {
+		return categoryExpenseIds;
+	}
+
+
+	public void setCategoryExpenseIds(String[] categoryExpenseIds) {
+		this.categoryExpenseIds = categoryExpenseIds;
+	}
+
+
 	public double getCompletedRatio() {
 		return completedRatio;
 	}
@@ -96,6 +143,9 @@ public class MonthlyBudgetVO extends DataObjectVO{
 	public void setCreationDate(String creationDate) {
 		this.creationDate = creationDate;
 	}
+
+
+	
 
 
 

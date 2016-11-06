@@ -6,6 +6,7 @@ public interface  Constants {
     static int ADD_CATEGORY_SERVICE=1;
     static int EDIT_CATEGORY_REVENUES_SERVICE=7;
     static int EDIT_CATEGORY_EXPENSES_SERVICE=8;
+    static int EDIT_MONTHLY_BUDGET_SERVICE=9;
 	static int ADD_LOCATION_SERVICE=3;
 	static int ADD_USER_SERVICE=4;
 	static int ADD_BUDGET_SERVICE=5;
@@ -23,6 +24,8 @@ public interface  Constants {
 	static String CATEGORY_TYPE_LABEL_EXPENSES="Expenses";
 	static String CATEGORY_TYPE_VALUE_REVENUES="1";
 	static String CATEGORY_TYPE_VALUE_EXPENSES="2";
+	static String ADD_ACTION_MODE="add";
+	static String EDIT_ACTION_MODE="edit";
 
 	
 

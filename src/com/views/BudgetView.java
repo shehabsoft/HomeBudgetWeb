@@ -62,6 +62,10 @@ public class BudgetView extends JSFView {
 	     categoryAllIncomeList=categoryView.getAllBudgetCategories();
 	     categoryAllList=categoryView.getAllExpensesCategories();
 		 monthlyBudgetVO=getActiveMonthlyBudgetByUserId();
+		 if(actionMode.equals(Constants.EDIT_ACTION_MODE))
+		 {
+			 filterCategoeries();
+		 }
 	     monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalIncomes())*100);
 	     System.out.println("Ratio: "+monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
@@ -70,6 +74,7 @@ public class BudgetView extends JSFView {
 				e.printStackTrace();
 			}
 	}
+	private String actionMode="";
 	private String style;
 	private MonthlyBudgetVO monthlyBudgetVO;
 	private List<CategoryVO> categoryIncomeList=new ArrayList<CategoryVO>();
@@ -80,9 +85,7 @@ public class BudgetView extends JSFView {
 	public void setCategoryAllIncomeList(List<CategoryVO> categoryAllIncomeList) {
 		this.categoryAllIncomeList = categoryAllIncomeList;
 	}
-	private String[] categoryId;
-	private String startDate; 
-	private String endDate; 
+
 	
 	
 
@@ -93,32 +96,15 @@ public class BudgetView extends JSFView {
 		this.monthlyBudgetVO = monthlyBudgetVO;
 	}
 
-	private String[] categoryIncomeId;
 
 	public List<CategoryVO> getCategoryIncomeList() {
 		return categoryIncomeList;
 	}
-	public String[] getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(String[] categoryId) {
-		this.categoryId = categoryId;
-	}
 	public void setCategoryIncomeList(List<CategoryVO> categoryIncomeList) {
 		this.categoryIncomeList = categoryIncomeList;
 	}
-	public String getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-	public String[] getCategoryIncomeId() {
-		return categoryIncomeId;
-	}
-	public void setCategoryIncomeId(String[] categoryIncomeId) {
-		this.categoryIncomeId = categoryIncomeId;
-	}
+
+
 	public String getStyle() {
 		return style;
 	}
@@ -126,12 +112,7 @@ public class BudgetView extends JSFView {
 		this.style = style;
 	}
 
-	public String getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
+
 
 	private String categoryStatus;
 	public int getCategoryTypeId() {
@@ -197,9 +178,107 @@ public class BudgetView extends JSFView {
 	     categoryAllIncomeList=categoryView.getAllBudgetCategories();
 	     categoryAllList=categoryView.getAllExpensesCategories();
 		 monthlyBudgetVO=getActiveMonthlyBudgetByUserId();
+		 if(actionMode.equals(Constants.EDIT_ACTION_MODE))
+		 {
+			 filterCategoeries();
+		 }
 		 monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalIncomes())*100);
 	     System.out.println(monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
+	}
+	
+	public void filterCategoeries()
+	{
+		for(CategoryVO categoryVO :categoryIncomeList)
+		{
+			
+			for(CategoryVO categoryVO2:categoryAllIncomeList)
+			{
+				if(categoryVO2.getId()==categoryVO.getId())
+				{
+					categoryAllIncomeList.remove(categoryVO2);
+					break;
+				}
+			}
+		}
+		for(CategoryVO categoryVO :categoryList)
+		{
+			
+			for(CategoryVO categoryVO2:categoryAllList)
+			{
+				if(categoryVO2.getId()==categoryVO.getId())
+				{
+					categoryAllList.remove(categoryVO2);
+					break;
+				}
+			}
+		}
+		
+		
+	}
+	public void updateSelecedExpenseCategories()
+	{
+		
+		for(int i=0;i<this.monthlyBudgetVO.getCategoryExpenseIds().length;i++)
+		{
+		System.out.println(""+this.monthlyBudgetVO.getCategoryExpenseIds()[i]);
+		boolean found=false;
+		CategoryVO selectedCategoryVo=new CategoryVO();
+		int expenseCategoryId=Integer.parseInt(this.monthlyBudgetVO.getCategoryExpenseIds()[i]);
+				for(CategoryVO categoryVO:categoryList)
+				{
+					if(expenseCategoryId==categoryVO.getId())
+					{
+						found=true;
+						break;
+					}
+				}
+				if(!found)
+				{
+					for(CategoryVO categoryVO:categoryAllList)
+					{
+						if(expenseCategoryId==categoryVO.getId())
+						{
+							selectedCategoryVo=categoryVO;
+							categoryList.add(selectedCategoryVo);
+							categoryAllList.remove(selectedCategoryVo);
+							break;
+						}
+					}
+				}
+		}
+	}
+	public void updateSelecedRevenuesCategories()
+	{
+		
+		for(int i=0;i<this.monthlyBudgetVO.getCategoryIncomeIds().length;i++)
+		{
+		System.out.println(""+this.monthlyBudgetVO.getCategoryIncomeIds()[i]);
+		boolean found=false;
+		CategoryVO selectedCategoryVo=new CategoryVO();
+		int expenseCategoryId=Integer.parseInt(this.monthlyBudgetVO.getCategoryIncomeIds()[i]);
+				for(CategoryVO categoryVO:categoryIncomeList)
+				{
+					if(expenseCategoryId==categoryVO.getId())
+					{
+						found=true;
+						break;
+					}
+				}
+				if(!found)
+				{
+					for(CategoryVO categoryVO:categoryAllIncomeList)
+					{
+						if(expenseCategoryId==categoryVO.getId())
+						{
+							selectedCategoryVo=categoryVO;
+							categoryIncomeList.add(selectedCategoryVo);
+							categoryAllIncomeList.remove(selectedCategoryVo);
+							break;
+						}
+					}
+				}
+		}
 	}
 	public List<CategoryVO> getCategoryList() {
 		return categoryList;
@@ -208,14 +287,96 @@ public class BudgetView extends JSFView {
 	public void setCategoryList(List<CategoryVO> categoryList) {
 		this.categoryList = categoryList;
 	}
+	public void edit() throws BusinessException
+	{
+		String[]selectedExpenseCategortyList=new String[categoryList.size()];
+		int count=0;
+		for(CategoryVO categoryVO:categoryList)
+		{
+			selectedExpenseCategortyList[count]=String.valueOf(categoryVO.getId());
+			count++;
+		}
+		monthlyBudgetVO.setCategoryExpenseIds(selectedExpenseCategortyList);
+		String[]selectedRevenueCategortyList=new String[categoryIncomeList.size()];
+		count=0;
+		for(CategoryVO categoryVO:categoryIncomeList)
+		{
+			selectedRevenueCategortyList[count]=String.valueOf(categoryVO.getId());
+			count++;
+		}
+		monthlyBudgetVO.setCategoryIncomeIds(selectedRevenueCategortyList);
+		
+		edit(this.monthlyBudgetVO);
+	}
+	@Action
+	public void showEditPage(ActionEvent event) throws BusinessException
+	{
+		actionMode="edit";
+		filterCategoeries();
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "editMonthlyBudget.xhtml");
+	
+	}
+	@Action
+	public void showAddPage(ActionEvent event) throws Exception
+	{
+		actionMode="add";
+		refesh();
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "addMonthlyBudget.xhtml");
+	
+	}
+	public boolean edit(MonthlyBudgetVO selectedMonthlyBudgetVO ) throws BusinessException
+	{
+		
+		String responseMessage="";
+		String requestData="";
+		try {
+	
 
+	
+		System.out.println("Calling Transaction Service Form Purchhase View(Edit Purchase)");
+		requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_MONTHLY_BUDGET_SERVICE+"</serviceCode><userId>37</userId><monthlyBudgetId>"+selectedMonthlyBudgetVO.getId()+"</monthlyBudgetId><startDate>"+selectedMonthlyBudgetVO.getStartDate()+"</startDate><endDate>"+selectedMonthlyBudgetVO.getEndDate()+"</endDate><incomeCategoriesId>"+Arrays.toString(selectedMonthlyBudgetVO.getCategoryIncomeIds())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(selectedMonthlyBudgetVO.getCategoryExpenseIds())+"</expenseCategoriesId></createTransaction>]]>";	
+		System.out.println("Request Data "+requestData);
+		String response=callTransactionService(requestData);
+		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
+		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
+		System.out.println("response  Data "+responseMessage);
+		System.out.print(responseMessage);	
+		 
+		setStatus(true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block	
+			setStatus(false);
+			
+			if(e instanceof BusinessException)
+			{
+				System.out.println(e);
+				throw new BusinessException(e.toString());
+			}
+			
+			
+		
+		}finally
+		{
+			if(!getStatus())
+			{
+				setMessage("Error");
+			}
+			
+		}
+		
+		setMessage(responseMessage);
+
+		
+		
+		return true;
+	}
 	@Action
 	public void add() throws BusinessException
 	{
 		String responseMessage="";
 		try
 		{
-	    String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_BUDGET_SERVICE+"</serviceCode><startDate>"+getStartDate()+"</startDate><endDate>"+getEndDate()+"</endDate><incomeCategoriesId>"+Arrays.toString(getCategoryIncomeId())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(getCategoryId())+"</expenseCategoriesId></createTransaction>]]>";
+	    String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_BUDGET_SERVICE+"</serviceCode><startDate>"+monthlyBudgetVO.getStartDate()+"</startDate><endDate>"+monthlyBudgetVO.getEndDate()+"</endDate><incomeCategoriesId>"+Arrays.toString(monthlyBudgetVO.getCategoryIncomeIds())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(monthlyBudgetVO.getCategoryExpenseIds())+"</expenseCategoriesId></createTransaction>]]>";
 		String response=callTransactionService(requestData);
 		System.out.println("Call Transaction Service For Location .....");
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
@@ -236,8 +397,7 @@ public class BudgetView extends JSFView {
 	
 	public void reset()
 	{
-		setStartDate("");
-		setEndDate("");
+		setMonthlyBudgetVO(new MonthlyBudgetVO());
 		
 		
 	}

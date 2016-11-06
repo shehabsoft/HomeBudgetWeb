@@ -203,19 +203,19 @@
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <label>Start Date </label>
-                                                <h:inputText type="text" class="form-control" id="startDateId"   value="#{budgetView.monthlyBudgetVO.startDate}"/>
+                                                <h:inputText type="text" class="form-control"  disabled="true" id="startDateId"   value="#{budgetView.monthlyBudgetVO.startDate}"/>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>End Date</label>
-                                                <h:inputText type="text" class="form-control"  id="endDateId" value="#{budgetView.monthlyBudgetVO.endDate}"/>
+                                                <h:inputText type="text" class="form-control" disabled="true" id="endDateId" value="#{budgetView.monthlyBudgetVO.endDate}"/>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Creation Date</label>
-                                                <h:inputText type="email" class="form-control"   id="creationDateId" value="#{budgetView.monthlyBudgetVO.creationDate}" />
+                                                <h:inputText type="email" class="form-control" disabled="true"  id="creationDateId" value="#{budgetView.monthlyBudgetVO.creationDate}" />
                                             </div>
                                         </div>
                                     </div>
@@ -224,13 +224,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Total Income</label>
-                                                <h:inputText type="text" class="form-control" id="totalIncome"  value="#{budgetView.monthlyBudgetVO.totalIncomes}"/>
+                                                <h:inputText type="text" class="form-control" disabled="true" id="totalIncome"  value="#{budgetView.monthlyBudgetVO.totalIncomes}"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Total Expenses</label>
-                                                <h:inputText type="text" class="form-control" id="totalExpenses" value="#{budgetView.monthlyBudgetVO.totalExpenses}"/>
+                                                <h:inputText type="text" class="form-control" disabled="true" id="totalExpenses" value="#{budgetView.monthlyBudgetVO.totalExpenses}"/>
                                             </div>
                                         </div>
                                     </div>
@@ -241,14 +241,28 @@
 									 
 									  </div>
 									</div>
-                                   <h:commandButton value="Refersh"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right" 
+									<div class="form-control col-md-3">
+                                   <h:commandButton value="Refersh"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control " 
 																					 action="#{budgetView.refesh}">
 										                    <f:ajax   execute="" render="totalIncome totalExpenses completedRatio startDateId  creationDateId endDateId" />
 										        </h:commandButton>
-                                    
-                                    <a href="addMonthlyBudget.jsf" style="margin-left:1px" class="btn btn-info btn-fill pull-right">Open Budget</a>
-                                   
-                                     <button type="submit" class="btn btn-info btn-fill pull-right">Close Budget</button>
+										     
+						         </div>
+						         <div class="form-control col-md-4">
+                                         <h:commandButton value="Edit"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control" 
+																					 actionListener="#{budgetView.showEditPage}">
+										                   
+										        </h:commandButton>   
+								</div>
+								   <div class="form-control col-md-4">
+                                    <h:commandButton value="Open Budget"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control" 
+																					 actionListener="#{budgetView.showAddPage}">
+										                   
+										        </h:commandButton>   
+                                   </div>
+                                      <div class="form-control col-md-4">
+                                     <button type="submit" class="btn btn-info btn-fill pull-right form-control">Close Budget</button>
+                                     </div>
                                     <div class="clearfix"></div>
                                      
                                 </h:form>
@@ -325,7 +339,7 @@
 
     </div>
 </div>
-	<div id="ckeckMail" class="modal fade " >
+	<div id="ckeckMail" class="modal fade" >
     <div class="modal-dialog ">
         <div class="modal-content alert alert-info alert-with-icon">
             <div class="modal-header">
