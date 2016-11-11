@@ -20,6 +20,7 @@ public class MonthlyBudgetVO extends DataObjectVO{
 	private int categoryIncomeId;
 	private String[] categoryIncomeIds;
 	private String[] categoryExpenseIds;
+	private double totalExpectedExpenses;
 	
 
 
@@ -30,6 +31,16 @@ public class MonthlyBudgetVO extends DataObjectVO{
 
 	public void setCategoryExpenseId(int categoryExpenseId) {
 		this.categoryExpenseId = categoryExpenseId;
+	}
+
+
+	public double getTotalExpectedExpenses() {
+		return totalExpectedExpenses;
+	}
+
+
+	public void setTotalExpectedExpenses(double totalExpectedExpenses) {
+		this.totalExpectedExpenses = totalExpectedExpenses;
 	}
 
 

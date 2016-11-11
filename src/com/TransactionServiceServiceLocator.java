@@ -7,6 +7,8 @@
 
 package com;
 
+import util.Configurations;
+
 public class TransactionServiceServiceLocator extends org.apache.axis.client.Service implements com.TransactionServiceService {
 
     public TransactionServiceServiceLocator() {
@@ -20,9 +22,9 @@ public class TransactionServiceServiceLocator extends org.apache.axis.client.Ser
     public TransactionServiceServiceLocator(java.lang.String wsdlLoc, javax.xml.namespace.QName sName) throws javax.xml.rpc.ServiceException {
         super(wsdlLoc, sName);
     }
-
+    Configurations configurations;
     // Use to get a proxy class for TransactionService
-    private java.lang.String TransactionService_address = "http://localhost:8080/WebServices/services/TransactionService";
+    private java.lang.String TransactionService_address ;
 
     public java.lang.String getTransactionServiceAddress() {
         return TransactionService_address;
@@ -42,9 +44,12 @@ public class TransactionServiceServiceLocator extends org.apache.axis.client.Ser
     public com.TransactionService getTransactionService() throws javax.xml.rpc.ServiceException {
        java.net.URL endpoint;
         try {
+        	configurations=new Configurations();
+        	configurations.initialize();
+        	TransactionService_address=configurations.getTransactionBackendUrl();
             endpoint = new java.net.URL(TransactionService_address);
         }
-        catch (java.net.MalformedURLException e) {
+        catch ( Exception e) {
             throw new javax.xml.rpc.ServiceException(e);
         }
         return getTransactionService(endpoint);

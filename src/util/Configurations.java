@@ -10,6 +10,7 @@ import java.util.Properties;
 public   class Configurations {
 
   private String backendUrl;
+  private String transactionBackendUrl="";
 
 	public  String  initialize() throws Exception {
 		try {
@@ -26,7 +27,8 @@ public   class Configurations {
  
  
 			// get the property value and print it out
-			String backendUrl = prop.getProperty("backEndUrl");
+		    backendUrl = prop.getProperty("backEndUrl");
+		    transactionBackendUrl=prop.getProperty("transactionBackEndUrl");
 			System.out.println(backendUrl);
 			return backendUrl;
 		
@@ -36,6 +38,12 @@ public   class Configurations {
 		System.out.println(e.toString());
 		throw new Exception(e);
 		}
+	}
+	public String getTransactionBackendUrl() {
+		return transactionBackendUrl;
+	}
+	public void setTransactionBackendUrl(String transactionBackendUrl) {
+		this.transactionBackendUrl = transactionBackendUrl;
 	}
 	public String getBackendUrl() {
 	return backendUrl;

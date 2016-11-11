@@ -25,6 +25,7 @@ import javax.xml.rpc.ServiceException;
 import javax.xml.ws.Action;
 import javax.xml.ws.WebServiceException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -49,10 +50,11 @@ import util.TransactionServiceParser;
 @SessionScoped
 public class CategoryView extends JSFView {
 
-	
+	 private static final Logger logger = Logger.getLogger(CategoryView.class);
 	public CategoryView() 
 	{
      try {
+    	 logger.info("Initilizing Category View");
     	categoryVO=new CategoryVO();
     	if(categoryList.size()==0 || categoryIncomeList.size()==0)
     	{
@@ -147,6 +149,7 @@ public class CategoryView extends JSFView {
 	}
 	public void refesh() throws Exception
 	{
+		 logger.info("Calling Refresh..........");
 		categoryList=getExpensesCategories();
 		categoryIncomeList=getBudgetCategories();
 		categoryAllList=getAllExpensesCategories();
@@ -202,7 +205,7 @@ public class CategoryView extends JSFView {
 		try {
 	
 
-	
+		logger.info("Calling Edit Action..........");
 		System.out.println("Calling Transaction Service Form Purchhase View(Edit Purchase)");
 		if(selectedCategoryVO.getCategoryTypeId()==Constants.CATEGORY_TYPE_EXPENSES_ID)
 		{
@@ -211,6 +214,7 @@ public class CategoryView extends JSFView {
 		{
 		 requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_CATEGORY_REVENUES_SERVICE+"</serviceCode><userId>37</userId><categoryId>"+selectedCategoryVO.getId()+"</categoryId><arabicDescription>"+selectedCategoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+selectedCategoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+selectedCategoryVO.getLimitValue()+"</limitValue><planedValue>"+selectedCategoryVO.getPlanedValue()+"</planedValue><actualValue>"+selectedCategoryVO.getActualValue()+"</actualValue><categoryStatus>"+selectedCategoryVO.getCategoryStatus()+"</categoryStatus></createTransaction>]]>";	
 		}
+		logger.info("Request Data "+requestData);
 		System.out.println("Request Data "+requestData);
 		String response=callTransactionService(requestData);
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
@@ -252,9 +256,12 @@ public class CategoryView extends JSFView {
 	{
 		String responseMessage="";
 		try {
+			
 			String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_CATEGORY_SERVICE+"</serviceCode><userId>37</userId><arabicDescription>"+categoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+categoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+categoryVO.getLimitValue()+"</limitValue><planedValue>"+categoryVO.getPlanedValue()+"</planedValue><actualValue>"+categoryVO.getActualValue()+"</actualValue><categoryStatus>"+categoryVO.getCategoryStatus()+"</categoryStatus><categoryType>"+categoryVO.getCategoryTypeId()+"</categoryType></createTransaction>]]>";
-	        String response=callTransactionService(requestData);
-		    TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
+	        logger.info("Request Data "+requestData);
+			String response=callTransactionService(requestData);
+			logger.info("Response Data "+response);
+			TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
 		    responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
 		    System.out.print(responseMessage);	
 
@@ -282,10 +289,11 @@ public class CategoryView extends JSFView {
 	public ArrayList<CategoryVO> getExpensesCategories() throws Exception
 	{
 		try {
-
+            logger.info("Call GetExpensesCategories ..........");
 			System.out.println("Call GetExpensesCategories ..........");
 			String output=callPostWebService("GetExpensesCategories");
 			System.out.println("Output .........."+output);
+			logger.info("Output .........."+output);
 			Gson gson=new Gson();
 		    Object obj = gson.fromJson(output, CategoriesKeyBasedDocument.class);
 		    CategoriesKeyBasedDocument categoriesKeyBasedDocument=(CategoriesKeyBasedDocument)obj;
@@ -300,10 +308,11 @@ public class CategoryView extends JSFView {
 	public ArrayList<CategoryVO> getAllExpensesCategories() throws Exception
 	{
 		try {
-
+		    logger.info("Call GetAllExpensesCategories ...........");
 			System.out.println("Call GetAllExpensesCategories ..........");
 			String output=callPostWebService("GetAllExpensesCategories");
 			System.out.println("Output .........."+output);
+			logger.info("Output .........."+output);
 			Gson gson=new Gson();
 		    Object obj = gson.fromJson(output, CategoriesKeyBasedDocument.class);
 		    CategoriesKeyBasedDocument categoriesKeyBasedDocument=(CategoriesKeyBasedDocument)obj;
@@ -318,9 +327,11 @@ public class CategoryView extends JSFView {
 	public ArrayList<CategoryVO> getBudgetCategories()throws Exception
 	{
 		try {
+			logger.info("Call GetBudgetCategories .........");
 			System.out.println("Call GetBudgetCategories ..........");
 			String output=callPostWebService("GetBudgetCategories");
 			System.out.println("Output .........."+output);
+			logger.info("Output .........."+output);
 			Gson gson=new Gson();
 		    Object obj = gson.fromJson(output, CategoriesKeyBasedDocument.class);
 		    CategoriesKeyBasedDocument categoriesKeyBasedDocument=(CategoriesKeyBasedDocument)obj;
@@ -335,9 +346,11 @@ public class CategoryView extends JSFView {
 	public ArrayList<CategoryVO> getAllBudgetCategories()throws Exception
 	{
 		try {
+			logger.info("Call GetAllBudgetCategories ..........");
 			System.out.println("Call GetAllBudgetCategories ..........");
 			String output=callPostWebService("GetAllBudgetCategories");
 			System.out.println("Output .........."+output);
+			logger.info("Output .........."+output);
 			Gson gson=new Gson();
 		    Object obj = gson.fromJson(output, CategoriesKeyBasedDocument.class);
 		    CategoriesKeyBasedDocument categoriesKeyBasedDocument=(CategoriesKeyBasedDocument)obj;

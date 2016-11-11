@@ -234,17 +234,37 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="progress">
+                                         <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Total Expected Expenses</label>
+                                                <h:inputText type="text" class="form-control" disabled="true" id="totalExpectedExpenses"  value="#{budgetView.monthlyBudgetVO.totalExpectedExpenses}"/>
+                                            </div>
+                                        </div>
+                                      
+                                  
+                                    <h:panelGrid rendered="#{   50 > budgetView.monthlyBudgetVO.completedRatio}"  >
+                                    <div class="progress " >
 									  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60"
 									  aria-valuemin="0" aria-valuemax="100" style="#{budgetView.style}">
-									  <h:outputLabel id="completedRatio" value="#{budgetView.monthlyBudgetVO.completedRatio} "> %Complete (success) </h:outputLabel>
+									 
 									 
 									  </div>
 									</div>
+									</h:panelGrid>
+									<h:panelGrid rendered="#{budgetView.monthlyBudgetVO.completedRatio  > 50}" >
+									<div class="progress " >
+									  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60"
+									  aria-valuemin="0" aria-valuemax="100" style="#{budgetView.style}">
+									 <h:outputLabel id="completedRatio" value="#{budgetView.monthlyBudgetVO.completedRatio} "> %Complete (warning) </h:outputLabel>
+									  </div>
+									</div>
+									</h:panelGrid>
+									  </div>
 									<div class="form-control col-md-3">
                                    <h:commandButton value="Refersh"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control " 
 																					 action="#{budgetView.refesh}">
-										                    <f:ajax   execute="" render="totalIncome totalExpenses completedRatio startDateId  creationDateId endDateId" />
+										                    <f:ajax   execute="" render="totalIncome totalExpenses completedRatio totalExpectedExpenses" />
 										        </h:commandButton>
 										     
 						         </div>

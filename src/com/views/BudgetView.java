@@ -66,7 +66,8 @@ public class BudgetView extends JSFView {
 		 {
 			 filterCategoeries();
 		 }
-	     monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalIncomes())*100);
+		 monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
+	     monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalExpectedExpenses())*100);
 	     System.out.println("Ratio: "+monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
 		 } catch (Exception e) {
@@ -77,6 +78,7 @@ public class BudgetView extends JSFView {
 	private String actionMode="";
 	private String style;
 	private MonthlyBudgetVO monthlyBudgetVO;
+	private PurchaceView  purchaceView =null;
 	private List<CategoryVO> categoryIncomeList=new ArrayList<CategoryVO>();
 	private List<CategoryVO> categoryAllIncomeList=new ArrayList<CategoryVO>();
 	public List<CategoryVO> getCategoryAllIncomeList() {
@@ -182,11 +184,49 @@ public class BudgetView extends JSFView {
 		 {
 			 filterCategoeries();
 		 }
-		 monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalIncomes())*100);
+		 monthlyBudgetVO.setTotalExpenses(getTotalExpenses());
+		 monthlyBudgetVO.setTotalIncomes(getTotalIncomes(categoryIncomeList));
+		 monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
+		 monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalExpectedExpenses())*100);
 	     System.out.println(monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
 	}
-	
+	public double getTotalIncomes(List<CategoryVO> categoryVOs)
+	{
+		double tatalExpenses=0;
+		for(CategoryVO categoryVO:categoryVOs)
+		{
+			tatalExpenses+=categoryVO.getActualValue();
+		}
+		return tatalExpenses;
+	}
+	public double getTotalExpectedExpenses(List<CategoryVO> categoryVOs)
+	{
+		double tatalExpenses=0;
+		for(CategoryVO categoryVO:categoryVOs)
+		{
+			tatalExpenses+=categoryVO.getPlanedValue();
+		}
+		return tatalExpenses;
+	}
+	public double getTotalExpenses() throws Exception
+	{
+		purchaceView=new PurchaceView();
+		List<PurchaseVO>purchaseVOs;
+		if(purchaceView.getPurchaseList()==null)
+		{
+			purchaseVOs=purchaceView.getAllPurchases();
+		}else
+		{
+			purchaseVOs=purchaceView.getPurchaseList();
+		}
+		double tatalExpenses=0;
+		for(PurchaseVO purchaseVO:purchaseVOs)
+		{
+			tatalExpenses+=purchaseVO.getPrice();
+		}
+		return tatalExpenses;
+	}
 	public void filterCategoeries()
 	{
 		for(CategoryVO categoryVO :categoryIncomeList)
