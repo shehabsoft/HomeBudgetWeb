@@ -270,7 +270,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 											<div class="form-group"> <label for="Actual">Actual Value</label>
 												
 												<h:inputText type="text" id="actualValueExpenses" rendered="#{categoryView.categoryVO.categoryTypeId eq 2}" disabled="true"  class="form-control" onblur="validateNumber(this,'ActualValueMessage')" required="true" value="#{categoryView.categoryVO.actualValue}"/>
-												<h:inputText type="text" id="actualValue"  rendered="#{categoryView.categoryVO.categoryTypeId ==1}"  class="form-control" onblur="validateNumber(this,'ActualValueMessage')" required="true" value="#{categoryView.categoryVO.actualValue}"/>
+												<h:inputText type="text" id="actualValue"  rendered="#{categoryView.categoryVO.categoryTypeId eq 1}"  class="form-control" onblur="validateNumber(this,'ActualValueMessage')" required="true" value="#{categoryView.categoryVO.actualValue}"/>
 												    
 												 <div class="col-md-8" id="ActualValueMessage"  style="color:red" ></div>
 											</div>

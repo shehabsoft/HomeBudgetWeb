@@ -26,6 +26,7 @@ import javax.xml.rpc.ServiceException;
 import javax.xml.ws.Action;
 import javax.xml.ws.WebServiceException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -52,11 +53,12 @@ import util.TransactionServiceParser;
 @SessionScoped
 public class BudgetView extends JSFView {
 
-	
+	private static final Logger logger = Logger.getLogger(BudgetView.class);
 	public BudgetView()
 	{	
 		super();
 		 try {
+		 logger.info("Initilizing BuggetView........");
 		 categoryList=categoryView.getCategoryList();
 	     categoryIncomeList=categoryView.getCategoryIncomeList();
 	     categoryAllIncomeList=categoryView.getAllBudgetCategories();
@@ -66,13 +68,17 @@ public class BudgetView extends JSFView {
 		 {
 			 filterCategoeries();
 		 }
+		 monthlyBudgetVO.setTotalExpenses(getTotalExpenses());
+		 monthlyBudgetVO.setTotalIncomes(getTotalIncomes(categoryIncomeList));
 		 monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
 	     monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalExpectedExpenses())*100);
 	     System.out.println("Ratio: "+monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
+	     logger.info("Ratio: "+monthlyBudgetVO.getCompletedRatio());
 		 } catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+			 logger.error(e);
+			 e.printStackTrace();
 			}
 	}
 	private String actionMode="";
@@ -175,6 +181,7 @@ public class BudgetView extends JSFView {
 	
 	public void refesh() throws Exception
 	{
+		 logger.info("Calling Refresh........");
 		 categoryList=categoryView.getExpensesCategories();
 	     categoryIncomeList=categoryView.getBudgetCategories();
 	     categoryAllIncomeList=categoryView.getAllBudgetCategories();
@@ -190,6 +197,7 @@ public class BudgetView extends JSFView {
 		 monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalExpectedExpenses())*100);
 	     System.out.println(monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
+	     logger.info("Ratio: "+monthlyBudgetVO.getCompletedRatio());
 	}
 	public double getTotalIncomes(List<CategoryVO> categoryVOs)
 	{
@@ -386,7 +394,7 @@ public class BudgetView extends JSFView {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block	
 			setStatus(false);
-			
+			logger.error(e);
 			if(e instanceof BusinessException)
 			{
 				System.out.println(e);
@@ -424,6 +432,7 @@ public class BudgetView extends JSFView {
 		System.out.print(responseMessage);	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block	
+			logger.error(e);
 			if(e instanceof BusinessException)
 			{
 				System.out.println(e);
@@ -444,7 +453,7 @@ public class BudgetView extends JSFView {
 	public MonthlyBudgetVO getActiveMonthlyBudgetByUserId() throws  Exception
 	{
 		try {
-
+            logger.info("Call getActiveMonthlyBudgetByUserId .....");
 			String output =callPostWebService("getActiveMonthlyBudgetByUserId");
 			System.out.println("Call getActiveMonthlyBudgetByUserId .....");
 			Gson gson=new Gson();
@@ -455,7 +464,9 @@ public class BudgetView extends JSFView {
 
 	}catch(Exception e)
 		{
-		             setStatus(false);
+		
+		logger.error(e);
+		setStatus(false);
 					if(e instanceof BusinessException)
 					{
 						System.out.println(e);
