@@ -45,3 +45,6 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+build/classes/properties.properties
+build/classes/log4j.xml
+build/classes/properties.properties

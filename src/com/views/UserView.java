@@ -273,5 +273,7 @@ public class UserView extends JSFView {
 	public void setEmailExitMessage(String emailExitMessage) {
 		this.emailExitMessage = emailExitMessage;
 	}
+
+
 	
 }

@@ -362,6 +362,8 @@ public class CategoryView extends JSFView {
 		    throw new Exception(e);
 	       }
 	}
+
+
     
 	
 }
