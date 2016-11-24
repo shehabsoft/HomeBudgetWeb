@@ -54,13 +54,13 @@ public class PurchaceView extends JSFView  {
 		categoryVOs=(ArrayList<CategoryVO>) categoryView.getCategoryList();
 		for(CategoryVO categoryVO:categoryVOs)
 		{
-			categoryList.put(categoryVO.getArabicDescription(),categoryVO.getId()); //label, value
+			categoryList.put(categoryVO.getEnglishDescription(),categoryVO.getId()); //label, value
 		}
 		purchaseList=getAllPurchases();
 		locationVOs=locationView.getLocationVOs();
 		for(LocationVO categoryVO:locationVOs)
 		{
-			locationList.put(categoryVO.getArabicName(),categoryVO.getId()); //label, value
+			locationList.put(categoryVO.getEnglishName(),categoryVO.getId()); //label, value
 		}
 	}
 	public Map<String, Object> getLocationList() {
@@ -104,7 +104,7 @@ public class PurchaceView extends JSFView  {
 		categoryVOs=categoryView.getExpensesCategories();
 		for(CategoryVO categoryVO:categoryVOs)
 		{
-			categoryList.put(categoryVO.getArabicDescription(),categoryVO.getId()); //label, value
+			categoryList.put(categoryVO.getEnglishDescription(),categoryVO.getId()); //label, value
 		}
 	}
 	@Action
@@ -113,7 +113,7 @@ public class PurchaceView extends JSFView  {
 		locationVOs=locationView.getAllLocations();
 		for(LocationVO categoryVO:locationVOs)
 		{
-			locationList.put(categoryVO.getArabicName(),categoryVO.getId()); //label, value
+			locationList.put(categoryVO.getEnglishName(),categoryVO.getId()); //label, value
 		}
 	}
 	@Action
