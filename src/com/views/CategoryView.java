@@ -39,6 +39,7 @@ import com.TransactionServiceSoapBindingStub;
 import com.dataObjects.CategoryVO;
 import com.dataObjects.Constants;
 import com.dataObjects.PurchaseVO;
+import com.dataObjects.UserVO;
 import com.google.gson.Gson;
 import com.models.Documents.CategoriesKeyBasedDocument;
 
@@ -55,6 +56,8 @@ public class CategoryView extends JSFView {
 	{
      try {
     	 logger.info("Initilizing Category View");
+    	 userView=new UserView();
+    	 //userVo=userView.getActiveUser();
     	categoryVO=new CategoryVO();
     	if(categoryList.size()==0 || categoryIncomeList.size()==0)
     	{
@@ -69,7 +72,7 @@ public class CategoryView extends JSFView {
 	}
     
 	}
-	
+	private UserView userView;
 	private CategoryVO categoryVO;
 	private int categoryIncomeId;
 	public int getCategoryIncomeId() {
@@ -209,10 +212,10 @@ public class CategoryView extends JSFView {
 		System.out.println("Calling Transaction Service Form Purchhase View(Edit Purchase)");
 		if(selectedCategoryVO.getCategoryTypeId()==Constants.CATEGORY_TYPE_EXPENSES_ID)
 		{
-		 requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_CATEGORY_EXPENSES_SERVICE+"</serviceCode><userId>37</userId><categoryId>"+selectedCategoryVO.getId()+"</categoryId><arabicDescription>"+selectedCategoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+selectedCategoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+selectedCategoryVO.getLimitValue()+"</limitValue><planedValue>"+selectedCategoryVO.getPlanedValue()+"</planedValue><categoryStatus>"+selectedCategoryVO.getCategoryStatus()+"</categoryStatus></createTransaction>]]>";	
+		 requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_CATEGORY_EXPENSES_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><categoryId>"+selectedCategoryVO.getId()+"</categoryId><arabicDescription>"+selectedCategoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+selectedCategoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+selectedCategoryVO.getLimitValue()+"</limitValue><planedValue>"+selectedCategoryVO.getPlanedValue()+"</planedValue><categoryStatus>"+selectedCategoryVO.getCategoryStatus()+"</categoryStatus></createTransaction>]]>";	
 		}else
 		{
-		 requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_CATEGORY_REVENUES_SERVICE+"</serviceCode><userId>37</userId><categoryId>"+selectedCategoryVO.getId()+"</categoryId><arabicDescription>"+selectedCategoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+selectedCategoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+selectedCategoryVO.getLimitValue()+"</limitValue><planedValue>"+selectedCategoryVO.getPlanedValue()+"</planedValue><actualValue>"+selectedCategoryVO.getActualValue()+"</actualValue><categoryStatus>"+selectedCategoryVO.getCategoryStatus()+"</categoryStatus></createTransaction>]]>";	
+		 requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_CATEGORY_REVENUES_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><categoryId>"+selectedCategoryVO.getId()+"</categoryId><arabicDescription>"+selectedCategoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+selectedCategoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+selectedCategoryVO.getLimitValue()+"</limitValue><planedValue>"+selectedCategoryVO.getPlanedValue()+"</planedValue><actualValue>"+selectedCategoryVO.getActualValue()+"</actualValue><categoryStatus>"+selectedCategoryVO.getCategoryStatus()+"</categoryStatus></createTransaction>]]>";	
 		}
 		logger.info("Request Data "+requestData);
 		System.out.println("Request Data "+requestData);
@@ -257,7 +260,7 @@ public class CategoryView extends JSFView {
 		String responseMessage="";
 		try {
 			
-			String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_CATEGORY_SERVICE+"</serviceCode><userId>37</userId><arabicDescription>"+categoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+categoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+categoryVO.getLimitValue()+"</limitValue><planedValue>"+categoryVO.getPlanedValue()+"</planedValue><actualValue>"+categoryVO.getActualValue()+"</actualValue><categoryStatus>"+categoryVO.getCategoryStatus()+"</categoryStatus><categoryType>"+categoryVO.getCategoryTypeId()+"</categoryType></createTransaction>]]>";
+			String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_CATEGORY_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><arabicDescription>"+categoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+categoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+categoryVO.getLimitValue()+"</limitValue><planedValue>"+categoryVO.getPlanedValue()+"</planedValue><actualValue>"+categoryVO.getActualValue()+"</actualValue><categoryStatus>"+categoryVO.getCategoryStatus()+"</categoryStatus><categoryType>"+categoryVO.getCategoryTypeId()+"</categoryType></createTransaction>]]>";
 	        logger.info("Request Data "+requestData);
 			String response=callTransactionService(requestData);
 			logger.info("Response Data "+response);

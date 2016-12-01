@@ -101,22 +101,7 @@ $(document).ready(function() {
                             <p>Sales List</p>
                         </a>
                     </li>
-                    <li>
-                        <a href="typography.html"> <i class="pe-7s-news-paper"></i>
-                            <p>Typography</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="icons.html"> <i class="pe-7s-science"></i>
-                            <p>Icons</p>
-                        </a>
-                    </li>
-                  
-                    <li>
-                        <a href="notifications.html"> <i class="pe-7s-bell"></i>
-                            <p>Notifications</p>
-                        </a>
-                    </li>
+              
                     <li class="active-pro">
                         <a href="upgrade.html"> <i class="pe-7s-rocket"></i>
                             <p>Upgrade to PRO</p>
@@ -244,6 +229,15 @@ $(document).ready(function() {
 								    				
 								    				
 								    				#{o.creationDate}
+								    			</h:column>
+								    			<h:column>
+								    				<f:facet name="header">View History</f:facet>
+								    				
+								    				
+								    			<h:commandButton value="History"  style=""  class="btn btn-info btn-fill pull-right" 
+																					 actionListener="#{purchaceView.showViewHistoryPage}">
+										                  <f:attribute name="purchaseId" value="#{o.id}" />
+										                  </h:commandButton>
 								    			</h:column>
 								    			<h:column>
 								    				<f:facet name="header">Edit</f:facet>

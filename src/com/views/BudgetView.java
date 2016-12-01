@@ -41,6 +41,7 @@ import com.dataObjects.CategoryVO;
 import com.dataObjects.Constants;
 import com.dataObjects.MonthlyBudgetVO;
 import com.dataObjects.PurchaseVO;
+import com.dataObjects.UserVO;
 import com.google.gson.Gson;
 import com.models.Documents.CategoriesKeyBasedDocument;
 import com.models.Documents.MonthlyBudgetKeyBasedDocument;
@@ -59,6 +60,8 @@ public class BudgetView extends JSFView {
 		super();
 		 try {
 		 logger.info("Initilizing BuggetView........");
+		 userView=new UserView();
+		 //userVo=userView.getActiveUser();
 		 categoryList=categoryView.getCategoryList();
 	     categoryIncomeList=categoryView.getCategoryIncomeList();
 	     categoryAllIncomeList=categoryView.getAllBudgetCategories();
@@ -87,6 +90,7 @@ public class BudgetView extends JSFView {
 	private PurchaceView  purchaceView =null;
 	private List<CategoryVO> categoryIncomeList=new ArrayList<CategoryVO>();
 	private List<CategoryVO> categoryAllIncomeList=new ArrayList<CategoryVO>();
+	private UserView userView;
 	public List<CategoryVO> getCategoryAllIncomeList() {
 		return categoryAllIncomeList;
 	}
@@ -181,6 +185,8 @@ public class BudgetView extends JSFView {
 	
 	public void refesh() throws Exception
 	{
+		try
+		{
 		 logger.info("Calling Refresh........");
 		 categoryList=categoryView.getExpensesCategories();
 	     categoryIncomeList=categoryView.getBudgetCategories();
@@ -198,6 +204,10 @@ public class BudgetView extends JSFView {
 	     System.out.println(monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
 	     logger.info("Ratio: "+monthlyBudgetVO.getCompletedRatio());
+		}catch(Exception e)
+		{
+			System.out.println(e.toString());
+		}
 	}
 	public double getTotalIncomes(List<CategoryVO> categoryVOs)
 	{
@@ -382,7 +392,7 @@ public class BudgetView extends JSFView {
 
 	
 		System.out.println("Calling Transaction Service Form Purchhase View(Edit Purchase)");
-		requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_MONTHLY_BUDGET_SERVICE+"</serviceCode><userId>37</userId><monthlyBudgetId>"+selectedMonthlyBudgetVO.getId()+"</monthlyBudgetId><startDate>"+selectedMonthlyBudgetVO.getStartDate()+"</startDate><endDate>"+selectedMonthlyBudgetVO.getEndDate()+"</endDate><incomeCategoriesId>"+Arrays.toString(selectedMonthlyBudgetVO.getCategoryIncomeIds())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(selectedMonthlyBudgetVO.getCategoryExpenseIds())+"</expenseCategoriesId></createTransaction>]]>";	
+		requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_MONTHLY_BUDGET_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><monthlyBudgetId>"+selectedMonthlyBudgetVO.getId()+"</monthlyBudgetId><startDate>"+selectedMonthlyBudgetVO.getStartDate()+"</startDate><endDate>"+selectedMonthlyBudgetVO.getEndDate()+"</endDate><incomeCategoriesId>"+Arrays.toString(selectedMonthlyBudgetVO.getCategoryIncomeIds())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(selectedMonthlyBudgetVO.getCategoryExpenseIds())+"</expenseCategoriesId></createTransaction>]]>";	
 		System.out.println("Request Data "+requestData);
 		String response=callTransactionService(requestData);
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();

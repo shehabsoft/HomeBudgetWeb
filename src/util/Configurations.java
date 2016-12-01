@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.dataObjects.UserVO;
+import com.google.gson.Gson;
+import com.models.Documents.UserKeyBasedDocument;
+
 public   class Configurations {
 
   private String backendUrl;
@@ -39,6 +43,7 @@ public   class Configurations {
 		throw new Exception(e);
 		}
 	}
+	
 	public String getTransactionBackendUrl() {
 		return transactionBackendUrl;
 	}

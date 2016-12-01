@@ -27,16 +27,19 @@ import com.TransactionServiceSoapBindingStub;
 import com.dataObjects.CategoryVO;
 import com.dataObjects.Constants;
 import com.dataObjects.LocationVO;
+import com.dataObjects.PurchaseHistoryVO;
 import com.dataObjects.PurchaseVO;
+import com.dataObjects.UserVO;
 import com.google.gson.Gson;
 import com.models.Documents.CategoriesKeyBasedDocument;
 import com.models.Documents.LocationKeyBasedDocument;
+import com.models.Documents.PurchaseHistoryKeyBasedDocument;
 import com.models.Documents.PurchasesKeyBasedDocument;
 
 import util.BusinessException;
 import util.TransactionServiceParser;
 
-@ManagedBean
+@ManagedBean(name="purchaceView")
 @SessionScoped
 public class PurchaceView extends JSFView  {
 
@@ -45,8 +48,9 @@ public class PurchaceView extends JSFView  {
 	private PurchaseVO purchaseVO;
 	
 	private List<PurchaseVO> purchaseList=new ArrayList<PurchaseVO>();
+	private List<PurchaseHistoryVO> purchaseHistoryList=new ArrayList<PurchaseHistoryVO>();
     private ArrayList<LocationVO> locationVOs=new ArrayList<LocationVO>();
-	
+
 
 	public PurchaceView() throws Exception
 	{
@@ -98,6 +102,12 @@ public class PurchaceView extends JSFView  {
 	}
 	
 
+	public List<PurchaseHistoryVO> getPurchaseHistoryList() {
+		return purchaseHistoryList;
+	}
+	public void setPurchaseHistoryList(List<PurchaseHistoryVO> purchaseHistoryList) {
+		this.purchaseHistoryList = purchaseHistoryList;
+	}
 	@Action
 	public void getAllCategories() throws Exception
 	{
@@ -124,7 +134,7 @@ public class PurchaceView extends JSFView  {
 		
 		try {
 		System.out.println("Calling Transaction Service Form Purchhase View");
-		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_PURCHASE_SERVICE+"</serviceCode><userId>37</userId><arabicDescription>"+purchaseVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+purchaseVO.getEnglishDescription()+"</englishDescription><price>"+purchaseVO.getPrice()+"</price><categoryId>"+purchaseVO.getCategoryId()+"</categoryId><locationId>"+purchaseVO.getLocationId()+"</locationId><details>"+purchaseVO.getDetails()+"</details></createTransaction>]]>";	
+		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_PURCHASE_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><arabicDescription>"+purchaseVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+purchaseVO.getEnglishDescription()+"</englishDescription><price>"+purchaseVO.getPrice()+"</price><categoryId>"+purchaseVO.getCategoryId()+"</categoryId><locationId>"+purchaseVO.getLocationId()+"</locationId><details>"+purchaseVO.getDetails()+"</details></createTransaction>]]>";	
 		System.out.println("Request Data "+requestData);
 		String response=callTransactionService(requestData);
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
@@ -173,6 +183,16 @@ public class PurchaceView extends JSFView  {
 	    	}
 	    }
 	}
+	@Action 
+	public void showViewHistoryPage(ActionEvent event) throws Exception
+	{
+
+		int purchaseId = (Integer)event.getComponent().getAttributes().get("purchaseId");
+		System.out.println(purchaseId);
+		purchaseHistoryList=getPurchaseHistory(purchaseId);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "purchaseHistory.xhtml");
+	    
+	}
 	@Action
 	public void edit() throws BusinessException
 	{
@@ -187,7 +207,7 @@ public class PurchaceView extends JSFView  {
 
 	
 		System.out.println("Calling Transaction Service Form Purchhase View(Edit Purchase)");
-		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_PURCHASE_SERVICE+"</serviceCode><userId>37</userId><purchaseId>"+purchaseVO.getId()+"</purchaseId><arabicDescription>"+purchaseVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+purchaseVO.getEnglishDescription()+"</englishDescription><price>"+purchaseVO.getPrice()+"</price><categoryId>"+purchaseVO.getCategoryId()+"</categoryId><locationId>"+purchaseVO.getLocationId()+"</locationId><details>"+purchaseVO.getDetails()+"</details></createTransaction>]]>";	
+		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_PURCHASE_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><purchaseId>"+purchaseVO.getId()+"</purchaseId><arabicDescription>"+purchaseVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+purchaseVO.getEnglishDescription()+"</englishDescription><price>"+purchaseVO.getPrice()+"</price><categoryId>"+purchaseVO.getCategoryId()+"</categoryId><locationId>"+purchaseVO.getLocationId()+"</locationId><details>"+purchaseVO.getDetails()+"</details></createTransaction>]]>";	
 		System.out.println("Request Data "+requestData);
 		String response=callTransactionService(requestData);
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
@@ -233,6 +253,26 @@ public class PurchaceView extends JSFView  {
 	{
 		this.purchaseList=getAllPurchases();
 	}
+public ArrayList<PurchaseHistoryVO>getPurchaseHistory(int purchaseId) throws Exception
+{
+	try {
+		String output = "";
+		System.out.println("Calling getPurchaseHistory  .... \n");
+		output=callPostWebService("getPurchaseHistory","purchaseId",purchaseId);
+		System.out.println("Output From Server  .... "+output);
+		System.out.println(" .... \n");
+		Gson gson=new Gson();
+	    Object obj = gson.fromJson(output, PurchaseHistoryKeyBasedDocument.class);
+	    PurchaseHistoryKeyBasedDocument purchaseHistoryKeyBasedDocument=(PurchaseHistoryKeyBasedDocument)obj;
+	    ArrayList<PurchaseHistoryVO>purchaseHistoryVOs=(ArrayList<PurchaseHistoryVO>)purchaseHistoryKeyBasedDocument.getPurchaseHistoryVO();
+	    return purchaseHistoryVOs;
+
+}catch(Exception e)
+	
+	{
+	   throw new Exception(e);
+	}
+}
 	public ArrayList<PurchaseVO> getAllPurchases() throws Exception
 	{
 		try {

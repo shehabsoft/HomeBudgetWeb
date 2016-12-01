@@ -40,6 +40,7 @@ import com.models.Documents.CurrenciesKeyBasedDocument;
 import com.models.Documents.LocationKeyBasedDocument;
 import com.models.Documents.PurchasesKeyBasedDocument;
 import com.models.Documents.StatusKeyBasedDocument;
+import com.models.Documents.UserKeyBasedDocument;
 
 import util.BusinessException;
 import util.TransactionServiceParser;
@@ -68,20 +69,14 @@ public class UserView extends JSFView {
 	
 
 
-	
+	//private UserView userView=new UserView();
     private boolean emailExit=false;
 	private String emailExitMessage="";
 	private List<CurrencyVO> currencyList=new ArrayList<CurrencyVO>();
     private ArrayList<CountryVO> countryList=new ArrayList<CountryVO>();
 	
 
-	public UserVO getUserVO() {
-		return userVO;
-	}
 
-	public void setUserVO(UserVO userVO) {
-		this.userVO = userVO;
-	}
 
 	public UserView() throws Exception
 	{
@@ -258,7 +253,33 @@ public class UserView extends JSFView {
 	    }
 	    
 	}
+	public UserVO getUserVO() {
+		return userVO;
+	}
 
+	public void setUserVO(UserVO userVO) {
+		this.userVO = userVO;
+	}
+
+	public  UserVO getActiveUser() throws Exception
+	{
+		try {
+
+			String output = "";
+			System.out.println("Calling .........Get Active User.");
+			output=callGetWebService("getActiveUser");
+			System.out.println("Output ..."+output);
+			Gson gson=new Gson();
+		    Object obj = gson.fromJson(output, UserKeyBasedDocument.class);
+		    UserKeyBasedDocument userKeyBasedDocument=(UserKeyBasedDocument)obj;
+		    UserVO userVO=(UserVO)userKeyBasedDocument.getUserVO();
+		    return userVO;
+
+	}catch(Exception e)
+		{
+		   throw new Exception(e);
+		}
+		}
 	public boolean getEmailExit() {
 		return emailExit;
 	}
