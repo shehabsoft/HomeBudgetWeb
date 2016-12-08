@@ -19,7 +19,7 @@
 			<attribute name="owner.project.facets" value="jst.jsf"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
@@ -39,7 +39,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jersey-client-1.17.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jersey-core-1.17.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jersey-json-1.17.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jersey-server-1.17.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jersey-server-1.17.1.jar" sourcepath="WebContent/WEB-INF/lib/jersey-server-1.17.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jersey-servlet-1.17.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jettison-1.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jsr311-api-1.1.1.jar"/>

@@ -29,6 +29,16 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 			 }
 	
 	}
+	function ckeck(selectedValue)
+	{
+		 if(selectedValue.value==2)//Expenses ID
+			 {
+			 document.getElementById("Actual").style.display="none";
+			 }else
+				 {
+			document.getElementById("Actual").style.display="block";
+				 }
+	}
 	function validateEnglishDescription(englishValue)
 	{
 		
@@ -134,27 +144,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                     </li>
                    
 			
-                    <li>
-                        <a href="salesList.jsf" onclick="showWaiting()"> <i class="pe-7s-note2"></i>
-                            <p>Sales List</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="typography.html" onclick="showWaiting()"> <i class="pe-7s-news-paper"></i>
-                            <p>Typography</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="icons.html" onclick="showWaiting()"> <i class="pe-7s-science"></i>
-                            <p>Icons</p>
-                        </a>
-                    </li>
-                  
-                    <li>
-                        <a href="notifications.html" onclick="showWaiting()"> <i class="pe-7s-bell"></i>
-                            <p>Notifications</p>
-                        </a>
-                    </li>
+                    
                     <li class="active-pro">
                         <a href="upgrade.html" onclick="showWaiting()"> <i class="pe-7s-rocket"></i>
                             <p>Upgrade to PRO</p>
@@ -249,7 +239,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                                 <div class="form-group"> <label for="exampleInputEmail1">Category Type</label> </div>
                                                 
                                      
-											   		<h:selectOneMenu id="categoryTypeId" class="form-control" value="#{categoryView.categoryVO.categoryTypeId}">
+											   		<h:selectOneMenu onchange="ckeck(this)" id="categoryTypeId" class="form-control" value="#{categoryView.categoryVO.categoryTypeId}">
    														<f:selectItems value="#{categoryView.categoryTypeList}" />
    													</h:selectOneMenu>
 											   		
@@ -266,7 +256,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 											
 											</div>
 											</div>
-											<div class="col-md-5">
+											<div class="col-md-5" id="Actual">
 											<div class="form-group"> <label for="Actual">Actual Value</label>
 												
 												<h:inputText type="text" id="actualValue" class="form-control" onblur="validateNumber(this,'ActualValueMessage')" required="true" value="#{categoryView.categoryVO.actualValue}"/>

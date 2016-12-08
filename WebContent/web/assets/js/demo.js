@@ -16,8 +16,7 @@ demo = {
         });
     },
     
-    initChartist: function(){    
-        
+    initChartist: function(incomes,expenses){    
         var dataSales = {
           labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
           series: [
@@ -26,7 +25,6 @@ demo = {
             [23, 113, 67, 108, 190, 239, 307, 308, 439, 410, 410, 509]
           ]
         };
-        
         var optionsSales = {
           lineSmooth: false,
           low: 0,
@@ -54,13 +52,32 @@ demo = {
         ];
     
         Chartist.Line('#chartHours', dataSales, optionsSales, responsiveSales);
-        
-    
+        var budget = [];
+        budget[0] = incomes.split(",");
+        budget[1] = expenses.split(",");
+    	
+       var numberOfBudget=budget[0].length;
+       switch (numberOfBudget) {
+       case 1:
+    	   months=['1'];
+           break; 
+       case 2:
+    	   months=['1','2'];
+           break; 
+       case 3: 
+    	   months=['1','2','3'];
+           break;
+       case 4:
+    	   months=['1','2','3','4'];
+    	   break;
+          }
+       var months
         var data = {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        		
+          labels: months,
           series: [
-            [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-            [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695]
+             budget[0],
+             budget[1]
           ]
         };
         
@@ -105,8 +122,8 @@ demo = {
         Chartist.Pie('#chartPreferences', dataPreferences, optionsPreferences);
         
         Chartist.Pie('#chartPreferences', {
-          labels: ['62%','32%','6%'],
-          series: [62, 32, 6]
+          labels: ['75%','10%','15%'],
+          series: [75, 10, 15]
         });   
     },
     

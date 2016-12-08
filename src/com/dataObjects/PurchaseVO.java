@@ -15,6 +15,7 @@ public class PurchaseVO extends DataObjectVO{
 	private int locationId;
 	private String creationDate;
 	private double price;
+	private double newPrice;
 	 private String categoryName;
 	 private String  locationName;
 	 private String details;
@@ -86,6 +87,12 @@ public class PurchaseVO extends DataObjectVO{
 
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	public double getNewPrice() {
+		return newPrice;
+	}
+	public void setNewPrice(double newPrice) {
+		this.newPrice = newPrice;
 	}
 
 

@@ -35,13 +35,16 @@ import com.TransactionServiceProxy;
 import com.TransactionServiceService;
 import com.TransactionServiceServiceLocator;
 import com.TransactionServiceSoapBindingStub;
-
+import com.dataObjects.CategoryHistoryVO;
 import com.dataObjects.CategoryVO;
 import com.dataObjects.Constants;
+import com.dataObjects.PurchaseHistoryVO;
 import com.dataObjects.PurchaseVO;
 import com.dataObjects.UserVO;
 import com.google.gson.Gson;
 import com.models.Documents.CategoriesKeyBasedDocument;
+import com.models.Documents.CategoryHistoryKeyBasedDocument;
+import com.models.Documents.PurchaseHistoryKeyBasedDocument;
 
 import util.BusinessException;
 import util.TransactionServiceParser;
@@ -52,6 +55,7 @@ import util.TransactionServiceParser;
 public class CategoryView extends JSFView {
 
 	 private static final Logger logger = Logger.getLogger(CategoryView.class);
+	 private List<CategoryHistoryVO> categoryHistoryList=new ArrayList<CategoryHistoryVO>();
 	public CategoryView() 
 	{
      try {
@@ -156,7 +160,7 @@ public class CategoryView extends JSFView {
 		categoryList=getExpensesCategories();
 		categoryIncomeList=getBudgetCategories();
 		categoryAllList=getAllExpensesCategories();
-		categoryIncomeList=getAllBudgetCategories();
+		categoryAllIncomeList=getAllBudgetCategories();
 	}
 	public List<CategoryVO> getCategoryList() {
 		return categoryList;
@@ -164,6 +168,29 @@ public class CategoryView extends JSFView {
 
 	public void setCategoryList(List<CategoryVO> categoryList) {
 		this.categoryList = categoryList;
+	}
+	@Action 
+	public void showViewHistoryPage(ActionEvent event) throws Exception
+	{
+
+		int categoryId = (Integer)event.getComponent().getAttributes().get("categoryId");;
+		categoryHistoryList=getCategoryHistory(categoryId);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "categoryHistory.xhtml");
+	    
+	}
+	public List<CategoryHistoryVO> getCategoryHistoryList() {
+		return categoryHistoryList;
+	}
+
+	public void setCategoryHistoryList(List<CategoryHistoryVO> categoryHistoryList) {
+		this.categoryHistoryList = categoryHistoryList;
+	}
+	@Action
+	public void showAddPage(ActionEvent event) throws Exception
+	{
+		categoryVO=new CategoryVO();
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "addCategory.xhtml");
+	
 	}
 	@Action
 	public void showEditPage(ActionEvent event) throws BusinessException
@@ -196,11 +223,25 @@ public class CategoryView extends JSFView {
 	    }
 	}
 	@Action
-	public void edit() throws BusinessException
+	public void showAddPurchasePage(ActionEvent event) throws Exception
+	{
+		int categoryId = (Integer)event.getComponent().getAttributes().get("categoryId");
+		System.out.println("Category ID :"+categoryId);
+		PurchaceView purchaceView=new PurchaceView();
+		PurchaseVO purchaseVO=new PurchaseVO();
+		purchaseVO.setCategoryId(categoryId);
+		purchaceView.setPurchaseVO(purchaseVO);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "addpurchase.xhtml");
+	  
+
+	     
+	}
+	@Action
+	public void edit() throws Exception
 	{
 		edit(this.categoryVO);
 	}
-	public boolean edit(CategoryVO selectedCategoryVO ) throws BusinessException
+	public boolean edit(CategoryVO selectedCategoryVO ) throws Exception
 	{
 		
 		String responseMessage="";
@@ -246,7 +287,7 @@ public class CategoryView extends JSFView {
 			}
 			
 		}
-		
+		refesh();
 		setMessage(responseMessage);
 
 		
@@ -259,7 +300,10 @@ public class CategoryView extends JSFView {
 	{
 		String responseMessage="";
 		try {
-			
+			if(new Integer(categoryVO.getCategoryTypeId()).equals(Constants.CATEGORY_TYPE_VALUE_EXPENSES))
+			{
+				categoryVO.setActualValue(0);
+			}
 			String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_CATEGORY_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><arabicDescription>"+categoryVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+categoryVO.getEnglishDescription()+"</englishDescription><limitValue>"+categoryVO.getLimitValue()+"</limitValue><planedValue>"+categoryVO.getPlanedValue()+"</planedValue><actualValue>"+categoryVO.getActualValue()+"</actualValue><categoryStatus>"+categoryVO.getCategoryStatus()+"</categoryStatus><categoryType>"+categoryVO.getCategoryTypeId()+"</categoryType></createTransaction>]]>";
 	        logger.info("Request Data "+requestData);
 			String response=callTransactionService(requestData);
@@ -366,7 +410,27 @@ public class CategoryView extends JSFView {
 	       }
 	}
 
+	public ArrayList<CategoryHistoryVO>getCategoryHistory(int categoryId) throws Exception
+	{
+		try {
+			String output = "";
+			System.out.println("Calling getCategoryHistory  .... \n");
+			output=callPostWebService("getCategoryHistory","categoryId",categoryId);
+			System.out.println("Output From Server  .... "+output);
+			System.out.println(" .... \n");
+			Gson gson=new Gson();
+		    Object obj = gson.fromJson(output, CategoryHistoryKeyBasedDocument.class);
+		    CategoryHistoryKeyBasedDocument categoryHistoryKeyBasedDocument=(CategoryHistoryKeyBasedDocument)obj;
+		    ArrayList<CategoryHistoryVO>categoryHistoryVOs=(ArrayList<CategoryHistoryVO>)categoryHistoryKeyBasedDocument.getCategoryHistoryVO(); 
+		    return categoryHistoryVOs;
 
+	}catch(Exception e)
+		
+		{
+		
+		   throw new Exception(e);
+		}
+	}
     
 	
 }

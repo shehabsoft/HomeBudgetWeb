@@ -55,6 +55,11 @@ import util.TransactionServiceParser;
 public class BudgetView extends JSFView {
 
 	private static final Logger logger = Logger.getLogger(BudgetView.class);
+	private double exceedLimit=0;
+	private double savingLimit=0;
+	//for Charts 
+	private String incomes="";
+	private String expenses="";
 	public BudgetView()
 	{	
 		super();
@@ -71,13 +76,17 @@ public class BudgetView extends JSFView {
 		 {
 			 filterCategoeries();
 		 }
-		 monthlyBudgetVO.setTotalExpenses(getTotalExpenses());
+		 getLimits(categoryList);
+		 monthlyBudgetVO.setExceedLimit(exceedLimit);
+		 monthlyBudgetVO.setSavingValue(savingLimit);
+		 monthlyBudgetVO.setTotalExpenses(getTotalExpenses(categoryList));
 		 monthlyBudgetVO.setTotalIncomes(getTotalIncomes(categoryIncomeList));
 		 monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
 	     monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalExpectedExpenses())*100);
 	     System.out.println("Ratio: "+monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
 	     logger.info("Ratio: "+monthlyBudgetVO.getCompletedRatio());
+	     initializeChart();
 		 } catch (Exception e) {
 				// TODO Auto-generated catch block
 			 logger.error(e);
@@ -91,6 +100,7 @@ public class BudgetView extends JSFView {
 	private List<CategoryVO> categoryIncomeList=new ArrayList<CategoryVO>();
 	private List<CategoryVO> categoryAllIncomeList=new ArrayList<CategoryVO>();
 	private UserView userView;
+	List<MonthlyBudgetVO>monthlyBudgetVOs=null;
 	public List<CategoryVO> getCategoryAllIncomeList() {
 		return categoryAllIncomeList;
 	}
@@ -197,13 +207,17 @@ public class BudgetView extends JSFView {
 		 {
 			 filterCategoeries();
 		 }
-		 monthlyBudgetVO.setTotalExpenses(getTotalExpenses());
+		 getLimits(categoryList);
+		 monthlyBudgetVO.setExceedLimit(exceedLimit);
+		 monthlyBudgetVO.setSavingValue(savingLimit);
+		 monthlyBudgetVO.setTotalExpenses(getTotalExpenses(categoryList));
 		 monthlyBudgetVO.setTotalIncomes(getTotalIncomes(categoryIncomeList));
 		 monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
 		 monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalExpectedExpenses())*100);
 	     System.out.println(monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
 	     logger.info("Ratio: "+monthlyBudgetVO.getCompletedRatio());
+	     initializeChart();
 		}catch(Exception e)
 		{
 			System.out.println(e.toString());
@@ -227,23 +241,31 @@ public class BudgetView extends JSFView {
 		}
 		return tatalExpenses;
 	}
-	public double getTotalExpenses() throws Exception
+	public double getTotalExpenses(List<CategoryVO> categoryVOs) throws Exception
 	{
-		purchaceView=new PurchaceView();
-		List<PurchaseVO>purchaseVOs;
-		if(purchaceView.getPurchaseList()==null)
-		{
-			purchaseVOs=purchaceView.getAllPurchases();
-		}else
-		{
-			purchaseVOs=purchaceView.getPurchaseList();
-		}
 		double tatalExpenses=0;
-		for(PurchaseVO purchaseVO:purchaseVOs)
+		for(CategoryVO categoryVO:categoryVOs)
 		{
-			tatalExpenses+=purchaseVO.getPrice();
+			tatalExpenses+=categoryVO.getActualValue();
 		}
 		return tatalExpenses;
+	}
+	public double getLimits(List<CategoryVO> categoryVOs) throws Exception
+	{
+ 
+		exceedLimit=0;
+		savingLimit=0;
+		for(CategoryVO categoryVO:categoryVOs)
+		{
+			if(categoryVO.getActualValue()>categoryVO.getLimitValue())
+			{
+				exceedLimit+=categoryVO.getActualValue()-categoryVO.getLimitValue();
+			}else
+			{
+				savingLimit+=categoryVO.getLimitValue()-categoryVO.getActualValue();
+			}
+		}
+		return exceedLimit;
 	}
 	public void filterCategoeries()
 	{
@@ -273,6 +295,36 @@ public class BudgetView extends JSFView {
 		}
 		
 		
+	}
+	public void initializeChart() throws Exception
+	{
+		incomes="";
+		expenses="";
+		 monthlyBudgetVOs=getAllMonthlyBudgetByUserId();
+	     for(int i=0;i< monthlyBudgetVOs.size();i++)
+	     {
+	    	 if(i==monthlyBudgetVOs.size()-1)
+	    	 {
+	    		 incomes+=monthlyBudgetVOs.get(i).getTotalIncomes();
+	    		 expenses+=monthlyBudgetVOs.get(i).getTotalExpenses();
+	    	 }else
+	    	 {
+	    	    incomes+=monthlyBudgetVOs.get(i).getTotalIncomes()+",";
+	    	    expenses+=monthlyBudgetVOs.get(i).getTotalExpenses()+",";
+	    	 }
+	     }
+	}
+	public String getIncomes() {
+		return incomes;
+	}
+	public void setIncomes(String incomes) {
+		this.incomes = incomes;
+	}
+	public String getExpenses() {
+		return expenses;
+	}
+	public void setExpenses(String expenses) {
+		this.expenses = expenses;
 	}
 	public void updateSelecedExpenseCategories()
 	{
@@ -382,6 +434,7 @@ public class BudgetView extends JSFView {
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "addMonthlyBudget.xhtml");
 	
 	}
+
 	public boolean edit(MonthlyBudgetVO selectedMonthlyBudgetVO ) throws BusinessException
 	{
 		
@@ -449,7 +502,7 @@ public class BudgetView extends JSFView {
 				throw new BusinessException(e.toString());
 			}
 		}
-		setStatus(true);;
+		setStatus(true);
 		setMessage(responseMessage);
 		reset();
 	}
@@ -488,7 +541,40 @@ public class BudgetView extends JSFView {
 					}
 		}
 		}
+	public  List<MonthlyBudgetVO> getAllMonthlyBudgetByUserId() throws  Exception
+	{
+		try {
+            logger.info("Call getAllMonthlyBudgetByUserId .....");
+			String output =callPostWebService("getAllMonthlyBudgetByUserId");
+			System.out.println("Call getAllMonthlyBudgetByUserId .....");
+			Gson gson=new Gson();
+		    Object obj = gson.fromJson(output, MonthlyBudgetKeyBasedDocument.class);
+		    MonthlyBudgetKeyBasedDocument monthlyBudgetKeyBasedDocument=(MonthlyBudgetKeyBasedDocument)obj;
+		    List<MonthlyBudgetVO> monthlyBudgetVOs= monthlyBudgetKeyBasedDocument.getMonthlyBudgetVOs();
+		    return monthlyBudgetVOs;
 
+	}catch(Exception e)
+		{
+		
+		logger.error(e);
+		setStatus(false);
+					if(e instanceof BusinessException)
+					{
+						System.out.println(e);
+						throw new BusinessException(e.toString());
+					}else
+					{
+						System.out.println(e);
+						throw new Exception(e);
+					}
+		}
+		}
+	public List<MonthlyBudgetVO> getMonthlyBudgetVOs() {
+		return monthlyBudgetVOs;
+	}
+	public void setMonthlyBudgetVOs(List<MonthlyBudgetVO> monthlyBudgetVOs) {
+		this.monthlyBudgetVOs = monthlyBudgetVOs;
+	}
     
 	
 }

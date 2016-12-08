@@ -23,7 +23,7 @@ public class PurchaseHistoryVO extends DataObjectVO {
 		this.locationName = locationName;
 	}
 	private int purchase_id;
-	private Date creation_date;
+	private String creation_date;
 	private String details;
 	private double price;
 	public int getLocation_id() {
@@ -38,10 +38,10 @@ public class PurchaseHistoryVO extends DataObjectVO {
 	public void setPurchase_id(int purchase_id) {
 		this.purchase_id = purchase_id;
 	}
-	public Date getCreation_date() {
+	public String getCreation_date() {
 		return creation_date;
 	}
-	public void setCreation_date(Date creation_date) {
+	public void setCreation_date(String creation_date) {
 		this.creation_date = creation_date;
 	}
 	public String getDetails() {

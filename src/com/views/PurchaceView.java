@@ -54,13 +54,14 @@ public class PurchaceView extends JSFView  {
 
 	public PurchaceView() throws Exception
 	{
+	 
 		purchaseVO=new PurchaseVO();
 		categoryVOs=(ArrayList<CategoryVO>) categoryView.getCategoryList();
 		for(CategoryVO categoryVO:categoryVOs)
 		{
 			categoryList.put(categoryVO.getEnglishDescription(),categoryVO.getId()); //label, value
 		}
-		purchaseList=getAllPurchases();
+		//purchaseList=getAllPurchases();
 		locationVOs=locationView.getLocationVOs();
 		for(LocationVO categoryVO:locationVOs)
 		{
@@ -183,8 +184,30 @@ public class PurchaceView extends JSFView  {
 	    	}
 	    }
 	}
+
+	@Action
+	public void showAddPage(ActionEvent event) throws BusinessException
+	{
+		int categoryId = (Integer)event.getComponent().getAttributes().get("categoryId");
+		System.out.println(categoryId);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "addpurchase.xhtml");
+	    this.purchaseVO=new PurchaseVO();
+	    purchaseVO.setCategoryId(categoryId);
+	    	 
+	   
+	}
 	@Action 
 	public void showViewHistoryPage(ActionEvent event) throws Exception
+	{
+
+		int categoryId = (Integer)event.getComponent().getAttributes().get("categoryId");
+		System.out.println(categoryId);
+		purchaseList=getPurchasesByCategoryId(categoryId);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "salesList.xhtml");
+	    
+	}
+	@Action 
+	public void showViewHistoryPurchasePage(ActionEvent event) throws Exception
 	{
 
 		int purchaseId = (Integer)event.getComponent().getAttributes().get("purchaseId");
@@ -207,7 +230,7 @@ public class PurchaceView extends JSFView  {
 
 	
 		System.out.println("Calling Transaction Service Form Purchhase View(Edit Purchase)");
-		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_PURCHASE_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><purchaseId>"+purchaseVO.getId()+"</purchaseId><arabicDescription>"+purchaseVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+purchaseVO.getEnglishDescription()+"</englishDescription><price>"+purchaseVO.getPrice()+"</price><categoryId>"+purchaseVO.getCategoryId()+"</categoryId><locationId>"+purchaseVO.getLocationId()+"</locationId><details>"+purchaseVO.getDetails()+"</details></createTransaction>]]>";	
+		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_PURCHASE_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><purchaseId>"+purchaseVO.getId()+"</purchaseId><arabicDescription>"+purchaseVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+purchaseVO.getEnglishDescription()+"</englishDescription><price>"+purchaseVO.getPrice()+"</price><newPrice>"+purchaseVO.getNewPrice()+"</newPrice><categoryId>"+purchaseVO.getCategoryId()+"</categoryId><locationId>"+purchaseVO.getLocationId()+"</locationId><details>"+purchaseVO.getDetails()+"</details></createTransaction>]]>";	
 		System.out.println("Request Data "+requestData);
 		String response=callTransactionService(requestData);
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
@@ -266,6 +289,26 @@ public ArrayList<PurchaseHistoryVO>getPurchaseHistory(int purchaseId) throws Exc
 	    PurchaseHistoryKeyBasedDocument purchaseHistoryKeyBasedDocument=(PurchaseHistoryKeyBasedDocument)obj;
 	    ArrayList<PurchaseHistoryVO>purchaseHistoryVOs=(ArrayList<PurchaseHistoryVO>)purchaseHistoryKeyBasedDocument.getPurchaseHistoryVO();
 	    return purchaseHistoryVOs;
+
+}catch(Exception e)
+	
+	{
+	   throw new Exception(e);
+	}
+}
+public ArrayList<PurchaseVO>getPurchasesByCategoryId(int categoryId) throws Exception
+{
+	try {
+		String output = "";
+		System.out.println("Calling getPurchasesByCategoryId  .... \n");
+		output=callPostWebService("getPurchasesByCategoryId","categoryId",categoryId);
+		System.out.println("Output From Server  .... "+output);
+		System.out.println(" .... \n");
+		Gson gson=new Gson();
+	    Object obj = gson.fromJson(output, PurchasesKeyBasedDocument.class);
+	    PurchasesKeyBasedDocument purchaseHistoryKeyBasedDocument=(PurchasesKeyBasedDocument)obj;
+	    ArrayList<PurchaseVO>purchaseVOs=(ArrayList<PurchaseVO>)purchaseHistoryKeyBasedDocument.getPurchaseVO();
+	    return purchaseVOs;
 
 }catch(Exception e)
 	

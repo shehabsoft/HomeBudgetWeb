@@ -131,11 +131,7 @@
                             <p> Locations </p>
                         </a>
                     </li>
-                    <li class="active">
-                        <a href="salesList.jsf" onclick="showWaiting()"> <i class="pe-7s-note2"></i>
-                            <p>Sales List</p>
-                        </a>
-                    </li>
+          
            
                     <li class="active-pro">
                         <a href="upgrade.html"> <i class="pe-7s-rocket"></i>
@@ -212,6 +208,27 @@
                                             
                                         </div>
                                        <div class="row"> 
+                                       	<div class="col-md-5">
+											<div class="form-group"> <label for="exampleInputEmail1">Current Price</label>
+												
+											<h:inputText  disabled="true" type="text" id="price" class="form-control" onblur="validateNumber(this,'PriceValueMessage')" required="true" value="#{purchaceView.purchaseVO.price}"/>
+												 <div class="col-md-8" id="PriceValueMessage"  style="color:red" ></div> 
+												
+											</div>
+											  <div id="wait" style="display:none;width:69px;height:89px;top:50%;left:50%;padding:2px;"><img src='assets/img/demo_wait.gif' width="64" height="64" /><br>Loading..M</br></div>
+                                        </div>
+                                        
+                                        <div class="col-md-5">
+											<div class="form-group"> <label for="exampleInputEmail1">Added Value</label>
+												
+											<h:inputText    type="text" id="newprice" class="form-control" onblur="validateNumber(this,'PriceValueMessage')" required="true" value="#{purchaceView.purchaseVO.newPrice}"/>
+												 <div class="col-md-8" id="PriceValueMessage"  style="color:red" ></div> 
+												
+											</div>
+											  <div id="wait" style="display:none;width:69px;height:89px;top:50%;left:50%;padding:2px;"><img src='assets/img/demo_wait.gif' width="64" height="64" /><br>Loading..M</br></div>
+                                        </div>
+                                        </div>
+                                           <div class="row"> 
                                             <div class="col-md-5">
                                                 <div class="col-md-8"> <label>location</label> <h:selectOneMenu id="locationId" class="form-control" value="#{purchaceView.purchaseVO.locationId}">
    														<f:selectItems value="#{purchaceView.locationList}" />
@@ -226,15 +243,7 @@
    													
                                             </div>
                                          
-											<div class="col-md-5">
-											<div class="form-group"> <label for="exampleInputEmail1">Price</label>
-												
-											<h:inputText type="text" id="price" class="form-control" onblur="validateNumber(this,'PriceValueMessage')" required="true" value="#{purchaceView.purchaseVO.price}"/>
-												 <div class="col-md-8" id="PriceValueMessage"  style="color:red" ></div> 
-												
-											</div>
-											  <div id="wait" style="display:none;width:69px;height:89px;top:50%;left:50%;padding:2px;"><img src='assets/img/demo_wait.gif' width="64" height="64" /><br>Loading..M</br></div>
-                                        </div>
+										
                                            <div class="col-md-5">
                                                 <div class="col-md-8"> <label for="exampleInputEmail1">Category</label>
                                                 
@@ -264,7 +273,7 @@
 										            <h:panelGrid columns="2">
 										                <h:commandButton value="Edit"  type="submit"  class="btn btn-info btn-fill pull-right" 
 																					style="width:150px"  action="#{purchaceView.edit}">
-										                    <f:ajax event="action" execute="arabicDescription englishDescription price details categoryId locationId" render="piValueText arabicDescription englishDescription price details categoryId locationId"
+										                    <f:ajax event="action" execute="arabicDescription englishDescription price newprice details categoryId locationId" render="piValueText arabicDescription englishDescription price newprice details categoryId locationId"
 										                            onevent="function(data) { demo.validate(data,'success')}" onerror="function(data) {  demo.validate(data,'failure')}"  />
 										                </h:commandButton>
 										              

@@ -96,11 +96,7 @@ $(document).ready(function() {
                             <p> Locations </p>
                         </a>
                     </li>
-                    <li class="active">
-                        <a href="salesList.jsf" onclick="showWaiting()"> <i class="pe-7s-note2"></i>
-                            <p>Sales List</p>
-                        </a>
-                    </li>
+               
               
                     <li class="active-pro">
                         <a href="upgrade.html"> <i class="pe-7s-rocket"></i>
@@ -235,7 +231,7 @@ $(document).ready(function() {
 								    				
 								    				
 								    			<h:commandButton value="History"  style=""  class="btn btn-info btn-fill pull-right" 
-																					 actionListener="#{purchaceView.showViewHistoryPage}">
+																					 actionListener="#{purchaceView.showViewHistoryPurchasePage}">
 										                  <f:attribute name="purchaseId" value="#{o.id}" />
 										                  </h:commandButton>
 								    			</h:column>
@@ -254,15 +250,7 @@ $(document).ready(function() {
 								    		</h:dataTable>
 								    		</div>
 								    		
-								    		  <h:commandButton value="Refersh"  style="height:50px;margin-left:1px"  class="btn btn-info btn-fill pull-right" 
-																					 action="#{purchaceView.refesh}">
-										                    <f:ajax   execute="todoForm" render="myTable" />
-										        </h:commandButton>
-										        <a href="addpurchase.jsf" class="btn btn-info btn-fill pull-right" style="height:50px;"> 
-							                            <p>  Add Purchas </p>
-							                        </a>
-										       
-										        </h:panelGroup>
+								    	</h:panelGroup>
 										    </h:form>
 								    	</div>
 								           </div>

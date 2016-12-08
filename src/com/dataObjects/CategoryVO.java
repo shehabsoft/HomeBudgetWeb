@@ -15,9 +15,34 @@ public class CategoryVO extends DataObjectVO{
 	private double planedValue;
 	
 	private double actualValue;
+    private double exceedLimit;
+    private double savingValue;
+	public double getExceedLimit() {
+		return exceedLimit;
+	}
+
+	public void setExceedLimit(double exceedLimit) {
+		this.exceedLimit = exceedLimit;
+	}
+
+	public double getSavingValue() {
+		return savingValue;
+	}
+
+	public void setSavingValue(double savingValue) {
+		this.savingValue = savingValue;
+	}
 
 	private int categoryTypeId;
+	private boolean withenLimit;
+	 
+	public boolean isWithenLimit() {
+		return withenLimit;
+	}
 
+	public void setWithenLimit(boolean withenLimit) {
+		this.withenLimit = withenLimit;
+	}
 
 	public int getCategoryTypeId() {
 		return categoryTypeId;
