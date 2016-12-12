@@ -51,8 +51,9 @@
     function ckeck() {
     	 
         var uname = document.getElementById("signUp:userName");
+        document.getElementById('errorMessage').innerHTML="";
         var errorFlage=false;
-        if (  ""==uname.value)
+        if (""==uname.value||uname.value==" ")
         {
         document.getElementById('error').style.display="block";
        	document.getElementById('errorMessage').style.display="block";
@@ -61,7 +62,7 @@
         }
         var email = document.getElementById("signUp:Email");
         ValidateEmailPattern(email);
-        if (  ""== email.value)
+        if (""== email.value||" "== email.value)
         {
         document.getElementById('error').style.display="block";
        	document.getElementById('errorMessage').style.display="block";
@@ -69,7 +70,7 @@
         errorFlage=true;
         }
         var address = document.getElementById("signUp:address");
-        if (""==address.value)
+        if (" "==address.value||""==address.value)
         {
         	
         document.getElementById('error').style.display="block";
@@ -91,9 +92,11 @@
         {
           document.getElementById('error').style.display="block";
           document.getElementById('errorMessage').style.display="block";
-        	return false;
+          return false;
         }else
         {
+        	document.getElementById('error').style.display="none";
+            document.getElementById('errorMessage').style.display="none";
         	return true;
         }
         
@@ -121,7 +124,8 @@
 		var arregex = /\S+@\S+\.\S+/;
 			if(arregex.test(text))
 				{
-				 document.getElementById('emailMessage').innerHTML="";
+				document.getElementById('emailMessage').style.color="green";
+				 document.getElementById('emailMessage').innerHTML="Valid Email";
 				 return true;
 				}else
 				{
@@ -154,13 +158,27 @@ function validatePasswordMatch()
 {
 	var password = document.getElementById("signUp:passwordinput");
 	var passwordRe = document.getElementById("signUp:confirm_password");
-	if(password.value!=passwordRe.value)
+	if(password.value==""||password.value==" "||passwordRe.value==" "||passwordRe.value=="")
+		{
+		 document.getElementById('passwordMessage').innerHTML="You Should Enter Password ";
+		 document.getElementById('error').style.display="block";
+		 document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Enter Password";
+		 return true;
+		}
+	else if(password.value!=passwordRe.value)
 		{
 		 document.getElementById('passwordMessage').innerHTML="The Password Should Matchs  ";
 		 document.getElementById('error').style.display="block";
 		 document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"The Password Should Matchs";
-		}
-	return true;
+			return true;
+		}else
+			{
+			 
+			 document.getElementById('passwordMessage').style.color="green";
+			 document.getElementById('passwordMessage').innerHTML="The Password Matchs  ";
+			 return false;
+			}
+	
 }
 function validateNumber(number,ID)
 {
@@ -175,7 +193,7 @@ function validateNumber(number,ID)
 		 document.getElementById(ID).innerHTML="Invalid Mobile Number Pattern ";
 		 document.getElementById('error').style.display="block";
 		 document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"Invalid Mobile Number Pattern";
-		 return true;
+		 return false;
 		   }
 	
 }
@@ -188,18 +206,14 @@ function validate(data,status)
          case "complete":
              break;
          case "success":
-        	 if("block"==document.getElementById("errorMessage").style.display)
-             {
-        		 
-             }else if("block"==document.getElementById("error").style.display)
-             {
-            	 document.getElementById('error').innerHTML="Please Solve Problems Before Submit";
-             }
-             else
-            	 {
-        	 document.getElementById("successMessage").style.display="block";
-            	 }
-        	setTimeout(alertFunc, 3000);
+        	 if("block"==document.getElementById("errorMessage").style.display)//server Error
+        		 {
+        		 setTimeout(FailReg, 5000);
+        		 }else
+        			{
+		        	document.getElementById("successMessage").style.display="block";
+		        	setTimeout(SuccessReg, 3000);
+        			}
         	 break;
          case "serverError":
         	 document.getElementById("successMessage").style.display="none";
@@ -215,7 +229,14 @@ function validate(data,status)
 	 document.getElementById('errorMessage').innerHTML="";
  }
 
- function alertFunc() {
+ function SuccessReg() {
+	 document.getElementById("successMessage").style.display="none";
+	 document.getElementById("errorMessage").style.display="none";
+	 $("#myModal").modal('hide');
+	 document.getElementById('errorMessage').innerHTML="";
+	 window.location.href = 'http://localhost:8080/HomeBudgetWeb/web/Dashboard.jsf';
+ }
+ function FailReg() {
 	 document.getElementById("successMessage").style.display="none";
 	 document.getElementById("errorMessage").style.display="none";
 	 $("#myModal").modal('hide');
@@ -225,7 +246,7 @@ function validate(data,status)
  {
 	 document.getElementById("successMessage").style.display="none";
 	 document.getElementById('errorMessage').innerHTML=""+error;
-	 setTimeout(alertFunc, 5000);
+	 setTimeout(FailReg, 5000);
  }
     
     </script>
@@ -243,7 +264,7 @@ function validate(data,status)
 			
 			<!-- Form Name -->
 			<legend>Sign Up In Smart Home Budget</legend>
-		<h:form id="signUp"  onsubmit="return ckeck()" >
+		   <h:form id="signUp"  onsubmit="return ckeck()" >
 			<!-- Text input-->
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="Name">Name</label>  
@@ -369,15 +390,16 @@ function validate(data,status)
 			<div class="col-md-5">
                                             <div class="form-group">
                                             
-												<h:commandButton value="Sign Up"  type="submit"  class="btn btn-info btn-fill pull-right" actionListener="#{userView.add}" 
-																							style="width:150px" onclick="ckeck()" > 
-												                    <f:ajax event="action" execute="currencyId mobilenumber countryId address status genderId passwordinput Email userName" render="currencyId mobilenumber countryId address status genderId passwordinput Email userName" onclick=""
+												<h:commandButton value="Sign Up"  type="submit"  class="btn btn-info btn-fill pull-right" actionListener="#{userView.add}" onclick="ckeck()"
+																							style="width:150px;"  > 
+																               
+												                    <f:ajax event="action" execute="currencyId mobilenumber countryId address status genderId passwordinput Email userName" render="currencyId mobilenumber countryId address status genderId passwordinput Email userName" 
 		 										                            onevent="function(data) { validate(data,'success')}" onerror="function(data) {  validate(data,'failure')}" /> 
 		 										  </h:commandButton> 
 		 								
 		 										  </div>
 		 										  
-		 						</div>
+		  </div>
 <div id="myModal" class="modal fade " >
     <div class="modal-dialog ">
         <div class="modal-content alert alert-info alert-with-icon">
@@ -386,18 +408,14 @@ function validate(data,status)
                 <h4 class="modal-title">Waiting.....</h4>
             </div>
             <div class="modal-body">
-         
-    
-      
-				
                 <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
                 <div class="alert alert-success" id="successMessage" style="display:none">
                 
                 
                   <span><b> Success - </b> Registeration Done Successfully "</span>
                     </div>
-                    	 <div id="error" >Please Solve Errors Before Submit</div>	
-                    	    <div class="alert alert-danger" id="errorMessage">
+                    	 <div id="error" style="display:none" >Please Solve Errors Before Submit</div>	
+                    	    <div class="alert alert-danger" id="errorMessage" style="display:none">
                                     <button type="button" aria-hidden="true" class="close">×</button>
                                    
                                 </div>

@@ -120,7 +120,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                         </a>
                     </li>
              
-                     <li class="active">
+                     <li >
                     <a  href="categories.jsf" onclick="showWaiting()">
                         <i class="pe-7s-cart"></i>
                         <p> Expenses  Categories</p>
@@ -236,17 +236,9 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 											   		
                                             </div>
                                       </div>
+                                      <h:panelGrid styleClass="col-md-5"  rendered="#{categoryView.categoryVO.categoryTypeId eq 1}">
                                         <div class="row">      
-                                            <div class="col-md-5">
-											<div class="form-group"> <label for="Limit">Limit Value</label>
-											
-										
-												<h:inputText type="text" id="limitValue" onblur="validateNumber(this,'LimitValueMessage')"  required="true"    class="form-control" value="#{categoryView.categoryVO.limitValue}"/>
-												     
-												 <div class="col-md-8" id="LimitValueMessage"  style="color:red" ></div>
-											
-											</div>
-											</div>
+                                           
 											<div class="col-md-5">
 											<div class="form-group"> <label for="Actual">Actual Value</label>
 												
@@ -256,7 +248,12 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 												 <div class="col-md-8" id="ActualValueMessage"  style="color:red" ></div>
 											</div>
 											</div>
-											<div class="col-md-5">
+										</div>
+										</h:panelGrid>
+										<h:panelGrid styleClass="col-md-5" rendered="#{categoryView.categoryVO.categoryTypeId eq 2}">
+										 <div class="row"> 
+											
+												<div class="col-md-5">
 											<div class="form-group"> <label for="Planed">Planed Value</label>
 												
 												<h:inputText type="text" id="planedValue" class="form-control" onblur="validateNumber(this,'PlanedValueMessage')" required="true" value="#{categoryView.categoryVO.planedValue}"/>
@@ -264,9 +261,29 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 												<div class="col-md-8" id="PlanedValueMessage"  style="color:red" ></div>
 											</div>
 											</div>
+											
+										 </div>
+										 </h:panelGrid>
+										 
+										  <div class="row"> 
+										  <h:panelGrid styleClass="col-md-5"  rendered="#{categoryView.categoryVO.categoryTypeId eq 2}">
+									     <div class="col-md-6">
+											
+											<div class="form-group"> <label for="Limit">Limit Value</label>
+											
+										
+												<h:inputText type="text" id="limitValue" onblur="validateNumber(this,'LimitValueMessage')"  required="true"    class="form-control" value="#{categoryView.categoryVO.limitValue}"/>
+												     
+												 <div class="col-md-8" id="LimitValueMessage"  style="color:red" ></div>
+											
+											</div>
+											</div>
+											</h:panelGrid>
+										</div>
+										
 											  <div id="wait" style="display:none;width:69px;height:89px;top:50%;left:50%;padding:2px;"><img src='assets/img/demo_wait.gif' width="64" height="64" /><br>Loading..M</br></div>
                                         
-										</div>
+										
                                         
                                        
                                                

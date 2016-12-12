@@ -268,7 +268,11 @@ public class PurchaceView extends JSFView  {
 	
 	public void reset()
 	{
-		setPurchaseVO(new PurchaseVO());
+	    getPurchaseVO().setArabicDescription("");
+	    getPurchaseVO().setEnglishDescription("");
+	    getPurchaseVO().setLocationId(0);
+	    getPurchaseVO().setDetails("");
+	    getPurchaseVO().setPrice(0);
 		
 		
 	}

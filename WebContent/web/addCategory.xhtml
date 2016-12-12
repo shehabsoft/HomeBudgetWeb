@@ -34,9 +34,13 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 		 if(selectedValue.value==2)//Expenses ID
 			 {
 			 document.getElementById("Actual").style.display="none";
+			 document.getElementById("Limit").style.display="block";
+			 document.getElementById("Planned").style.display="block";
 			 }else
 				 {
 			document.getElementById("Actual").style.display="block";
+			 document.getElementById("Limit").style.display="none";
+			 document.getElementById("Planned").style.display="none";
 				 }
 	}
 	function validateEnglishDescription(englishValue)
@@ -246,7 +250,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                             </div>
                                       </div>
                                         <div class="row">      
-                                            <div class="col-md-5">
+                                            <div class="col-md-5" id="Limit"  style="display:none" >
 											<div class="form-group"> <label for="Limit">Limit Value</label>
 											
 										
@@ -263,8 +267,8 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 												    
 												 <div class="col-md-8" id="ActualValueMessage"  style="color:red" ></div>
 											</div>
-											</div>
-											<div class="col-md-5">
+											</div> 
+											<div class="col-md-5" id="Planned" style="display:none">
 											<div class="form-group"> <label for="Planed">Planed Value</label>
 												
 												<h:inputText type="text" id="planedValue" class="form-control" onblur="validateNumber(this,'PlanedValueMessage')" required="true" value="#{categoryView.categoryVO.planedValue}"/>
@@ -389,8 +393,8 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
     
 <script type="text/javascript">
     	$(document).ready(function(){
-      
-        	demo.initChartist();
+    		 
+        	
 
         	$.notify({
             	icon: 'pe-7s-home',
