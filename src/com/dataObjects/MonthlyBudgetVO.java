@@ -21,7 +21,17 @@ public class MonthlyBudgetVO extends DataObjectVO{
 	private String[] categoryIncomeIds;
 	private String[] categoryExpenseIds;
 	private double totalExpectedExpenses;
-    private double exceedLimit;
+	private double totalLimitExpenses;
+    public double getTotalLimitExpenses() {
+		return totalLimitExpenses;
+	}
+
+	public void setTotalLimitExpenses(double totalLimitExpenses) {
+		this.totalLimitExpenses = totalLimitExpenses;
+	}
+
+
+	private double exceedLimit;
     private double savingValue;
 	public double getExceedLimit() {
 		return exceedLimit;

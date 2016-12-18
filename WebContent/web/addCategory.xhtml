@@ -1,34 +1,119 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html>
-<!-- shehab tarek -->
-
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" 
-xmlns:c="http://java.sun.com/jsp/jstl/core">
-
-
-
-<!-- 	<f:loadBundle basename="resources.messages" var="msgs" /> -->
+	xmlns:h="http://java.sun.com/jsf/html">
 	<h:head>
+		
+			<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	 
+ <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="assets/img/favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>Home Budget by Shehab eldin tarek</title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <!-- Bootstrap core CSS     -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Animation library for notifications   -->
+    <link href="assets/css/animate.min.css" rel="stylesheet" />
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet" />
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="assets/css/demo.css" rel="stylesheet" />
+
+    <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+
+<script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+<!--  Checkbox, Radio & Switch Plugins -->
+<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
+<!--  Charts Plugin -->
+<script src="assets/js/chartist.min.js"></script>
+<!--  Notifications Plugin    -->
+<script src="assets/js/bootstrap-notify.js"></script>
+    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+	<script src="assets/js/light-bootstrap-dashboard.js"></script>
+	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+	<script src="assets/js/demo.js"></script>
+	<!--Validation Script -->
+	<script src="assets/js/validation.js"></script>
+ 
+   
+    
+<script type="text/javascript">
+    	$(document).ready(function(){
+        	$.notify({
+            	icon: 'pe-7s-home',
+            	message: "Welcome To Category Page ,You Can Add Category."
+
+            },{
+                type: 'info',
+                timer: 2000
+            });
+        	clear();
+    	});
+	</script>
 	<script>
-	var status=false;
-	function validateArabicDescription(arabicValue)
+	 
+	function validate()
 	{
-		var text=arabicValue.value;
-	    var arregex = /[\u0600-\u06FF]/;
-	   if(arregex.test(text))
-		   {
-		   document.getElementById('arabicDescriptionMessage').innerHTML="";
-		   return true;
-		   }else
-			{
-			 document.getElementById('arabicDescriptionMessage').innerHTML="You Should Enter Arabic Description ";
-		    return false;
+		 clear();
+		 $("#waiting").modal('show'); 
+		 document.getElementById('errorMessage').innerHTML="";
+		 var arabicDescription = document.getElementById("addCategoryForm:arabicDescription");
+		 var error=0;
+	     var successFalge=validateArabicDescription(arabicDescription);
+		 if(successFalge==false)
+			 {
+			 error+=1;
+			 }  
+		 var englishDescription = document.getElementById("addCategoryForm:englishDescription");
+		 successFalge=validateEnglishDescription(englishDescription);
+		 if(successFalge==false)
+			 {
+			 error+=1;
 			 }
-	
+		 //validate Number Values if display is true
+		 var display= document.getElementById('Limit').style.display;
+	  	 if(display!="none")
+			 {
+				 var limitValue = document.getElementById("addCategoryForm:limitValue"); 
+				 successFalge=validateNumber(limitValue,'limitValueMessage');
+				 if(successFalge==false)
+				 {
+				 error+=1;
+				 }  
+			 } 
+		 var display= document.getElementById('Actual').style.display ;
+	 	 if(display!="none")
+			 {
+				 var actualValue = document.getElementById("addCategoryForm:actualValue") ; 
+			     successFalge=validateNumber(actualValue,'ActualValueMessage');
+				 if(successFalge==false)
+				 {
+				 error+=1;
+				 } 
+			 }  
+		 var display= document.getElementById('Planned').style.display;
+	  	 if(display!="none")
+			 {
+				 var plannedValue = document.getElementById("addCategoryForm:plannedValue"); 
+				 successFalge=validateNumber(plannedValue,'PlannedValueMessage');
+				 if(successFalge==false)
+				 {
+				 error+=1;
+				 }  
+			 } 
+		 if(error>0)
+			 {
+			   return false;
+			 }else
+			 {
+			   return true;
+			 }
 	}
+ 
 	function ckeck(selectedValue)
 	{
 		 if(selectedValue.value==2)//Expenses ID
@@ -43,68 +128,42 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 			 document.getElementById("Planned").style.display="none";
 				 }
 	}
-	function validateEnglishDescription(englishValue)
+ 
+ 
+	
+	function submit(data,status)
 	{
-		
-		var text=englishValue.value;
-	    var arregex = /^[0-9a-zA-Z-_]+$/;
-	   if(arregex.test(text))
-		   {
-		   document.getElementById('englishDescriptionMessage').innerHTML="";
-		   return true;
-		   }else
-			{
-			 document.getElementById('englishDescriptionMessage').innerHTML="You Should Enter English  Description ";
-		    return false;
+			 switch(data.status) {
+	         case "begin":
+	        	 $("#waiting").modal('show'); 
+	             break;
+	         case "complete":
+	             break;
+	         case "success":
+	        	 if("block"==document.getElementById("errorMessage").style.display)//server Error
+	        		 {
+	        		    document.getElementById("successMessage").style.display="none";
+	        		 	setTimeout(Fail, 5000);
+	        		 }else//sucess
+	        		 {
+			        	document.getElementById("successMessage").style.display="block";
+			        	setTimeout(Success, 3000);
+	        		 }
+	        	 break;
+	         case "serverError":
+	        	 document.getElementById("successMessage").style.display="none";
+	        	 document.getElementById("errorMessage").style.display="block";
+	        	 showError(data.errorMessage);
+	        	 break;
 			 }
-		
-	
-		
-		
 	}
-	function validateNumber(number,ID)
-	{
-		var numberValue=number.value;
-		var arregex = /^(?=.)([+-]?([0-9]*)(\.([0-9]+))?)$/;
-		if(arregex.test(numberValue))
-		   {
-			 document.getElementById(ID).innerHTML="";
-			  return true;
-		   }else
-			   {
-			 document.getElementById(ID).innerHTML="You Should Enter NuMbers Digits 0.0 ";
-			   return false;
-			   }
-		
-	}
-	
 
+ 
 
 	</script>
 		
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		
-			    <meta charset="utf-8" />
-    <link rel="icon" type="image/png" href="assets/img/favicon.ico" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Home Budget by Shehab eldin tarek</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
-    <!-- Bootstrap core CSS     -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Animation library for notifications   -->
-    <link href="assets/css/animate.min.css" rel="stylesheet" />
-    <!--  Light Bootstrap Table core CSS    -->
-    <link href="assets/css/light-bootstrap-dashboard.css" rel="stylesheet" />
-    <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="assets/css/demo.css" rel="stylesheet" />
-    <!--     Fonts and icons     -->
-	 <link rel="stylesheet" type="text/css" media="screen"
-     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css" />
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css' />
-    <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
-	</h:head>
+
+</h:head>
 	<h:body>
 	
 	   <div class="wrapper">
@@ -209,7 +268,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                            
                                 <div class="header">
                                     <h4 class="title">Create  Category</h4> </div>
-                                    <h:form > 
+                                    <h:form id="addCategoryForm"> 
                                     <div class="content">
                                     
                                         <div class="row">
@@ -223,9 +282,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                             <div class="col-md-5">
                                                 <div class="form-group"> <label>English Description</label> <h:inputText type="text"  required="true" onblur="validateEnglishDescription(this)" id="englishDescription" placeholder=""  class="form-control" value="#{categoryView.categoryVO.englishDescription}"></h:inputText>
                                                   <div class="col-md-8" id="englishDescriptionMessage"  style="color:red" ></div>
-                                           
-
-                                                </div>
+                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">  
@@ -254,9 +311,9 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 											<div class="form-group"> <label for="Limit">Limit Value</label>
 											
 										
-												<h:inputText type="text" id="limitValue" onblur="validateNumber(this,'LimitValueMessage')"  required="true"    class="form-control" value="#{categoryView.categoryVO.limitValue}"/>
+												<h:inputText type="text" id="limitValue" onblur="validateNumber(this,'limitValueMessage')"  required="true"    class="form-control" value="#{categoryView.categoryVO.limitValue}"/>
 												     
-												 <div class="col-md-8" id="LimitValueMessage"  style="color:red" ></div>
+												 <div class="col-md-8" id="limitValueMessage"  style="color:red" ></div>
 											
 											</div>
 											</div>
@@ -271,12 +328,12 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 											<div class="col-md-5" id="Planned" style="display:none">
 											<div class="form-group"> <label for="Planed">Planed Value</label>
 												
-												<h:inputText type="text" id="planedValue" class="form-control" onblur="validateNumber(this,'PlanedValueMessage')" required="true" value="#{categoryView.categoryVO.planedValue}"/>
+												<h:inputText type="text" id="plannedValue" class="form-control" onblur="validateNumber(this,'plannedValueMessage')" required="true" value="#{categoryView.categoryVO.planedValue}"/>
 												     
-												<div class="col-md-8" id="PlanedValueMessage"  style="color:red" ></div>
+												<div class="col-md-8" id="PlannedValueMessage"  style="color:red" ></div>
 											</div>
 											</div>
-											  <div id="wait" style="display:none;width:69px;height:89px;top:50%;left:50%;padding:2px;"><img src='assets/img/demo_wait.gif' width="64" height="64" /><br>Loading..M</br></div>
+											  
                                         
 										</div>
                                         
@@ -284,10 +341,10 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                                                
 
 										            <h:panelGrid columns="2"> 
-										                <h:commandButton value="Add Category"  type="submit"  class="btn btn-info btn-fill pull-right" action="#{categoryView.add}" 
+										                <h:commandButton value="Add Category"  type="submit"  class="btn btn-info btn-fill pull-right" action="#{categoryView.add}" onclick="return validate()"
 																					style="width:150px"  > 
-										                    <f:ajax event="action" execute="englishDescription arabicDescription  limitValue planedValue actualValue categoryStatus categoryTypeId" render="piValueText englishDescription arabicDescription  limitValue planedValue actualValue categoryStatus" onclick=""
- 										                            onevent="function(data) { demo.validate(data,'success')}" onerror="function(data) {  demo.validate(data,'failure')}" /> 
+										                    <f:ajax event="action" execute="englishDescription arabicDescription  limitValue plannedValue actualValue categoryStatus categoryTypeId" render="englishDescription arabicDescription  limitValue plannedValue actualValue categoryStatus" onclick=""
+ 										                            onevent="function(data) { submit(data,'success')}" onerror="function(data) {  submit(data,'failure')}" /> 
  										                </h:commandButton> 
 										              
 										            </h:panelGrid>
@@ -295,12 +352,12 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 										
 										       
 			                                			 
-			                                			 <div class="col-md-9">
+			                                		<!-- 	 <div class="col-md-9">
 			                                			 <h:panelGroup id="piValueText" class="col-md-9" >
 													        <h:outputFormat rendered="#{categoryView.status}" class="form-control col-md-9" value="#{categoryView.message}"/>
 													        
 													    </h:panelGroup>
-													    </div>
+													    </div> -->
 			                                			
 			                                		
 			                                		
@@ -340,76 +397,35 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
     </div>
 	
 
-	<div id="ckeckMail" class="modal fade " >
+ <div id="waiting" class="modal fade " >
     <div class="modal-dialog ">
         <div class="modal-content alert alert-info alert-with-icon">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title">Waiting.....</h4>
             </div>
-            <div class="modal-body">
-         
-    
-      
-			
+                 <div class="modal-body">
                 <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
-        
+                <div class="alert alert-success" id="successMessage" style="display:none">
+                
+                
+                  <span><img src='assets/img/success3.png'/><b> Success - </b> Adding Category Operation Done Successfully "</span>
+                    </div>
+                    	 <div id="error" style="display:none" >Please Solve Errors Before Submit</div>	
+                    	    <div class="alert alert-danger" id="errorMessage" style="display:none">
+                                    <button type="button" aria-hidden="true" class="close">×</button>
+                                   
+                                </div>
+                    
             </div>
         </div>
     </div>
-	
-	
-	
-	
-	
-	
-	
-		
-        </div>
+ 
+ </div>
         
 	</h:body>
 
 
-<!--   Core JS Files   -->
-<script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-<!--  Checkbox, Radio & Switch Plugins -->
-<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
-<!--  Charts Plugin -->
-<script src="assets/js/chartist.min.js"></script>
-<!--  Notifications Plugin    -->
-<script src="assets/js/bootstrap-notify.js"></script>
-<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-<script src="assets/js/light-bootstrap-dashboard.js"></script>
-<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-<script src="assets/js/demo.js"></script>
-<script>
-  	function showWaiting()
-	{
-		 $("#ckeckMail").modal('show');
-	}	
-	</script>
-   
-    
-<script type="text/javascript">
-    	$(document).ready(function(){
-    		 
-        	
 
-        	$.notify({
-            	icon: 'pe-7s-home',
-            	message: "Welcome To Category Page ,You Can Add Category."
 
-            },{
-                type: 'info',
-                timer: 2000
-            });
-			
-			
-
-    	});
-    	
-    	
-    	
-	</script>
 </html>

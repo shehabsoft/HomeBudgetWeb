@@ -70,6 +70,7 @@ public class UserView extends JSFView {
 
 
 	//private UserView userView=new UserView();
+    private boolean validateError=false;
     private boolean emailExit=false;
 	private String emailExitMessage="";
 	private List<CurrencyVO> currencyList=new ArrayList<CurrencyVO>();
@@ -122,6 +123,14 @@ public class UserView extends JSFView {
 		this.message = message;
 	}
 	
+	public boolean isValidateError() {
+		return validateError;
+	}
+
+	public void setValidateError(boolean validateError) {
+		this.validateError = validateError;
+	}
+
 	@Action
 	public void add() throws BusinessException
 	{
@@ -136,7 +145,7 @@ public class UserView extends JSFView {
 //		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
 //		System.out.print(responseMessage);	
 		status=true;
-		// throw new BusinessException("dfdgfg");
+	// throw new BusinessException("dfdgfg");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block	
 			status=false;

@@ -152,7 +152,7 @@ public class PurchaceView extends JSFView  {
 			{
 				System.out.println(e);
 				throw new BusinessException(e.toString());
-			}
+			} 
 			
 			
 		

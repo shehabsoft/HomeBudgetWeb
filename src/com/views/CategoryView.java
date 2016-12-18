@@ -299,6 +299,7 @@ public class CategoryView extends JSFView {
 	public void add() throws BusinessException
 	{
 		String responseMessage="";
+		
 		try {
 			if(new Integer(categoryVO.getCategoryTypeId()).equals(Constants.CATEGORY_TYPE_VALUE_EXPENSES))
 			{
@@ -317,6 +318,10 @@ public class CategoryView extends JSFView {
 			if(e instanceof BusinessException)
 			{
 				System.out.println(e);
+				throw new BusinessException(e.toString());
+			}
+			if(e instanceof Exception)
+			{
 				throw new BusinessException(e.toString());
 			}
 		}

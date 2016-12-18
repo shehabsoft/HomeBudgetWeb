@@ -82,6 +82,7 @@ public class BudgetView extends JSFView {
 		 monthlyBudgetVO.setTotalExpenses(getTotalExpenses(categoryList));
 		 monthlyBudgetVO.setTotalIncomes(getTotalIncomes(categoryIncomeList));
 		 monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
+		 monthlyBudgetVO.setTotalLimitExpenses(getTotalLimitExpenses(categoryList));
 	     monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalExpectedExpenses())*100);
 	     System.out.println("Ratio: "+monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
@@ -213,6 +214,7 @@ public class BudgetView extends JSFView {
 		 monthlyBudgetVO.setTotalExpenses(getTotalExpenses(categoryList));
 		 monthlyBudgetVO.setTotalIncomes(getTotalIncomes(categoryIncomeList));
 		 monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
+		 monthlyBudgetVO.setTotalLimitExpenses(getTotalLimitExpenses(categoryList));
 		 monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalExpectedExpenses())*100);
 	     System.out.println(monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
@@ -249,6 +251,15 @@ public class BudgetView extends JSFView {
 			tatalExpenses+=categoryVO.getActualValue();
 		}
 		return tatalExpenses;
+	}
+	public double getTotalLimitExpenses(List<CategoryVO> categoryVOs) throws Exception
+	{
+		double totalLimitExpenses=0;
+		for(CategoryVO categoryVO:categoryVOs)
+		{
+			totalLimitExpenses+=categoryVO.getLimitValue();
+		}
+		return totalLimitExpenses;
 	}
 	public double getLimits(List<CategoryVO> categoryVOs) throws Exception
 	{
