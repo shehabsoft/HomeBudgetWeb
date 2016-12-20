@@ -70,6 +70,18 @@ demo = {
        case 4:
     	   months=['1','2','3','4'];
     	   break;
+       case 5:
+    	   months=['1','2','3','4','5'];
+    	   break;
+       case 6:
+    	   months=['1','2','3','4','5','6'];
+    	   break;
+       case 7:
+    	   months=['1','2','3','4','5','6','7'];
+    	   break;
+       case 8:
+    	   months=['1','2','3','4','5','6','7','8'];
+    	   break;
           }
        var months
         var data = {

@@ -33,6 +33,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
+    	<script src="assets/js/validation.js"></script>
   <script>
   $( function() {
     $("#datepicker").datepicker();
@@ -40,11 +41,86 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
   } );
   </script>
   <script>
-  	function showWaiting()
+ 
+	function validate()
 	{
-		 $("#ckeckMail").modal('show');
-	}	
+		 clear();
+		 $("#waiting").modal('show'); 
+		 document.getElementById('errorMessage').innerHTML="";
+		 var datepickerend = document.getElementById("datepickerend");
+		 var error=0;
+		 if(datepickerend.value==null ||datepickerend.value=='')
+			 {
+			 error+=1;
+			 document.getElementById('error').style.display="block";
+		     document.getElementById('errorMessage').style.display="block";
+		     document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Select End Date ";
+			 }
+		 
+		 var datepicker = document.getElementById("datepicker");
+		 if(datepicker.value==null ||datepicker.value=='')
+		 {
+		 error+=1;
+		 document.getElementById('error').style.display="block";
+	     document.getElementById('errorMessage').style.display="block";
+	     document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Select Start Date ";
+		 }
+		 //validate Number Values if display is true
+	     /* var expenseBudgetId = document.getElementById("expenseBudgetId"); 
+		 if(expenseBudgetId.selectedOptions.length==null ||expenseBudgetId.selectedOptions.length=='')
+			 {
+			 error+=1;
+			 document.getElementById('error').style.display="block";
+		     document.getElementById('errorMessage').style.display="block";
+		     document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Select at Least One Expneses Categories ";
+			 }
+		 var categoryIncomeId = document.getElementById("categoryIncomeId"); 
+		 
+		 if(categoryIncomeId.selectedOptions.length==null ||categoryIncomeId.selectedOptions.length=='')
+		 {
+		 error+=1;
+		 document.getElementById('error').style.display="block";
+	     document.getElementById('errorMessage').style.display="block";
+	     document.getElementById('errorMessage').innerHTML=document.getElementById('errorMessage').innerHTML+"<br/>"+"You Should Select at Least One Income Categories ";
+		 } */
+	 
+		 if(error>0)
+			 {
+			   return false;
+			 }else
+			 {
+			   return true;
+			 }
+	}
+
+	function submit(data,status)
+	{
+			 switch(data.status) {
+	         case "begin":
+	        	 $("#waiting").modal('show'); 
+	             break;
+	         case "complete":
+	             break;
+	         case "success":
+	        	 if("block"==document.getElementById("errorMessage").style.display)//server Error
+	        		 {
+	        		    document.getElementById("successMessage").style.display="none";
+	        		 	setTimeout(Fail, 5000);
+	        		 }else//sucess
+	        		 {
+			        	document.getElementById("successMessage").style.display="block";
+			        	setTimeout(Success, 3000);
+	        		 }
+	        	 break;
+	         case "serverError":
+	        	 document.getElementById("successMessage").style.display="none";
+	        	 document.getElementById("errorMessage").style.display="block";
+	        	 showError(data.errorMessage);
+	        	 break;
+			 }
+	}
 	</script>
+
    
 </h:head>
 <h:body>
@@ -274,7 +350,6 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 										                    <f:ajax event="action" execute="categoryIncomeId" render="categoryIncomeId selectedCategoryIncomeId"
 										                            onevent="function(data) { demo.validate(data)}"  />
 									</h:commandButton>
-		 							
 									</div>
                                        <div class="col-md-5">
                                             <div class="form-group" >
@@ -297,10 +372,10 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 										            
 								<div class="form-control col-md-4">
                                          
-										  <h:commandButton value="Save"    class="btn btn-info btn-fill pull-right form-control" 
+										  <h:commandButton value="Save"    class="btn btn-info btn-fill pull-right form-control"  onclick="return validate()"
 																					style="margin-left:10px"  actionListener="#{budgetView.edit}">
 										                    <f:ajax event="action" execute="categoryIncomeId datepicker expenseBudgetId datepickerend" render="categoryIncomeId expenseBudgetId"
-										                            onevent="function(data) { demo.validate(data)}"  />
+										                           onevent="function(data) { submit(data,'success')}" onerror="function(data) {  submit(data,'failure')}"  />
 									</h:commandButton>
 		 										  
 		 										
@@ -318,16 +393,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 									</h:commandButton>
 		 							
 									</div>
-												<div class="form-group">  
-												  
-			                                			
-			                                			<h:panelGroup id="piValueText" class="form-control col-md-7" >
-													        <h:outputFormat  rendered="#{budgetView.status}" class="form-control col-md-9" value="#{budgetView.message}"/>
-													        
-													    </h:panelGroup>
-													  
-										            
-										            </div>
+										 
 		 							
 										            </div>
                                     <div class="clearfix"></div>
@@ -385,23 +451,31 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 
        
  
- <div id="ckeckMail" class="modal fade form-control " >
+ 
+ <div id="waiting" class="modal fade " >
     <div class="modal-dialog ">
         <div class="modal-content alert alert-info alert-with-icon">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title">Waiting.....</h4>
             </div>
-            <div class="modal-body">
-         
-    
-      
-			
+                 <div class="modal-body">
                 <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
-        
+                <div class="alert alert-success" id="successMessage" style="display:none">
+                
+                
+                  <span><img src='assets/img/success3.png'/><b> Success - </b>Edit Budget Operation Done Successfully "</span>
+                    </div>
+                    	 <div id="error" style="display:none" >Please Solve Errors Before Submit</div>	
+                    	    <div class="alert alert-danger" id="errorMessage" style="display:none">
+                                    <button type="button" aria-hidden="true" class="close">×</button>
+                                   
+                                </div>
+                    
             </div>
         </div>
     </div>
+ 
  </div>
  
  
