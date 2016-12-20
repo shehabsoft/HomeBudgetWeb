@@ -27,6 +27,7 @@ import javax.xml.ws.Action;
 import javax.xml.ws.WebServiceException;
 
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.annotate.JsonAnyGetter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -82,6 +83,7 @@ public class BudgetView extends JSFView {
 		 monthlyBudgetVO.setTotalExpenses(getTotalExpenses(categoryList));
 		 monthlyBudgetVO.setTotalIncomes(getTotalIncomes(categoryIncomeList));
 		 monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
+		 monthlyBudgetVO.setRemaining(monthlyBudgetVO.getTotalIncomes()-monthlyBudgetVO.getTotalExpenses());
 		 monthlyBudgetVO.setTotalLimitExpenses(getTotalLimitExpenses(categoryList));
 	     monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalExpectedExpenses())*100);
 	     System.out.println("Ratio: "+monthlyBudgetVO.getCompletedRatio());
@@ -216,7 +218,8 @@ public class BudgetView extends JSFView {
 		 monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
 		 monthlyBudgetVO.setTotalLimitExpenses(getTotalLimitExpenses(categoryList));
 		 monthlyBudgetVO.setCompletedRatio((monthlyBudgetVO.getTotalExpenses()/monthlyBudgetVO.getTotalExpectedExpenses())*100);
-	     System.out.println(monthlyBudgetVO.getCompletedRatio());
+		 monthlyBudgetVO.setRemaining(monthlyBudgetVO.getTotalIncomes()-monthlyBudgetVO.getTotalExpenses());
+		 System.out.println(monthlyBudgetVO.getCompletedRatio());
 	     style ="width:"+monthlyBudgetVO.getCompletedRatio()+"%";
 	     logger.info("Ratio: "+monthlyBudgetVO.getCompletedRatio());
 	     initializeChart();
@@ -457,6 +460,51 @@ public class BudgetView extends JSFView {
 	
 		System.out.println("Calling Transaction Service Form Purchhase View(Edit Purchase)");
 		requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.EDIT_MONTHLY_BUDGET_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><monthlyBudgetId>"+selectedMonthlyBudgetVO.getId()+"</monthlyBudgetId><startDate>"+selectedMonthlyBudgetVO.getStartDate()+"</startDate><endDate>"+selectedMonthlyBudgetVO.getEndDate()+"</endDate><incomeCategoriesId>"+Arrays.toString(selectedMonthlyBudgetVO.getCategoryIncomeIds())+"</incomeCategoriesId><expenseCategoriesId>"+Arrays.toString(selectedMonthlyBudgetVO.getCategoryExpenseIds())+"</expenseCategoriesId></createTransaction>]]>";	
+		System.out.println("Request Data "+requestData);
+		String response=callTransactionService(requestData);
+		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();
+		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
+		System.out.println("response  Data "+responseMessage);
+		System.out.print(responseMessage);	
+		 
+		setStatus(true);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block	
+			setStatus(false);
+			logger.error(e);
+			if(e instanceof BusinessException)
+			{
+				System.out.println(e);
+				throw new BusinessException(e.toString());
+			}
+			
+			
+		
+		}finally
+		{
+			if(!getStatus())
+			{
+				setMessage("Error");
+			}
+			
+		}
+		
+		setMessage(responseMessage);
+
+		
+		
+		return true;
+	}
+	@Action
+	public boolean close() throws BusinessException
+	{
+		
+		String responseMessage="";
+		String requestData="";
+		try {
+		System.out.println("Calling Transaction Service Form Purchhase View(Edit Purchase)");
+		Gson gson = new Gson(); 
+		requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.CLOSE_MONTHLY_BUDGET_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><monthlyBudgetId>"+this.getMonthlyBudgetVO().getId()+"</monthlyBudgetId><incomeCategories>{CategoryVO:"+gson.toJson(getCategoryIncomeList())+"}</incomeCategories></createTransaction>]]>";	
 		System.out.println("Request Data "+requestData);
 		String response=callTransactionService(requestData);
 		TransactionServiceParser transactionServiceParser=new  TransactionServiceParser();

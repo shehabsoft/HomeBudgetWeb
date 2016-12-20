@@ -130,9 +130,7 @@ public class PurchaceView extends JSFView  {
 	@Action
 	public void add() throws BusinessException
 	{
-	
 		String responseMessage="";
-		
 		try {
 		System.out.println("Calling Transaction Service Form Purchhase View");
 		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_PURCHASE_SERVICE+"</serviceCode><userId>"+getUserVO().getId()+"</userId><arabicDescription>"+purchaseVO.getArabicDescription()+"</arabicDescription> <englishDescription>"+purchaseVO.getEnglishDescription()+"</englishDescription><price>"+purchaseVO.getPrice()+"</price><categoryId>"+purchaseVO.getCategoryId()+"</categoryId><locationId>"+purchaseVO.getLocationId()+"</locationId><details>"+purchaseVO.getDetails()+"</details></createTransaction>]]>";	
@@ -153,9 +151,6 @@ public class PurchaceView extends JSFView  {
 				System.out.println(e);
 				throw new BusinessException(e.toString());
 			} 
-			
-			
-		
 		}finally
 		{
 			if(!getStatus())

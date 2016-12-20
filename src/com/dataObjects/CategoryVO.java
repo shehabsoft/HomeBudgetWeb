@@ -17,6 +17,15 @@ public class CategoryVO extends DataObjectVO{
 	private double actualValue;
     private double exceedLimit;
     private double savingValue;
+    private double newValue;
+	public double getNewValue() {
+		return newValue;
+	}
+
+	public void setNewValue(double newValue) {
+		this.newValue = newValue;
+	}
+
 	public double getExceedLimit() {
 		return exceedLimit;
 	}

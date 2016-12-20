@@ -22,7 +22,9 @@ public class MonthlyBudgetVO extends DataObjectVO{
 	private String[] categoryExpenseIds;
 	private double totalExpectedExpenses;
 	private double totalLimitExpenses;
-    public double getTotalLimitExpenses() {
+	private double remaining;
+    
+	public double getTotalLimitExpenses() {
 		return totalLimitExpenses;
 	}
 
@@ -182,7 +184,14 @@ public class MonthlyBudgetVO extends DataObjectVO{
 	}
 
 
-	
+	public double getRemaining() {
+		return remaining;
+	}
+
+	public void setRemaining(double remaining) {
+		this.remaining = remaining;
+	}
+
 
 
 
