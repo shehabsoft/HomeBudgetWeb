@@ -32,13 +32,16 @@ demo = {
          });
     },
 
-    initDocumentationCharts: function(){
+    initDocumentationCharts: function(dayString,totalPriceString,expensesLabels,expensesValues,dayStringCategory,totalPriceStringCategory){
         /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
+    	var day = [];
+    	var totalPrice=[];
+    	day[0] = dayString.split(",");
+    	totalPrice[0] = totalPriceString.split(",");
         dataDailySalesChart = {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+            labels: day[0],
             series: [
-                [12, 17, 7, 17, 23, 18, 38]
+                 [totalPrice[0]]
             ]
         };
 
@@ -47,7 +50,7 @@ demo = {
                 tension: 0
             }),
             low: 0,
-            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            high: 5000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
             chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
         }
 
@@ -56,15 +59,21 @@ demo = {
         md.startAnimationForLineChart(dailySalesChart);
     },
 
-    initDashboardPageCharts: function(){
+    initDashboardPageCharts: function(dayString,totalPriceString,expensesLabels,expensesValues,dayStringCategory,totalPriceStringCategory){
 
         /* ----------==========     Daily Sales Chart initialization    ==========---------- */
-
+    	var day = [];
+    	var totalPrice=[];
+    	day[0] = dayString.split(",");
+    	totalPrice[0] = totalPriceString.split(",");
         dataDailySalesChart = {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-            series: [
-                [12, 17, 7, 17, 23, 18, 38]
-            ]
+           
+        		labels:day[0],
+            
+    
+            series: [totalPrice[0]]
+                
+            
         };
 
         optionsDailySalesChart = {
@@ -72,7 +81,7 @@ demo = {
                 tension: 0
             }),
             low: 0,
-            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            high: 5000	, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
             chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
         }
 
@@ -83,11 +92,14 @@ demo = {
 
 
         /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
+        var dayCategory = [];
+    	var totalPriceCategory=[];
+    	dayCategory[0] = dayStringCategory.split(",");
+    	totalPriceCategory[0] = totalPriceStringCategory.split(",");
         dataCompletedTasksChart = {
-            labels: ['12am', '3pm', '6pm', '9pm', '12pm', '3am', '6am', '9am'],
+            labels: dayCategory[0]	,
             series: [
-                [230, 750, 450, 300, 280, 240, 200, 190]
+                totalPriceCategory[0]
             ]
         };
 
@@ -108,11 +120,28 @@ demo = {
 
 
         /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-
+        var expensesLab = [];
+    	var expensesVal=[];
+    	expensesLab[0] = expensesLabels.split(",");
+    	var LabelNum ="";
+    	var LabelNumArr=[];
+    	expensesVal[0] = expensesValues.split(",");
+    	for(i=0;i<expensesLab[0].length;i++)
+    		{
+    		if(i==expensesLab[0].length-1)
+    			{
+    			LabelNum+=""+i;	
+    			}else
+    			 {
+    			 LabelNum+=""+i+",";	
+    			 }
+    		
+    		}
+    	LabelNumArr[0]=LabelNum.split(",");
         var dataEmailsSubscriptionChart = {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          labels:	LabelNumArr[0],
           series: [
-            [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+                expensesVal[0]
 
           ]
         };
@@ -121,7 +150,7 @@ demo = {
                 showGrid: false
             },
             low: 0,
-            high: 1000,
+            high: 3000,
             chartPadding: { top: 0, right: 5, bottom: 0, left: 0}
         };
         var responsiveOptions = [

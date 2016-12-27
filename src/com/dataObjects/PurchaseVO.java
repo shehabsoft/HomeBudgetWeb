@@ -1,39 +1,42 @@
 package com.dataObjects;
 
-import java.util.Date;
+public class PurchaseVO extends DataObjectVO {
 
-public class PurchaseVO extends DataObjectVO{
-	
-	
 	private String arabicDescription;
-	
 	private String englishDescription;
-
-
-
 	private int categoryId;
 	private int locationId;
 	private String creationDate;
 	private double price;
 	private double newPrice;
-	 private String categoryName;
-	 private String  locationName;
-	 private String details;
+	private String categoryName;
+	private String locationName;
+	private String details;
+	private double totalPrice;
 
+	public double getTotalPrice() {
+		return totalPrice;
+	}
 
-		public String getLocationName() {
-			return locationName;
-		}
-		public void setLocationName(String locationName) {
-			this.locationName = locationName;
-		}
-	
-		public String getCreationDate() {
-			return creationDate;
-		}
-		public void setCreationDate(String creationDate) {
-			this.creationDate = creationDate;
-		}
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public String getLocationName() {
+		return locationName;
+	}
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
+
+	public String getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(String creationDate) {
+		this.creationDate = creationDate;
+	}
 
 	public String getCategoryName() {
 		return categoryName;
@@ -42,12 +45,15 @@ public class PurchaseVO extends DataObjectVO{
 	public String getDetails() {
 		return details;
 	}
+
 	public void setDetails(String details) {
 		this.details = details;
 	}
+
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+
 	public String getArabicDescription() {
 		return arabicDescription;
 	}
@@ -63,7 +69,6 @@ public class PurchaseVO extends DataObjectVO{
 	public void setEnglishDescription(String englisDescription) {
 		this.englishDescription = englisDescription;
 	}
-
 
 	public int getCategoryId() {
 		return categoryId;
@@ -88,12 +93,13 @@ public class PurchaseVO extends DataObjectVO{
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
 	public double getNewPrice() {
 		return newPrice;
 	}
+
 	public void setNewPrice(double newPrice) {
 		this.newPrice = newPrice;
 	}
-
 
 }
