@@ -333,7 +333,7 @@
     <h:form  id="monthlyBudget" >
       	<div id="closeMonthlyBudget" class="modal fade" role="dialog" >
 		    <div class="modal-dialog" style="background-color:white">
-		        <div class="modal-content alert alert-info alert-with-icon" style="background-color:white;color:black">
+		        <div class="modal-content alert alert-info alert-with-icon" style="background-color:white;color:black;padding: 0px">
 		            <div class="modal-header">
 		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 		                <h4 class="modal-title">Close Monthly Budget</h4>
@@ -355,7 +355,7 @@
 								
 								    	
 		 
-									           <h:column>
+									           <h:column  id="description">
 								    				<f:facet name="header"> Description</f:facet>
 								    				#{o.englishDescription}
 								    			</h:column>
@@ -403,7 +403,7 @@
                 <h4 class="modal-title">Waiting.....</h4>
             </div>
                  <div class="modal-body">
-                <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
+                <div id="wait" style=""><img src='assets/img/3.gif' /> Please Wait</div>
                 <div class="alert alert-success" id="successMessage" style="display:none">
                 
                 

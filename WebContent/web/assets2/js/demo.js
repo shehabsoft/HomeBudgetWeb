@@ -32,7 +32,7 @@ demo = {
          });
     },
 
-    initDocumentationCharts: function(dayString,totalPriceString,expensesLabels,expensesValues,dayStringCategory,totalPriceStringCategory){
+    initDocumentationCharts: function(dayString,totalPriceString,expensesLabels,expensesValues,dayStringCategory,totalPriceStringCategory,maxPurchasesPercategory){
         /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
     	var day = [];
     	var totalPrice=[];
@@ -59,7 +59,7 @@ demo = {
         md.startAnimationForLineChart(dailySalesChart);
     },
 
-    initDashboardPageCharts: function(dayString,totalPriceString,expensesLabels,expensesValues,dayStringCategory,totalPriceStringCategory){
+    initDashboardPageCharts: function(dayString,totalPriceString,expensesLabels,expensesValues,dayStringCategory,totalPriceStringCategory,maxPurchasesPercategory){
 
         /* ----------==========     Daily Sales Chart initialization    ==========---------- */
     	var day = [];
@@ -108,7 +108,7 @@ demo = {
                 tension: 0
             }),
             low: 0,
-            high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            high: maxPurchasesPercategory, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
             chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
         }
 

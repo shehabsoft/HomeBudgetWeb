@@ -39,7 +39,7 @@
  
 	<div class="wrapper">
 
-	    <div class="sidebar" data-color="purple" data-image="assets2/img/sidebar-1.jpg">
+	    <div class="sidebar" data-color="purple" data-image="assets2/img/sidebar-4.jpg">
 			<!--
 		        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -48,7 +48,7 @@
 
 			<div class="logo">
 				<a href="http://www.creative-tim.com" class="simple-text">
-					Creative Tim
+				 
 				</a>
 			</div>
 
@@ -96,12 +96,7 @@
 	                        <p>Notifications</p>
 	                    </a>
 	                </li>
-					<li class="active-pro">
-	                    <a href="upgrade.html">
-	                        <i class="material-icons">unarchive</i>
-	                        <p>Upgrade to PRO</p>
-	                    </a>
-	                </li>
+					 
 	            </ul>
 	    	</div>
 	    </div>
@@ -219,8 +214,8 @@
 									<i class="fa fa-twitter"></i>
 								</div>
 								<div class="card-content">
-									<p class="category">Followers</p>
-									<h3 class="title">+245</h3>
+									<p class="category">Saving</p>
+									<h3 class="title"><h:outputLabel styleClass="title" id="savingValue" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingValue}"></h:outputLabel></h3>
 								</div>
 								<div class="card-footer">
 									<div class="stats">
@@ -291,8 +286,8 @@
    														<f:selectItems value="#{budgetView.categoryMap}"    />
    														<f:ajax   event="change" listener="#{budgetView.ajaxChart}"   execute="categoryId" render="" 														
    														   onevent="function(data) { if (data.status === 'success') { 
-   														   demo.initDocumentationCharts('#{budgetView.dayString}','#{budgetView.totalPriceString}','#{budgetView.expensesLabelsString}','#{budgetView.expensesValuesString}','#{budgetView.dayStringByCategory}','#{budgetView.totalPriceStringByCategory}');
-        	                                               demo.initDashboardPageCharts('#{budgetView.dayString}','#{budgetView.totalPriceString}','#{budgetView.expensesLabelsString}','#{budgetView.expensesValuesString}','#{budgetView.dayStringByCategory}','#{budgetView.totalPriceStringByCategory}');
+   														   demo.initDocumentationCharts('#{budgetView.dayString}','#{budgetView.totalPriceString}','#{budgetView.expensesLabelsString}','#{budgetView.expensesValuesString}','#{budgetView.dayStringByCategory}','#{budgetView.totalPriceStringByCategory}','#{budgetView.maxExpenses}');
+        	                                               demo.initDashboardPageCharts('#{budgetView.dayString}','#{budgetView.totalPriceString}','#{budgetView.expensesLabelsString}','#{budgetView.expensesValuesString}','#{budgetView.dayStringByCategory}','#{budgetView.totalPriceStringByCategory}','#{budgetView.maxExpenses}');
    														   location.reload();
                                                                                                           } }
    														
@@ -689,8 +684,8 @@
     	$(document).ready(function(){
     	 
 			// Javascript method's body can be found in assets2/js/demos.js
-			demo.initDocumentationCharts('#{budgetView.dayString}','#{budgetView.totalPriceString}','#{budgetView.expensesLabelsString}','#{budgetView.expensesValuesString}','#{budgetView.dayStringByCategory}','#{budgetView.totalPriceStringByCategory}');
-        	demo.initDashboardPageCharts('#{budgetView.dayString}','#{budgetView.totalPriceString}','#{budgetView.expensesLabelsString}','#{budgetView.expensesValuesString}','#{budgetView.dayStringByCategory}','#{budgetView.totalPriceStringByCategory}');
+			demo.initDocumentationCharts('#{budgetView.dayString}','#{budgetView.totalPriceString}','#{budgetView.expensesLabelsString}','#{budgetView.expensesValuesString}','#{budgetView.dayStringByCategory}','#{budgetView.totalPriceStringByCategory}','#{budgetView.maxExpenses}');
+        	demo.initDashboardPageCharts('#{budgetView.dayString}','#{budgetView.totalPriceString}','#{budgetView.expensesLabelsString}','#{budgetView.expensesValuesString}','#{budgetView.dayStringByCategory}','#{budgetView.totalPriceStringByCategory}','#{budgetView.maxExpenses}');
         	 
 
     	});

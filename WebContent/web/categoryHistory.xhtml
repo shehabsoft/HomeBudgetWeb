@@ -36,6 +36,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'/>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+     <script src="assets/js/validation.js"></script>
     
    <script>
 $(document).ready(function() {
@@ -43,12 +44,8 @@ $(document).ready(function() {
    
 } );
     </script>
-      <script>
-  	function showWaiting()
-	{
-		 $("#ckeckMail").modal('show');
-	}	
-	</script>
+  	
+ 
 </h:head>
 <h:body>
 <div class="wrapper">
@@ -265,25 +262,33 @@ $(document).ready(function() {
 								    		
 		  </div>
 	  
-<div id="ckeckMail" class="modal fade " >
+	
+ <div id="waiting" class="modal fade " >
     <div class="modal-dialog ">
-        <div class="modal-content alert alert-info alert-with-icon">
+        <div class="modal-content alert alert-success alert-with-icon">
+            
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title">Waiting.....</h4>
             </div>
-            <div class="modal-body">
-         
-    
-      
-			
-                <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
-        
+                 <div class="modal-body">
+                     <div id="wait" style="">  <img src='assets/img/3.gif'  /> Please Wait</div>
+                <div class="alert alert-success" id="successMessage" style="display:none">
+                
+                
+                  <span><img src='assets/img/success3.png'/><b> Success - </b> Adding Purchase Operation Done Successfully "</span>
+                    </div>
+                    	 <div id="error" style="display:none" >Please Solve Errors Before Submit</div>	
+                    	    <div class="alert alert-danger" id="errorMessage" style="display:none">
+                                    <button type="button" aria-hidden="true" class="close">×</button>
+                                   
+                                </div>
+                    
             </div>
         </div>
     </div>
-    </div>
-    </div>
+ 
+ </div>
 	</h:body>
 	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
 
