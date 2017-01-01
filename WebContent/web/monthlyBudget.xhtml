@@ -61,6 +61,7 @@
    </style>
  	</h:head>
 	<h:body>
+	  <h:form  id="monthlyBudget">
 		   <div class="wrapper">
     <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
  
@@ -166,12 +167,12 @@
                         </li>
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Dropdown
+                                    User
                                     <b class="caret"></b>
                               </a>
                               <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
+                                <li><a href="signUp.jsf">Sign Up</a></li>
+                                <li><a href="login.jsf">Sign Out</a></li>
                                 <li><a href="#">Something</a></li>
                                 <li><a href="#">Another action</a></li>
                                 <li><a href="#">Something</a></li>
@@ -191,7 +192,7 @@
 
  
         <div class="content">
-              <h:form>
+               
             <div class="container-fluid">
                 <div class="row">
           
@@ -291,7 +292,7 @@
     
  
             </div>
-            </h:form>
+          
         </div>
 
 
@@ -329,8 +330,7 @@
 
     </div>
 </div>
-</h:body>
-    <h:form  id="monthlyBudget" >
+
       	<div id="closeMonthlyBudget" class="modal fade" role="dialog" >
 		    <div class="modal-dialog" style="background-color:white">
 		        <div class="modal-content alert alert-info alert-with-icon" style="background-color:white;color:black;padding: 0px">
@@ -378,9 +378,9 @@
 								    		</h:dataTable>
 								    		</div>
 								    		
-								    		  <h:commandButton value="Save"    class="btn btn-info btn-fill pull-right" onclick="$('#closeMonthlyBudget').modal('show');" 
+								    		  <h:commandButton value="Save"    class="btn btn-info btn-fill pull-right" onclick="return  validate()" 
 																					style="margin-left:5px"  actionListener="#{budgetView.close}">
-										                    <f:ajax event="action" execute="myTable" render="" 
+										                    <f:ajax event="action" execute="myTable" render="startDateId endDateId creationDateId totalIncome saving totalExpectedExpenses totallimitExpenses exceedLimit totalIncome1 totalExpenses1 remaining " 
  										                            onevent="function(data) { submit(data,'success')}" onerror="function(data) {submit(data,'failure')}" /> 
 										        </h:commandButton>
 										       <a href="" class="btn btn-info btn-fill pull-right" onclick="ResetForm()"> Reset</a>	
@@ -394,14 +394,14 @@
 		            </div>
 		        </div>
 		    </div>
-		    </h:form>
+		  
  <div id="waiting" class="modal fade " >
     <div class="modal-dialog ">
         <div class="modal-content alert alert-info alert-with-icon">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title">Waiting.....</h4>
-            </div>
+            </div>continue
                  <div class="modal-body">
                 <div id="wait" style=""><img src='assets/img/3.gif' /> Please Wait</div>
                 <div class="alert alert-success" id="successMessage" style="display:none">
@@ -414,15 +414,19 @@
                                     <button type="button" aria-hidden="true" class="close">×</button>
                                    
                                 </div>
-                    
+                    <h:commandButton value="Continue"    class="btn btn-info btn-fill pull-right" onclick="Continue()" id="continue"
+																					style="margin-left:5px;display:none"  actionListener="#{budgetView.close}">
+					 <f:ajax event="action" execute="myTable" render="startDateId endDateId creationDateId totalExpenses totalIncome saving totalExpectedExpenses totallimitExpenses exceedLimit totalIncome1 totalExpenses1 remaining " 
+ 						 onevent="function(data) { submit(data,'success')}" onerror="function(data) {submit(data,'failure')}" /> 
+					 </h:commandButton>
             </div>
         </div>
     </div>
  
  </div>
 
-
-  
+  </h:form>
+  </h:body>
    <script>
 	function submit(data,status)
 	{
@@ -493,6 +497,29 @@
   		
   	   
  
+  	}
+  	function validate()
+  	{
+  	$('#waiting').modal('show');
+  	var remainig=	document.getElementById('monthlyBudget:remaining').value;
+  	if(remainig>0)
+  		{
+		document.getElementById("error").style.display="block";
+		document.getElementById("errorMessage").style.display="block";
+		 document.getElementById("monthlyBudget:continue").style.display="block";
+  		document.getElementById("errorMessage").innerHTML="You Have Remaing Value From Previous Month with Value "+remainig+"  Do you want To Continue ";
+  		return false;
+  		}
+  	
+  	else
+  		return true
+  	}
+  	function Continue()
+  	{
+  		document.getElementById("error").style.display="none";
+	    document.getElementById("errorMessage").style.display="none";
+	    document.getElementById("monthlyBudget:continue").style.display="none";
+	    
   	}
 	</script>
 	<script type="text/javascript">

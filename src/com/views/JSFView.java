@@ -57,7 +57,7 @@ public void setUserVO(UserVO userVO) {
 	JSFView.userVO = userVO;
 }
 
-public abstract void add() throws BusinessException;
+public abstract void add() throws BusinessException, Exception;
    public abstract void refesh() throws Exception;
    public abstract void reset();
    

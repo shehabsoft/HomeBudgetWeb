@@ -108,6 +108,7 @@ public class BudgetView extends JSFView {
 			logger.info("Ratio: " + monthlyBudgetVO.getCompletedRatio());
 
 			initializeChart();
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.error(e);
@@ -659,7 +660,7 @@ public class BudgetView extends JSFView {
 	}
 
 	@Action
-	public boolean close() throws BusinessException {
+	public boolean close() throws Exception {
 
 		String responseMessage = "";
 		String requestData = "";
@@ -696,12 +697,12 @@ public class BudgetView extends JSFView {
 		}
 
 		setMessage(responseMessage);
-
+        refesh();
 		return true;
 	}
 
 	@Action
-	public void add() throws BusinessException {
+	public void add() throws Exception {
 		String responseMessage = "";
 		try {
 			String requestData = "<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"
@@ -727,6 +728,7 @@ public class BudgetView extends JSFView {
 		setStatus(true);
 		setMessage(responseMessage);
 		reset();
+		refesh();
 	}
 
 	public void reset() {
