@@ -161,7 +161,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                           <a href="">
+                           <a href="user.jsf">
                                Account
                             </a>
                         </li>
@@ -173,15 +173,14 @@
                               <ul class="dropdown-menu">
                                 <li><a href="signUp.jsf">Sign Up</a></li>
                                 <li><a href="login.jsf">Sign Out</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
+                               
+                              
                                 <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                <li><a href="Dashboard.jsf">Dashboard</a></li>
                               </ul>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="login.jsf">
                                 Log out
                             </a>
                         </li>
@@ -201,7 +200,7 @@
                         <div class="card card-user">
                           
                             <div class="content">
-                            <h4 class="title">Monitoring Progress...<br /> </h4>
+                          
                                     <div id="topLoader"  class="col-md-5"  >      
                                         </div>
                                           <h4 class="title">Current Expenses <b><h:outputLabel styleClass="title" id="totalExpenses" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalExpenses}"></h:outputLabel></b></h4>
@@ -266,7 +265,7 @@
                              <div class="col-md-4">
                         <div class="card ">
                             <div class="header">
-                                <h4 class="title">2016 Budget</h4>
+                                <h4 class="title"> <script>document.write(new Date().getFullYear())</script> Budget</h4>
                                 <p class="category">All Incomes and Expenses  against Months</p>
                             </div>
                             <div class="content">
@@ -323,7 +322,7 @@
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                   2016 <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                    <script>document.write(new Date().getFullYear())</script> <a href="https://plus.google.com/u/0/116725778726548635120">shehab Soft</a>, made with love for a better web
                 </p>
             </div>
         </footer>
