@@ -13,7 +13,15 @@ public class CategoryVO extends DataObjectVO{
 	private double limitValue;
 	
 	private double planedValue;
-	
+	private String actualValueStr;
+	public String getActualValueStr() {
+		return actualValueStr;
+	}
+
+	public void setActualValueStr(String actualValueStr) {
+		this.actualValueStr = actualValueStr;
+	}
+
 	private double actualValue;
     private double exceedLimit;
     private double savingValue;

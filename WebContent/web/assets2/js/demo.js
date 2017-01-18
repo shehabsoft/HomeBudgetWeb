@@ -169,7 +169,124 @@ demo = {
         md.startAnimationForBarChart(emailsSubscriptionChart);
 
     },
+    initExpensesCategories: function(ActualValues){
 
+        /* ----------==========     Daily Sales Chart initialization    ==========---------- */
+
+    	actualValues[0] = ActualValues.split(",");
+    	for(i=0;i<actualValues[0].length;i++)
+		{
+		if(i==actualValues[0].length-1)
+			{
+			LabelNum+=""+i;	
+			}else
+			 {
+			 LabelNum+=""+i+",";	
+			 }
+		
+		}
+    	LabelNumArr[0]=LabelNum.split(",");;
+        dataDailySalesChart = {
+           
+        		labels:LabelNumArr[0],
+            
+    
+            series: [actualValues[0]]
+                
+            
+        };
+
+        optionsDailySalesChart = {
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 0
+            }),
+            low: 0,
+            high: 5000	, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+        }
+
+        var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+
+        md.startAnimationForLineChart(dailySalesChart);
+
+
+
+        /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
+        var dayCategory = [];
+    	var totalPriceCategory=[];
+    	dayCategory[0] = dayStringCategory.split(",");
+    	totalPriceCategory[0] = totalPriceStringCategory.split(",");
+        dataCompletedTasksChart = {
+            labels: dayCategory[0]	,
+            series: [
+                totalPriceCategory[0]
+            ]
+        };
+
+        optionsCompletedTasksChart = {
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 0
+            }),
+            low: 0,
+            high: maxPurchasesPercategory, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
+        }
+
+        var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
+
+        // start animation for the Completed Tasks Chart - Line Chart
+        md.startAnimationForLineChart(completedTasksChart);
+
+
+
+
+    }
+    ,
+    initalizeCategoryHistory:function(actualValues,finalValue)
+    {
+        /* ----------==========     CategoryHistory Chart initialization    ==========---------- */
+    	var LabelNumArr=[];
+        var actualValuesArr=[];
+        actualValuesArr= actualValues.split(",");
+    	var LabelNum='';
+    	for(i=0;i<=actualValuesArr.length;i++)
+    	{
+    	if(i==actualValuesArr.length)
+    		{
+    		LabelNum+="Current Month ("+finalValue+")";	
+    		}else
+    		 {
+    		 LabelNum+=""+i+"("+actualValuesArr[i]+")"+",";	
+    		 }
+    	
+    	}
+    	LabelNumArr[0]=LabelNum.split(",");;
+    	var history=[];
+    	history[0] = actualValues.split(",");
+    	history[0][actualValuesArr.length]=finalValue;
+        dataCompletedTasksChart = {
+            labels:LabelNumArr[0]	,
+            series: [
+                history[0]
+            ]
+        };
+
+        optionsCompletedTasksChart = {
+            lineSmooth: Chartist.Interpolation.cardinal({
+                tension: 0
+            }),
+            low: 0,
+            high: 2000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
+        }
+
+        var completedTasksChart = new Chartist.Line('#completedTasksChart2', dataCompletedTasksChart, optionsCompletedTasksChart);
+
+        // start animation for the Completed Tasks Chart - Line Chart
+        md.startAnimationForLineChart(completedTasksChart);
+
+    	
+    },
     initGoogleMaps: function(){
         var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
         var mapOptions = {

@@ -19,6 +19,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.rpc.ServiceException;
@@ -38,13 +39,16 @@ import com.TransactionServiceSoapBindingStub;
 import com.dataObjects.CategoryHistoryVO;
 import com.dataObjects.CategoryVO;
 import com.dataObjects.Constants;
+import com.dataObjects.MonthlyBudgetVO;
 import com.dataObjects.PurchaseHistoryVO;
 import com.dataObjects.PurchaseVO;
 import com.dataObjects.UserVO;
 import com.google.gson.Gson;
 import com.models.Documents.CategoriesKeyBasedDocument;
 import com.models.Documents.CategoryHistoryKeyBasedDocument;
+import com.models.Documents.MonthlyBudgetKeyBasedDocument;
 import com.models.Documents.PurchaseHistoryKeyBasedDocument;
+import com.models.Documents.PurchasesKeyBasedDocument;
 
 import util.BusinessException;
 import util.TransactionServiceParser;
@@ -55,6 +59,12 @@ public class CategoryView extends JSFView {
 
 	private static final Logger logger = Logger.getLogger(CategoryView.class);
 	private List<CategoryHistoryVO> categoryHistoryList = new ArrayList<CategoryHistoryVO>();
+    private List<MonthlyBudgetVO> monthlyBudgetVOsChart;
+    String actualValue = "";
+	String limitValue = "";
+   private String categoryName;
+
+	
 
 	public CategoryView() {
 		try {
@@ -146,7 +156,13 @@ public class CategoryView extends JSFView {
 	public void setCategoryStatusList(Map<String, Object> categoryStatusList) {
 		CategoryView.categoryStatusList = categoryStatusList;
 	}
+	public String getCategoryName() {
+		return categoryName;
+	}
 
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
 	public Map<String, Object> getCategoryTypeList() {
 		return categoryTypeList;
 	}
@@ -175,12 +191,12 @@ public class CategoryView extends JSFView {
 	public void showViewHistoryPage(ActionEvent event) throws Exception {
 
 		int categoryId = (Integer) event.getComponent().getAttributes().get("categoryId");
-		;
 		categoryHistoryList = getCategoryHistory(categoryId);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "categoryHistory.xhtml");
 
 	}
+
 
 	public List<CategoryHistoryVO> getCategoryHistoryList() {
 		return categoryHistoryList;
@@ -197,7 +213,20 @@ public class CategoryView extends JSFView {
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "addCategory.xhtml");
 
 	}
-
+	@Action
+	public void ajaxChart(AjaxBehaviorEvent event) throws Exception {
+		// monthlyChartPurchaseListByCategory Chart
+	    int categoryId = (Integer) event.getComponent().getAttributes().get("categoryId");
+		for(CategoryVO categoryVO :categoryList)
+		{
+			if(categoryId==categoryVO.getId())
+			{
+				categoryName=categoryVO.getEnglishDescription();
+				break;
+			}
+		}
+		System.out.println("Actual Value :::::::::::::"+categoryName);
+	}
 	@Action
 	public void showEditPage(ActionEvent event) throws BusinessException {
 		int categoryId = (Integer) event.getComponent().getAttributes().get("categoryId");
@@ -443,6 +472,39 @@ public class CategoryView extends JSFView {
 
 			throw new Exception(e);
 		}
+	}
+	public ArrayList<MonthlyBudgetVO> getAllMonthlyBudgetByCategoryIdAndUserId(int categoryId) throws Exception {
+		try {
+			String output = "";
+			System.out.println("Calling getAllMonthlyBudgetByCategoryIdAndUserId  .... \n");
+			output = callPostWebService("getAllMonthlyBudgetByCategoryIdAndUserId", "CategoryId", categoryId);
+			System.out.println("Output From Server  .... " + output);
+			System.out.println(" .... \n");
+			Gson gson = new Gson();
+			Object obj = gson.fromJson(output, MonthlyBudgetKeyBasedDocument.class);
+			MonthlyBudgetKeyBasedDocument purchasesKeyBasedDocument = (MonthlyBudgetKeyBasedDocument) obj;
+			ArrayList<MonthlyBudgetVO> monthlyBudgetVOs = (ArrayList<MonthlyBudgetVO>) purchasesKeyBasedDocument.getMonthlyBudgetVOs();
+            return  monthlyBudgetVOs;
+		} catch (Exception e)
+
+		{
+			throw new Exception(e);
+		}
+	}
+	public String getActualValue() {
+		return actualValue;
+	}
+
+	public void setActualValue(String incomes) {
+		this.actualValue = incomes;
+	}
+
+	public String getLimitValue() {
+		return limitValue;
+	}
+
+	public void setLimitValue(String expenses) {
+		this.limitValue = expenses;
 	}
 
 }

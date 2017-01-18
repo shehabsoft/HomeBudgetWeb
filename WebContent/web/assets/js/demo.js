@@ -95,7 +95,7 @@ demo = {
     	   months=['1','2','3','4','5','6','7','8','9','10','11','12'];
     	   break;
           }
-       var months
+       
         var data = {
         		
           labels: months,
@@ -150,7 +150,6 @@ demo = {
           series: [75, 10, 15]
         });   
     },
-    
     initGoogleMaps: function(){
         var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
         var mapOptions = {

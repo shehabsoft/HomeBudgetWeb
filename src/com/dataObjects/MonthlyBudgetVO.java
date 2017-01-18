@@ -23,7 +23,24 @@ public class MonthlyBudgetVO extends DataObjectVO{
 	private double totalExpectedExpenses;
 	private double totalLimitExpenses;
 	private double remaining;
-    
+	private double limitValue;
+	private double actualValue;
+	public double getLimitValue() {
+		return limitValue;
+	}
+
+	public void setLimitValue(double limitValue) {
+		this.limitValue = limitValue;
+	}
+
+	public double getActualValue() {
+		return actualValue;
+	}
+
+	public void setActualValue(double actualValue) {
+		this.actualValue = actualValue;
+	}
+
 	public double getTotalLimitExpenses() {
 		return totalLimitExpenses;
 	}
