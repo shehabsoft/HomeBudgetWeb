@@ -69,7 +69,7 @@ public class CategoryView extends JSFView {
 	public CategoryView() {
 		try {
 			logger.info("Initilizing Category View");
-			userView = new UserView();
+			//userView = new UserView();
 			// userVo=userView.getActiveUser();
 			categoryVO = new CategoryVO();
 			if (categoryList.size() == 0 || categoryIncomeList.size() == 0) {
@@ -85,7 +85,7 @@ public class CategoryView extends JSFView {
 
 	}
 
-	private UserView userView;
+	//private UserView userView;
 	private CategoryVO categoryVO;
 	private int categoryIncomeId;
 

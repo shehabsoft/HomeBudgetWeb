@@ -41,7 +41,9 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
     	 <script src="assets/js/validation.js"></script>
    <script>
 $(document).ready(function() {
-    $('#myTable').DataTable();
+    $('#myTable').DataTable({
+        "lengthMenu": [[5, 10, 15,25,50,"ALL"], [5,10,15, 25, 50, "All"]]
+    });
 } );
     </script>
     <script>
@@ -196,10 +198,13 @@ $(document).ready(function() {
                            <h:panelGroup id="panel">
 	                            <h:commandButton value="Refersh"    class="btn btn-info btn-fill pull-right" 
 																						style="width:100px"  action="#{categoryView.refesh}">
-											                    <f:ajax   execute="todoForm" render="categoryName1" />
+											                    <f:ajax   execute="todoForm" render="myTable"   onevent="function(data) { if (data.status === 'success') {
+											 
+											            location.reload();
+											                  }}"/>
 											        </h:commandButton>
 		                       <div class="display content table-responsive table-full-width">
-								          <h:dataTable value="#{categoryView.categoryList}" var="o" id="myTable" rows="5"
+								          <h:dataTable value="#{categoryView.categoryList}" var="o" id="myTable" 
 				 				    			styleClass="table table-hover table-striped"
 								    			headerClass="order-table-header"
 								    			rowClasses="order-table-odd-row,order-table-even-row" 
@@ -296,7 +301,7 @@ $(document).ready(function() {
 										        </h:panelGroup>
 										    
 								    	</div>
-								    		             <a id="go"  style="display:none" href="#completedTasksChartGroup3">Contact</a>
+				<a id="go"  style="display:none" href="#completedTasksChartGroup3">Contact</a>
 					<h:panelGroup id="completedTasksChartGroup3">
 						<div class="card ">
                             <div class="header">

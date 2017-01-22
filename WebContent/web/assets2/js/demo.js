@@ -260,10 +260,48 @@ demo = {
     		 }
     	
     	}
+    	
+    	
+    	
     	LabelNumArr[0]=LabelNum.split(",");;
     	var history=[];
     	history[0] = actualValues.split(",");
     	history[0][actualValuesArr.length]=finalValue;
+    	var max=history[0][0];
+    	var MaxInt=parseInt(max);
+    	for(i=1;i<history[0].length;i++)
+    		{
+    		if(MaxInt<parseInt(history[0][i]))
+    			{
+    			MaxInt=parseInt(history[0][i]);
+    			}
+    		}
+    	if(MaxInt<parseInt(finalValue))
+    		{
+    		max=finalValue;
+    		}
+    	if(MaxInt>0 &&MaxInt<10)
+		{
+		MaxInt+=20;
+		}
+    	else if(MaxInt>10 &&MaxInt<100)
+		{
+		MaxInt+=10;
+		}
+    	else if(MaxInt>100 &&MaxInt<1000)
+    		{
+    		MaxInt+=100;
+    		}
+    	else if(MaxInt>1000 &&MaxInt <10000)
+    		{
+    		max+=1000;
+    		}
+    	else if(MaxInt>10000 &&MaxInt <100000)
+    		{
+    		MaxInt+=10000;
+    		}
+    	
+    	
         dataCompletedTasksChart = {
             labels:LabelNumArr[0]	,
             series: [
@@ -276,7 +314,7 @@ demo = {
                 tension: 0
             }),
             low: 0,
-            high: 2000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+            high: MaxInt, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
             chartPadding: { top: 0, right: 0, bottom: 0, left: 0}
         }
 
