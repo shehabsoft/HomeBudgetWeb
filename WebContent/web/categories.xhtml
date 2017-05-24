@@ -245,7 +245,7 @@ $(document).ready(function() {
 																					 >
 										                  <f:attribute name="categoryId" value="#{o.id}" />
 										                  <f:ajax  render=":todoForm:categoryName1"  listener="#{categoryView.ajaxChart}"  onevent="function(data) { if (data.status === 'success') { 
-   														   demo.initalizeCategoryHistory('#{o.actualValueStr}','#{o.actualValue}');
+   														   demo.initalizeCategoryHistory('#{o.actualValueStr}','#{o.actualValue}','#{o.statusDate}');
    														 
    														    go();
    														     

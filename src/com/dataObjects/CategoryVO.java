@@ -11,7 +11,15 @@ public class CategoryVO extends DataObjectVO{
 	private int parentCategoryId;
 	
 	private double limitValue;
-	
+	private String statusDate;
+	public String getStatusDate() {
+		return statusDate;
+	}
+
+	public void setStatusDate(String statusDate) {
+		this.statusDate = statusDate;
+	}
+
 	private double planedValue;
 	private String actualValueStr;
 	public String getActualValueStr() {

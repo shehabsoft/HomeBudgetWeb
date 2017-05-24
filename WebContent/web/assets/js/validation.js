@@ -1,4 +1,4 @@
-	
+canvasjs.min.js	
 function showWaiting()
 	{
 		 $("#waiting").modal('show');

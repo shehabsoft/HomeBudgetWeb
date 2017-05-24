@@ -242,31 +242,29 @@ demo = {
 
     }
     ,
-    initalizeCategoryHistory:function(actualValues,finalValue)
+    initalizeCategoryHistory:function(actualValues,finalValue,statusDate)
     {
         /* ----------==========     CategoryHistory Chart initialization    ==========---------- */
     	var LabelNumArr=[];
         var actualValuesArr=[];
         actualValuesArr= actualValues.split(",");
+        var statusDateArr=[];
+        statusDateArr=statusDate.split(",");
     	var LabelNum='';
-    	for(i=0;i<=actualValuesArr.length;i++)
+    	for(i=0;i<actualValuesArr.length;i++)
     	{
-    	if(i==actualValuesArr.length)
+    	if(i==actualValuesArr.length-1)
     		{
-    		LabelNum+="Current Month ("+finalValue+")";	
+    		LabelNum+="Current Month ("+actualValuesArr[i]+")";	
     		}else
     		 {
-    		 LabelNum+=""+i+"("+actualValuesArr[i]+")"+",";	
+    		 LabelNum+="("+statusDateArr[i]+")"+",";	
     		 }
     	
     	}
-    	
-    	
-    	
     	LabelNumArr[0]=LabelNum.split(",");;
     	var history=[];
     	history[0] = actualValues.split(",");
-    	history[0][actualValuesArr.length]=finalValue;
     	var max=history[0][0];
     	var MaxInt=parseInt(max);
     	for(i=1;i<history[0].length;i++)
