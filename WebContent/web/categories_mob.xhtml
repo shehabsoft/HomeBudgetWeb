@@ -164,19 +164,17 @@ $(document).ready(function() {
                               </a>
                               <ul class="dropdown-menu">
                                 <li><a href="signUp.jsf">Sign Up</a></li>
-                                
+                                <li><a href="login.jsf">Sign Out</a></li>
                                
                               
                                 <li class="divider"></li>
                                 <li><a href="Dashboard.jsf">Dashboard</a></li>
-                                  
                               </ul>
                         </li>
-                                 <li>
-                             <h:commandButton value="Log Out"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control" 
-																					 actionListener="#{userView.logOut}">
-										                   
-										        </h:commandButton>   
+                        <li>
+                            <a href="login.jsf">
+                                Log out
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -205,7 +203,7 @@ $(document).ready(function() {
 											            location.reload();
 											                  }}"/>
 											        </h:commandButton>
-		                       <div class="display content table-responsive table-full-width">
+		                       <div class="display content table-responsive table-full-width col-md-12">
 								          <h:dataTable value="#{categoryView.categoryList}" var="o" id="myTable" 
 				 				    			styleClass="table table-hover table-striped"
 								    			headerClass="order-table-header"
@@ -226,54 +224,20 @@ $(document).ready(function() {
 								    				<f:facet name="header">Actual Value</f:facet>
 								    				#{o.actualValue}
 								    			</h:column>
-								    			<h:column>
-								    				<f:facet name="header">Planed Value</f:facet>
-								    				#{o.planedValue}
-								    			</h:column>
-								    			<h:column>
-								    				<f:facet name="header">Limit Value</f:facet>
-								    				#{o.limitValue}
-								    			</h:column>
+								    			 
 								    			<h:column>
 								    				<f:facet name="header">Status</f:facet>
 								    			<h:outputLabel rendered="#{o.withenLimit eq true}"><i  class="fa fa-check text-success"/></h:outputLabel>
 								    			<h:outputLabel rendered="#{o.withenLimit  eq false}"><i  class="fa fa-times text-danger"/></h:outputLabel>	
 								    			</h:column>
-								    	<h:column>
-								    			<f:facet name="header">Chart</f:facet>
-								    				
-								    				
-								    			<h:commandButton value="Chart"    class="btn btn-info btn-fill pull-right" render="completedTasksChartGroup3" onclick=""
-																					 >
-										                  <f:attribute name="categoryId" value="#{o.id}" />
-										                  <f:ajax  render=":todoForm:categoryName1"  listener="#{categoryView.ajaxChart}"  onevent="function(data) { if (data.status === 'success') { 
-   														   demo.initalizeCategoryHistory('#{o.actualValueStr}','#{o.actualValue}','#{o.statusDate}');
-   														 
-   														    go();
-   														     
-                                                                                                          } }" 
-   															/>													
-   														   
-   								 
-   														 
-										                  </h:commandButton>
-										              
-								    			</h:column>
+								  
 								    				<h:column  >
 								    			<f:facet name="header"></f:facet>
 								    				
 							
 										              
 								    			</h:column>
-								    			<h:column>
-								    				<f:facet name="header">History</f:facet>
-								    				
-								    				
-								    			<h:commandButton value="History"  style=""  class="btn btn-info btn-fill pull-right" 
-																					 actionListener="#{purchaceView.showViewHistoryPage}">
-										                  <f:attribute name="categoryId" value="#{o.id}" />
-										                  </h:commandButton>
-								    			</h:column>
+								    		 
 								             <h:column>
 								             <f:facet name="header">اضافة</f:facet>
 								    				
@@ -303,23 +267,7 @@ $(document).ready(function() {
 										        </h:panelGroup>
 										    
 								    	</div>
-				<a id="go"  style="display:none" href="#completedTasksChartGroup3">Contact</a>
-					<h:panelGroup id="completedTasksChartGroup3">
-						<div class="card ">
-                            <div class="header">
-                                <h4 class="title"> <script>document.write(new Date().getFullYear())</script> Budget</h4>
-             
-                                <p class="category"><h:outputText  id="categoryName1"  value="#{categoryView.categoryName}"></h:outputText>   History</p>
-                            </div>
-                            <div class="content">
-                           	<div class="card-header card-chart" data-background-color="red">
-									<h:panelGroup id="completedTasksChartGroup">
-									<div class="ct-chart" id="completedTasksChart2"></div>
-								     </h:panelGroup>
-								</div>
-                            </div>
-                        </div>
-                        </h:panelGroup>
+				
 								           </div>
 								           </h:form>
 								    		</div>

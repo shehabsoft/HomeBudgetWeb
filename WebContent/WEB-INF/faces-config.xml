@@ -12,4 +12,22 @@
 		<managed-bean-scope>application</managed-bean-scope>
 	</managed-bean>
 
+<navigation-rule> 
+ <from-view-id>monthlyBudget.jsf</from-view-id> 
+   <navigation-case> 
+   
+      <from-action>#{userView.logOut}</from-action> 
+      <from-outcome>logOut</from-outcome> 
+      <to-view-id>login.jsf</to-view-id> 
+   </navigation-case> 
+ </navigation-rule>
+ <navigation-rule> 
+ <from-view-id>budgets.jsf</from-view-id> 
+   <navigation-case> 
+   
+      <from-action>#{userView.logOut}</from-action> 
+      <from-outcome>logOut</from-outcome> 
+      <to-view-id>login.jsf</to-view-id> 
+   </navigation-case> 
+ </navigation-rule>
 </faces-config>

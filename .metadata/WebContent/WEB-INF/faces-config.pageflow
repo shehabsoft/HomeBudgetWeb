@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14749739397450" configfile="/HomeBudgetWeb/WebContent/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14749739397450" configfile="/HomeBudgetWeb/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="monthlyBudget.xhtml" x="36" y="552" id="pf14965037636788" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14973568187790" path="monthlyBudget.jsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="login.jsf" x="338" y="562" id="pf14973568187791" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14973568187790 pf14974381399886" path="login.jsf"/>
+  <nodes xsi:type="pageflow:PFPage" name="budgets.jsf" id="pf14974381399897" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf14974381399886" path="budgets.jsf"/>
+  <links id="pf14973568187790" target="pf14973568187791" source="pf14965037636788" outcome="logOut" fromaction="#{userView.logOut}"/>
+  <links id="pf14974381399886" target="pf14973568187791" source="pf14974381399897" outcome="logOut" fromaction="#{userView.logOut}"/>
+</pageflow:Pageflow>

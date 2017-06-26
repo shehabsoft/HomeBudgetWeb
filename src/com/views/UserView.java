@@ -17,6 +17,10 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.xml.rpc.ServiceException;
 import javax.xml.ws.Action;
 
@@ -70,17 +74,18 @@ public class UserView extends JSFView {
 
 
 	//private UserView userView=new UserView();
-    private boolean validateError=false;
+   
+
+	private boolean validateError=false;
     private boolean emailExit=false;
 	private String emailExitMessage="";
 	private List<CurrencyVO> currencyList=new ArrayList<CurrencyVO>();
     private ArrayList<CountryVO> countryList=new ArrayList<CountryVO>();
-	
-
-
+   
 
 	public UserView() throws Exception
 	{
+		
 		userVO=new UserVO();
 		currencyList=getAllCurrencies();
 		for(CurrencyVO currencyVO:currencyList)
@@ -94,6 +99,7 @@ public class UserView extends JSFView {
 			countryMap.put(countryVO.getEnglishName(),countryVO.getId()); //label, value
 		}
 		emailExit=false;
+		
 	}
 
 	private Boolean status;
@@ -130,7 +136,7 @@ public class UserView extends JSFView {
 	public void setValidateError(boolean validateError) {
 		this.validateError = validateError;
 	}
-
+ 
 	@Action
 	public void add() throws BusinessException
 	{
@@ -220,7 +226,37 @@ public class UserView extends JSFView {
 		   throw new Exception(e);
 	}
 	}
-
+	
+	@Action
+	public void checkAuthority1() throws IOException
+	{
+		System.out.println("Login");
+	}
+	@Action
+	public void checkAuthority() throws IOException
+	{
+		   System.out.println("Login");
+		    HttpSession session = super.getSession(true);
+		    UserVO userVO= checkAccount();
+	        if(userVO!=null)
+	        {
+	        	session.setAttribute("UserVo", userVO.getName());
+	        	session.setAttribute("UserVo", userVO);
+	        
+	        	
+	        }  
+	}
+	@Action
+	public String logOut() throws IOException
+	{
+		    HttpSession session = super.getSession(true);
+	        session.setAttribute("UserVo",null);
+	        FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+			.handleNavigation(FacesContext.getCurrentInstance(), null, "login.jsf");
+	        return "logOut";
+	        	
+	        
+	}
 	@Action
 	public void checkEmail() throws IOException
 	{
@@ -261,6 +297,45 @@ public class UserView extends JSFView {
 	    	emailExit=false;
 	    	emailExitMessage="Good Mail";
 	    }
+	    
+	}
+	@Action
+	public UserVO checkAccount() throws IOException
+	{
+		String serviceUrl = "http://localhost:8080/WebServices/getData" + "/" + "checkAccount";
+		URL url = new URL(serviceUrl);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		Gson gson2 = new Gson();
+
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Content-Type", "application/json");
+		conn.setRequestProperty("email", userVO.getEmail());
+		conn.setRequestProperty("password", userVO.getPassword());
+		conn.setDoOutput(true);
+		conn.setUseCaches(false);
+		if (conn.getResponseCode() != 200) {
+
+			throw new RuntimeException("Failed : HTTP error code : "
+					+ conn.getResponseCode());
+		}
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				(conn.getInputStream())));
+		String output = "";
+		System.out.println("Output from Server .... \n");
+		output = br.readLine();
+	    Object obj = gson2.fromJson(output, UserKeyBasedDocument.class);
+	    UserKeyBasedDocument userKeyBasedDocument=(UserKeyBasedDocument)obj;
+	    UserVO userVO=(UserVO)userKeyBasedDocument.getUserVO();
+	    if(userVO!=null)
+	    {
+	    	emailExit=true;
+	    	emailExitMessage="This Mail Exit In System";
+	    }else
+	    {
+	    	emailExit=false;
+	    	emailExitMessage="Good Mail";
+	    }
+	    return userVO;
 	    
 	}
 	public UserVO getUserVO() {

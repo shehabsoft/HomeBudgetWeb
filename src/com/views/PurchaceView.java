@@ -56,6 +56,8 @@ public class PurchaceView extends JSFView {
 
 	public PurchaceView() throws Exception {
 
+		if(getUserVO()==null)
+			return;
 		purchaseVO = new PurchaseVO();
 		categoryVOs = (ArrayList<CategoryVO>) categoryView.getCategoryList();
 		for (CategoryVO categoryVO : categoryVOs) {
@@ -236,6 +238,7 @@ public class PurchaceView extends JSFView {
 			responseMessage = transactionServiceParser.parseCreateTransactionResponse(response);
 			System.out.println("response  Data " + responseMessage);
 			System.out.print(responseMessage);
+			
 
 			setStatus(true);
 		} catch (Exception e) {

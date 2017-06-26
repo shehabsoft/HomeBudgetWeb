@@ -50,11 +50,26 @@
         <param-name>encoding</param-name>
         <param-value>windows-1256</param-value>
     </init-param>
+    
+    
 </filter>
+<filter>
+  <filter-name>SecurityFilter</filter-name>
+        <filter-class>util.SecurityFilter</filter-class>
+         <init-param>
+            <param-name>detectUrls</param-name>
+            <param-value>/setup/ws_security_copy.jsp
+            </param-value> 
+        </init-param>
+        </filter>
 
 <!-- The mapping for the Set Character Encoding Filter -->
 <filter-mapping>
     <filter-name>setCharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
 </filter-mapping>
+<filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>*.jsf</url-pattern>
+    </filter-mapping>
 </web-app>

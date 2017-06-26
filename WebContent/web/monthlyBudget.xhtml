@@ -172,7 +172,7 @@
                               </a>
                               <ul class="dropdown-menu">
                                 <li><a href="signUp.jsf">Sign Up</a></li>
-                                <li><a href="login.jsf">Sign Out</a></li>
+                              
                                
                               
                                 <li class="divider"></li>
@@ -180,9 +180,10 @@
                               </ul>
                         </li>
                         <li>
-                            <a href="login.jsf">
-                                Log out
-                            </a>
+                             <h:commandButton value="Log Out"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control" 
+																					 actionListener="#{userView.logOut}">
+										                   
+										        </h:commandButton>   
                         </li>
                     </ul>
                 </div>
@@ -206,7 +207,7 @@
                                           <h4 class="title">Current Expenses <b><h:outputLabel styleClass="title" id="totalExpenses" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalExpenses}"></h:outputLabel></b></h4>
                             <h4 class="title">Planned Expenses <b><h:outputLabel styleClass="title" id="totalExpectedExpenses" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalExpectedExpenses}"></h:outputLabel></b></h4>
                                <h4 class="title">The Limit OF Expenses <b><h:outputLabel styleClass="title" id="totallimitExpenses" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalLimitExpenses}"></h:outputLabel></b></h4>
-                           <h5 class="title">Exceed Limit within Planned <b><h:outputLabel styleClass="title" id="exceedLimit" class="form-control title" value="#{budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h5>
+                          
                            
                             </div>
                             <hr></hr>
@@ -241,12 +242,16 @@
                               <h4 class="title"> Creation Date <b><h:outputLabel styleClass="title" id="creationDateId" class="form-control title" value="#{budgetView.monthlyBudgetVO.creationDate}"></h:outputLabel></b></h4>
                            <h4 class="title">Total Income <b><h:outputLabel styleClass="title" id="totalIncome" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalIncomes}"></h:outputLabel></b></h4>
                              <h4 class="title">Saving within Limit <b><h:outputLabel styleClass="title" id="saving" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingValue}"></h:outputLabel></b></h4>
+                             <h4 class="title">Saving within Planned <b><h:outputLabel styleClass="title" id="savingPlanned" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingPlanned}"></h:outputLabel></b></h4>
+                             <h4 class="title">Exceed Limit within Planned <b><h:outputLabel styleClass="title" id="exceedLimit" class="form-control title" value="#{budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h4>
+                             <h4 class="title">Profit In Book <b><h:outputLabel styleClass="title" id="profileBook" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingPlanned-budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h4>
+                             
                             </div>
                             <hr></hr>
                             <div class="text-center">
                                 <h:commandButton value="Refersh"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control " 
 																					 action="#{budgetView.refesh}">
-										                    <f:ajax   execute="" render="totalIncome totalExpenses  totalExpectedExpenses exceedLimit saving"  />
+										                    <f:ajax   execute="" render="totalIncome totalExpenses  totalExpectedExpenses exceedLimit saving savingPlanned totallimitExpenses startDateId endDateId creationDateId profileBook"  />
 										        </h:commandButton>
                               		 							
 		 							  <h:commandButton value="Add New Category"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control" 

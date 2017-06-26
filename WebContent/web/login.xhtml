@@ -28,14 +28,11 @@ body {
  margin-bottom:0px;
 }
 </style>
-		<link rel="stylesheet" type="text/css"
-			href="../xmlhttp/css/rime/rime.css" />
+		 
 			<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<link rel='stylesheet' type='text/css'
-			href='../resources/css/showcase_style.css' />
-			<link rel='stylesheet' type='text/css'
-			href='../resources/css/table.css' />
+		 
+		 
 			    <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="assets/img/favicon.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -57,6 +54,53 @@ body {
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css' />
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <script src="assets/js/validation.js"></script>
+    <script>
+    function validate(data,status)
+    {
+    		 switch(data.status) {
+             case "begin":
+            	 $("#myModal").modal('show'); 
+                 break;
+             case "complete":
+            	
+            	
+             case "success":
+            	 if("block"==document.getElementById("errorMessage").style.display)//server Error
+        		 {
+        		setTimeout(FailReg, 5000);
+        		 }else
+        			{
+		        	document.getElementById("successMessage").style.display="block";
+		           setTimeout(SuccessReg, 3000);
+        			}
+            	 break;
+             case "serverError":
+            	 document.getElementById("successMessage").style.display="none";
+            	 document.getElementById("errorMessage").style.display="block";
+            	 showError(data.errorMessage);
+            	 break;
+    		 }
+    }
+    function SuccessReg() {
+   	 document.getElementById("successMessage").style.display="none";
+   	 document.getElementById("errorMessage").style.display="none";
+   	 $("#myModal").modal('hide');
+   	 document.getElementById('errorMessage').innerHTML="";
+ 	 window.location.href = 'http://localhost:8080/HomeBudgetWeb/web/monthlyBudget.jsf';
+    }
+    function FailReg() {
+   	 document.getElementById("successMessage").style.display="none";
+   	 document.getElementById("errorMessage").style.display="none";
+   	 $("#myModal").modal('hide');
+   	 document.getElementById('errorMessage').innerHTML="";
+    }
+    function ckeck() {
+    	$("#waiting").modal('show'); 
+    	return true;
+    }
+    
+    </script>
 	</h:head>
 	<h:body>
 		   <div class="container" >
@@ -66,18 +110,20 @@ body {
                 <div class="panel-heading"> <strong class="">Login</strong>
 
                 </div>
+                
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form">
+                 <h:form id="signUp" class="form-horizontal" onsubmit="return ckeck()" role="form">
+                   
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
                             <div class="col-sm-9">
-                                <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required=""/>
+                               <h:inputText id="email" name="email" type="text"  class="form-control input-md"  requiredMessage="dsfdffdgdfg"   required="true"  value="#{userView.userVO.email}"></h:inputText>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword3" class="col-sm-3 control-label">Password</label>
                             <div class="col-sm-9">
-                                <input type="password" class="form-control" id="inputPassword3" placeholder="Password" required=""/>
+                                 <h:inputText id="password" name="password" type="password"  class="form-control input-md"    required="true"  value="#{userView.userVO.password}"></h:inputText>
                             </div>
                         </div>
                         <div class="form-group">
@@ -91,11 +137,45 @@ body {
                         <div class="form-group last">
                             <div class="col-sm-offset-3 col-sm-9">
                                 <button type="submit" class="btn btn-success btn-sm">Sign in</button>
-                                <a href="Dashboard.jsf" class="">Login</a>
+                                     <div class="form-group">
+                                            
+									 <h:commandButton value="Login"  type="submit"  class="btn btn-info btn-fill pull-right" actionListener="#{userView.checkAuthority}"   onclick="return ckeck()"
+																							style="width:150px;"  > 
+																  
+												                    <f:ajax event="action" execute="password email"
+		 										                            onevent="function(data) {  validate(data,'success')}" onerror="function(data) {  validate(data,'failure')}" /> 
+		 							 </h:commandButton> 
+		 								
+		 						  </div>
                                 <button type="reset" class="btn btn-default btn-sm">Reset</button>
                             </div>
                         </div>
-                    </form>
+                        <div id="waiting" class="modal fade " >
+    <div class="modal-dialog ">
+        <div class="modal-content alert alert-info alert-with-icon">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Waiting.....</h4>
+            </div>
+                 <div class="modal-body">
+                       <div id="wait" style="">  <img src='assets/img/3.gif'  /> Please Wait</div>
+                <div class="alert alert-success" id="successMessage" style="display:none">
+                
+                
+                  <span><img src='assets/img/success3.png'/><b> Success - </b> Successfully Login"</span>
+                    </div>
+                    	 <div id="error" style="display:none" >Please Solve Errors Before Submit</div>	
+                    	    <div class="alert alert-danger" id="errorMessage" style="display:none">
+                                    <button type="button" aria-hidden="true" class="close">×</button>
+                                   
+                                </div>
+                    
+            </div>
+        </div>
+    </div>
+ 
+ </div>
+                  </h:form>
                 </div>
                 <div class="panel-footer">Not Registered? <a href="signUp.jsf" class="">Register here</a>
                 </div>
@@ -123,19 +203,5 @@ body {
   
    
     
-<script type="text/javascript">
-    	$(document).ready(function(){
-      
-        	demo.initChartist();
-        	$.notify({
-            	icon: 'pe-7s-home',
-            	message: "Welcome To Home Budget"
-            },{
-                type: 'info',
-                timer: 2000
-            });
-			
-			
-    	});
-	</script>
+
 </html>

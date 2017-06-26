@@ -25,6 +25,15 @@ public class MonthlyBudgetVO extends DataObjectVO{
 	private double remaining;
 	private double limitValue;
 	private double actualValue;
+	private double savingPlanned = 0;
+	public double getSavingPlanned() {
+		return savingPlanned;
+	}
+
+	public void setSavingPlanned(double savingPlanned) {
+		this.savingPlanned = savingPlanned;
+	}
+
 	public double getLimitValue() {
 		return limitValue;
 	}

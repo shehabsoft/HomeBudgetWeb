@@ -71,6 +71,8 @@ public class CategoryView extends JSFView {
 			logger.info("Initilizing Category View");
 			//userView = new UserView();
 			// userVo=userView.getActiveUser();
+			if(getUserVO()==null)
+				return;
 			categoryVO = new CategoryVO();
 			if (categoryList.size() == 0 || categoryIncomeList.size() == 0) {
 				categoryList = getExpensesCategories();

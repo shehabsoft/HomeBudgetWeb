@@ -71,7 +71,13 @@
 	        	 break;
 			 }
 	}
-	
+	function Success() {
+		 document.getElementById("successMessage").style.display="none";
+		 document.getElementById("errorMessage").style.display="none";
+		 $("#waiting").modal('hide');
+		 document.getElementById('errorMessage').innerHTML="";
+		 window.location.assign("http://localhost:8080/HomeBudgetWeb/web/categories.xhtml")
+	}
 
 
 	</script>

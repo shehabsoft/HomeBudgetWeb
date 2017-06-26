@@ -10,6 +10,10 @@ import java.util.Arrays;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.xml.rpc.ServiceException;
 
 import com.TransactionService;
@@ -40,7 +44,7 @@ public JSFView()
 		   backendUrl=configurations.initialize();
 		   if(userVO==null)
 		   {
-			   userVO=getActiveUser();
+			   userVO=getCurrentUser();
 		   }
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
@@ -168,14 +172,8 @@ public abstract void add() throws BusinessException, Exception;
 	{	
 		try {
 
-			String output = "";
-			System.out.println("Calling .........Get Active User.");
-			output=callGetWebService("getActiveUser");
-			System.out.println("Output ..."+output);
-			Gson gson=new Gson();
-		    Object obj = gson.fromJson(output, UserKeyBasedDocument.class);
-		    UserKeyBasedDocument userKeyBasedDocument=(UserKeyBasedDocument)obj;
-		    UserVO userVO=(UserVO)userKeyBasedDocument.getUserVO();
+			HttpSession session = getSession(true);
+			UserVO userVO=(UserVO)session.getAttribute("UserVo");
 		    return userVO;
 
 	}catch(Exception e)
@@ -184,5 +182,68 @@ public abstract void add() throws BusinessException, Exception;
 		}
 		}
 	
+	public UserVO getCurrentUser() throws Exception
+	{
+		try {
 
+			HttpSession session = getSession(true);
+			UserVO userVO=(UserVO)session.getAttribute("UserVo");
+		    return userVO;
+
+	}catch(Exception e)
+		{
+		   throw new Exception(e);
+		}
+	}
+	
+    /**
+     * Get related HttpServletRequest.
+     *
+     * @return Related HttpServletRequest.
+     */
+    public HttpServletRequest getRequest() {
+        return (HttpServletRequest) getExternalContext().getRequest();
+    }
+    /**
+     * Get ExternalContext reference.
+     *
+     * @return ExternalContext reference.
+     */
+    public ExternalContext getExternalContext() {
+        FacesContext fctx = getFacesContext();
+        if (fctx == null) {
+            return null;
+        }
+
+        return fctx.getExternalContext();
+    }
+    /**
+     * Get FacesContext reference.
+     *
+     * @return FacesContext reference.
+     */
+    public FacesContext getFacesContext() {
+        return FacesContext.getCurrentInstance();
+    }
+    /**
+     * Returns the current HttpSession associated with this request or, if there is no current session and
+     * create is true, returns a new session.
+     *
+     * @param create true to create a new session for this request if necessary; false to return null if
+     *               there's no current session
+     * @return the HttpSession associated with this request or null if create is false and the request has
+     *         no valid session
+     */
+    public HttpSession getSession(boolean create) {
+        return (HttpSession) getExternalContext().getSession(create);
+    }
+    
+    /**
+     * Returns the current HttpSession associated with this request
+     * 
+     * @return the HttpSession associated with this request
+     */
+    public HttpSession getSession() {
+        return (HttpSession) getExternalContext().getSession( false );
+    }
 }

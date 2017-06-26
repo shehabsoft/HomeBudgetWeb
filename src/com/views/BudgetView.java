@@ -59,6 +59,9 @@ public class BudgetView extends JSFView {
 	private static final Logger logger = Logger.getLogger(BudgetView.class);
 	private double exceedLimit = 0;
 	private double savingLimit = 0;
+	private double savingPlanned = 0;
+	
+
 	// for Charts
 	private String incomes = "";
 	private String expenses = "";
@@ -80,8 +83,8 @@ public class BudgetView extends JSFView {
 		super();
 		try {
 			logger.info("Initilizing BuggetView........");
-			//userView = new UserView();
-			// userVo=userView.getActiveUser();
+			if(getUserVO()==null)
+				return;
 			categoryList = categoryView.getCategoryList();
 			for (CategoryVO categoryVO : categoryList) {
 				categoryMap.put(categoryVO.getEnglishDescription(), categoryVO.getId()); // label,
@@ -97,6 +100,7 @@ public class BudgetView extends JSFView {
 			getLimits(categoryList);
 			monthlyBudgetVO.setExceedLimit(exceedLimit);
 			monthlyBudgetVO.setSavingValue(savingLimit);
+			monthlyBudgetVO.setSavingPlanned(savingPlanned);
 			monthlyBudgetVO.setTotalExpenses(getTotalExpenses(categoryList));
 			monthlyBudgetVO.setTotalIncomes(getTotalIncomes(categoryIncomeList));
 			monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
@@ -143,7 +147,7 @@ public class BudgetView extends JSFView {
 
 	private String actionMode = "";
 	private String style;
-	private MonthlyBudgetVO monthlyBudgetVO;
+	private MonthlyBudgetVO monthlyBudgetVO=new MonthlyBudgetVO();
 	private PurchaceView purchaceView = null;
 	private List<CategoryVO> categoryIncomeList = new ArrayList<CategoryVO>();
 	private List<CategoryVO> categoryAllIncomeList = new ArrayList<CategoryVO>();
@@ -275,6 +279,7 @@ public class BudgetView extends JSFView {
 			getLimits(categoryList);
 			monthlyBudgetVO.setExceedLimit(exceedLimit);
 			monthlyBudgetVO.setSavingValue(savingLimit);
+			monthlyBudgetVO.setSavingPlanned(savingPlanned);
 			monthlyBudgetVO.setTotalExpenses(getTotalExpenses(categoryList));
 			monthlyBudgetVO.setTotalIncomes(getTotalIncomes(categoryIncomeList));
 			monthlyBudgetVO.setTotalExpectedExpenses(getTotalExpectedExpenses(categoryList));
@@ -327,12 +332,14 @@ public class BudgetView extends JSFView {
 
 		exceedLimit = 0;
 		savingLimit = 0;
+		savingPlanned=0;
 		for (CategoryVO categoryVO : categoryVOs) {
 			if (categoryVO.getActualValue() > categoryVO.getLimitValue()) {
 				exceedLimit += categoryVO.getActualValue() - categoryVO.getLimitValue();
 			} else {
 				savingLimit += categoryVO.getLimitValue() - categoryVO.getActualValue();
-			}
+				savingPlanned+=categoryVO.getPlanedValue()-categoryVO.getActualValue();
+						}
 		}
 		return exceedLimit;
 	}
@@ -834,6 +841,13 @@ public class BudgetView extends JSFView {
 
 	public void setActualValueStr(String actualValueStr) {
 		this.actualValueStr = actualValueStr;
+	}
+	public double getSavingPlanned() {
+		return savingPlanned;
+	}
+
+	public void setSavingPlanned(double savingPlanned) {
+		this.savingPlanned = savingPlanned;
 	}
 
 }
