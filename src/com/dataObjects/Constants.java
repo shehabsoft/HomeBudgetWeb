@@ -8,6 +8,8 @@ public interface  Constants {
     static int EDIT_CATEGORY_EXPENSES_SERVICE=8;
     static int EDIT_MONTHLY_BUDGET_SERVICE=9;
     static int CLOSE_MONTHLY_BUDGET_SERVICE=12;
+    static int APPROVE_PURCHASE_SERVICE=13;
+    static int REJECT_PURCHASE_SERVICE=14;
 	static int ADD_LOCATION_SERVICE=3;
 	static int ADD_USER_SERVICE=4;
 	static int ADD_BUDGET_SERVICE=5;

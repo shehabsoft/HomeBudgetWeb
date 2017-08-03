@@ -172,16 +172,16 @@ $(document).ready(function() {
             </div>
         </nav>
         
-        <div class="content">
-            <div class="container-fluid">
+        <div class="content" style="padding: 12px 0px">
+            <div class="container-fluid" style="padding-right:0px;padding-left:0px">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                         
                             <div class="header">
                             
-                                <h4 class="title">Sales List </h4>
-                                <p class="category">Here  You Can Find Your Purchase List</p>
+                                <h4 class="title" style="font-family:Digital-7;font-size:24">Sales List </h4>
+                                <p class="category" style="font-family:Digital-7;font-size:24">Here  You Can Find Your Purchase List</p>
                             </div>
                 
                            <h:form  id="todoForm" prependId="false">
@@ -194,22 +194,41 @@ $(document).ready(function() {
 
 								    			<h:column>
 								    				<f:facet name="header">Details</f:facet>
-								    				#{o.details}
+								    			<h:outputLabel style="font-family:Digital-7;font-size:20">	#{o.details}</h:outputLabel>
 								    			</h:column>
 									           
 								    			<h:column>
 								    				<f:facet name="header">Price</f:facet>
-								    				#{o.price}
+								    			<h:outputLabel style="font-family:Digital-7;font-size:20">	#{o.price}</h:outputLabel>
 								    			</h:column>
 								    			
 								    			<h:column>
-								    				<f:facet name="header">Location</f:facet>
-								    				#{o.locationName}
+								    					<div class="btn-group col-md-10">
+												  
+												  <button type="button" class="btn btn-danger dropdown-toggle pe-7s-more"  style="border:none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+												  
+												    <span class="sr-only">Toggle Dropdown</span>
+												</button>
+										<ul class="dropdown-menu" style="font-family:Digital-7;font-size:20">	
+					                              
+					                          <li >
+								    				 
+								    				
+							          Date:	#{o.creation_date}
+								    				
+								    				
+								    		</li>
+								    		 <li>
+								    				 
+								    				
+								    		Location:#{o.locationName}
+								    				
+								    				
+								    		</li>
+								    		</ul>
+								    		</div>	
 								    			</h:column>
-								    			<h:column>
-								    				<f:facet name="header">Creation Date</f:facet>
-								    				#{o.creation_date}
-								    			</h:column>
+								    			 
 								    			
 								    		
 								    		</h:dataTable>
@@ -219,6 +238,10 @@ $(document).ready(function() {
 																					 action="#{purchaceView.refesh}">
 										                    <f:ajax   execute="todoForm" render="myTable" />
 										        </h:commandButton>
+										         <h:commandLink  value="Back"  onclick="window.history.back()" style="height:50px;margin-left:1px"  class="btn btn-info btn-fill pull-right" >
+													 						  
+										                     
+										        </h:commandLink>
 										       
 										       
 										        </h:panelGroup>

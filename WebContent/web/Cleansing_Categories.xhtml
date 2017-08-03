@@ -7,8 +7,8 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
  <link rel="stylesheet" type="text/css" href="assets/css/design.css"/>
   <script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
  <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
 
-<meta charset="utf-8" />
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
@@ -16,7 +16,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
-       <link href="assets/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="assets/css/jquery.dataTables.min.css" rel="stylesheet" />
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
    <link rel="stylesheet" type="text/css" href="assets/css/design.css"/>
@@ -36,19 +36,17 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'/>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
-    
+    <!-- Material Dashboard javascript methods -->
+
+    	 <script src="assets/js/validation.js"></script>
    <script>
 $(document).ready(function() {
-    $('#myTable').DataTable();
-   
+    $('#myTable').DataTable({
+        "lengthMenu": [[5, 10, 15,25,50,"ALL"], [5,10,15, 25, 50, "All"]]
+    });
 } );
     </script>
-      <script>
-  	function showWaiting()
-	{
-		 $("#ckeckMail").modal('show');
-	}	
-	</script>
+   
 </h:head>
 <h:body>
 <div class="wrapper">
@@ -63,13 +61,14 @@ $(document).ready(function() {
                      Home Budget
                 </a>
             </div>
-             <ul class="nav">
+<ul class="nav">
                     <li>
                         <a href="Dashboard.jsf" onclick="showWaiting()"> <i class="pe-7s-graph"></i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                      <li   >
+                    <li>
+                  
                         <a href="monthlyBudget.jsf" onclick="showWaiting()"> <i class="pe-7s-user"></i>
                             <p>Monthly Budget</p>
                         </a>
@@ -79,25 +78,30 @@ $(document).ready(function() {
                             <p>User Profile</p>
                         </a>
                     </li>
-                         <li >
+                     <li >
                         <a href="budgets.jsf" onclick="showWaiting()"> <i class="pe-7s-cart"></i>
-                            <p> Budget Categories</p>
+                            <p> Budget Categories </p>
+                        </a>
+                    </li>
+                
+                          <li>
+                        <a href="categories.jsf" onclick="showWaiting()"> <i class="pe-7s-cart"></i>
+                            <p> Expenses Categories </p>
                         </a>
                     </li>
                
-                          <li >
-                        <a href="categories.jsf" onclick="showWaiting()"> <i class="pe-7s-cart"></i>
-                            <p>  Expenses Categories </p>
+                     <li  class="active">
+                        <a href="Cleansing_Categories.jsf" onclick="showWaiting()"> <i class="pe-7s-cart"></i>
+                            <p> Cleansing </p>
                         </a>
                     </li>
-                   
                          <li  >
                         <a href="locations.jsf" onclick="showWaiting()"> <i class="pe-7s-culture"></i>
                             <p> Locations </p>
                         </a>
                     </li>
+                
                
-              
                     <li class="active-pro">
                         <a href="user.html"> <i class="pe-7s-rocket"></i>
                             <p>Upgrade to PRO</p>
@@ -116,7 +120,7 @@ $(document).ready(function() {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Sales List</a>
+                    <a class="navbar-brand" href="#" style="font-family:Digital-7;font-size:24">Expenses Categories</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -164,9 +168,10 @@ $(document).ready(function() {
                               
                                 <li class="divider"></li>
                                 <li><a href="Dashboard.jsf">Dashboard</a></li>
+                                  
                               </ul>
                         </li>
-                                     <li>
+                                 <li>
                              <h:commandButton value="Log Out"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control" 
 																					 actionListener="#{userView.logOut}">
 										                   
@@ -177,66 +182,44 @@ $(document).ready(function() {
             </div>
         </nav>
         
-      <div class="content" style="padding: 12px 0px">
+        <div class="content" style="padding: 12px 0px">
             <div class="container-fluid" style="padding-right:0px;padding-left:0px">
                 <div class="row">
+                <h:form  id="todoForm" prependId="false">
                     <div class="col-md-12">
                         <div class="card">
+                         <div class="header">
+                            
+                                
+                              
+                            </div>
                         
-                           
-                
-                           <h:form  id="todoForm" prependId="false">
+                            
+                       
                            <h:panelGroup id="panel">
+	                           
 		                       <div class="display content table-responsive table-full-width">
-								          <h:dataTable value="#{purchaceView.purchaseList}" var="o" id="myTable"
-				 				    			styleClass="table table-hover table-striped"
+								          <h:dataTable value="#{categoryView.categoryList}" var="o" id="myTable" 
+				 				    			styleClass="table table-hover table-striped"  
 								    			headerClass="order-table-header"
 								    			rowClasses="order-table-odd-row,order-table-even-row" 
 								    		>
 								
 								    	
 		
-								    			<h:column>
-								    				<f:facet name="header">Arabic Description</f:facet>
-								    			<h:outputLabel style="font-family:Digital-7;font-size:24">	#{o.arabicDescription}</h:outputLabel>
+								    			<h:column >
+								    				<f:facet name="header" >Arabic Description</f:facet>
+								    		<h:outputLabel style="font-family:Digital-7;font-size:24"> #{o.arabicDescription} </h:outputLabel>
 								    			</h:column>
-									           
-								    			<h:column>
-								    				<f:facet name="header">Price</f:facet>
-								    			<h:outputLabel style="font-family:Digital-7;font-size:24">	#{o.price}</h:outputLabel>
+									         
+								    			<h:column >
+								    				<f:facet name="header" >English Description</f:facet>
+								    		<h:outputLabel style="font-family:Digital-7;font-size:24"> #{o.englishDescription} </h:outputLabel>
 								    			</h:column>
-								    			
-								    			
-								    			<h:column>
-								    				<f:facet name="header">Details</f:facet>
-								    		<div class="btn-group col-md-10">
-												  
-												  <button type="button" class="btn btn-danger dropdown-toggle pe-7s-more"  style="border:none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												  
-												    <span class="sr-only">Toggle Dropdown</span>
-												</button>
-										<ul class="dropdown-menu" style="font-family:Digital-7;font-size:20">	
-					                              
-					                          <li >
-								    				 
-								    				
-							          Date:	#{o.creationDate}
-								    				
-								    				
-								    		</li>
-								    		 <li>
-								    				 
-								    				
-								    		Location:#{o.locationName}
-								    				
-								    				
-								    		</li>
-								    		</ul>
-								    		</div>		
-								    				
-								    				
-								    			</h:column>
-								    	 <h:column   >
+								    		 
+								    		
+								            	
+								    				<h:column   >
 								    			<f:facet name="header">Actions</f:facet>
 								    		<div class="btn-group col-md-10">
 												  
@@ -244,36 +227,51 @@ $(document).ready(function() {
 												  
 												    <span class="sr-only">Toggle Dropdown</span>
 												</button>
-										<ul class="dropdown-menu">	
+												  <ul class="dropdown-menu">	
 					                              
-					                          <li>
-								    			<h:commandButton value="History"  style="font-family:Digital-7;font-size:24;border:none;width:100%"  class="btn btn-info btn-fill pull-right" 
-																					 actionListener="#{purchaceView.showViewHistoryPurchasePage}">
-										                  <f:attribute name="purchaseId" value="#{o.id}" />
-										        </h:commandButton>           
-										     </li>
-										     <li>
-										       <h:commandButton value="Edit"  style="font-family:Digital-7;font-size:24;border:none;width:100%"  class="btn btn-info btn-fill pull-right" 
-																					 actionListener="#{purchaceView.showEditPage}">
-										                  <f:attribute name="purchaseId" value="#{o.id}" />
-										        </h:commandButton>
-										     </li>
-										</ul>
-										                  </div>
-								    	</h:column>
-								    			
+					                                
+					   							
+					                                <li>
+					                                	<h:commandButton value="History"  style="font-family:Digital-7;font-size:20;border:none;width:100%"  class="btn btn-info btn-fill pull-right" 
+																										 actionListener="#{purchaceView.showViewAllPurchasesHistoryPage}">
+															                  <f:attribute name="categoryId" value="#{o.id}" />
+														</h:commandButton>
+					                                </li>
+					                          
+					                               
+					                              </ul>
+					                        
+					                        </div>
+							
+										              
+								    			</h:column>
+								    		
+								          <h:column>
+								    				<f:facet name="header">Status</f:facet>
+								    			<h:outputLabel rendered="#{o.withenLimit eq true}"><i  class="fa fa-check text-success"/></h:outputLabel>
+								    			<h:outputLabel rendered="#{o.withenLimit  eq false}"><i  class="fa fa-times text-danger"/></h:outputLabel>	
+								    			</h:column>
+										     
 								    		
 								
 								    		</h:dataTable>
 								    		</div>
-								    		 <h:commandLink  value="Back"  onclick="window.history.back()" style="height:50px;margin-left:1px"  class="btn btn-info btn-fill pull-right" >
-													 						  
-										                     
-										        </h:commandLink>
-								    	</h:panelGroup>
-										    </h:form>
+								    		
+								    		  <h:commandButton value="Refersh"    class="btn btn-info btn-fill pull-right" 
+																						style="width:100px"  action="#{categoryView.refesh}">
+											                    <f:ajax   execute="todoForm" render="myTable"   onevent="function(data) { if (data.status === 'complete') {
+											 
+											            location.reload();
+											                  }}"/>
+											        </h:commandButton>
+										        </h:panelGroup>
+										    
 								    	</div>
+						
+			
+					
 								           </div>
+								           </h:form>
 								    		</div>
 								    		</div>
 								    		</div>
@@ -311,28 +309,62 @@ $(document).ready(function() {
         </footer>
 								    		
 		  </div>
-	  
-<div id="ckeckMail" class="modal fade " >
+	  </div>
+ <div id="waiting" class="modal fade " >
     <div class="modal-dialog ">
         <div class="modal-content alert alert-info alert-with-icon">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title">Waiting.....</h4>
             </div>
-            <div class="modal-body">
-         
-    
-      
-			
-                <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
-        
+                 <div class="modal-body">
+                      <div id="wait" style="">  <img src='assets/img/3.gif'  /> Please Wait</div>
+                <div class="alert alert-success" id="successMessage" style="display:none">
+                
+                
+                  <span><img src='assets/img/success3.png'/><b> Success - </b> Adding Category Operation Done Successfully "</span>
+                    </div>
+                    	 <div id="error" style="display:none" >Please Solve Errors Before Submit</div>	
+                    	    <div class="alert alert-danger" id="errorMessage" style="display:none">
+                                    <button type="button" aria-hidden="true" class="close">×</button>
+                                   
+                                </div>
+                    
             </div>
         </div>
     </div>
+ 
+ </div>
+ <div id="Graph" class="modal fade " >
+    <div class="modal-dialog ">
+        <div class="modal-content alert alert-info alert-with-icon">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Waiting.....</h4>
+            </div>
+                 <div class="modal-body">
+            
+                         <div class="card ">
+                            <div class="header">
+                                <h4 class="title"> <script>document.write(new Date().getFullYear())</script> Budget</h4>
+                                <p class="category">Category History</p>
+                            </div>
+                            <div class="content">
+                           	<div class="card-header card-chart" data-background-color="red">
+									<h:panelGroup id="completedTasksChartGroup1">
+									<div class="ct-chart" id="completedTasksChart2"></div>
+								     </h:panelGroup>
+								</div>
+                            </div>
+                        </div>
+                </div>
+        </div>
     </div>
-    </div>
+ 
+ </div>
 	</h:body>
 	<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="assets2/js/material.min.js" type="text/javascript"></script>
 
 	<!--  Checkbox, Radio & Switch Plugins -->
 	<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
@@ -347,10 +379,12 @@ $(document).ready(function() {
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="assets/js/light-bootstrap-dashboard.js"></script>
-
+	<script src="assets2/js/material-dashboard.js"></script>
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<script src="assets/js/demo.js"></script>
 
+	<script src="assets2/js/demo.js"></script>
+ 
+   
 	
 	
 	</h:html>

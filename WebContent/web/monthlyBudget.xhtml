@@ -57,6 +57,7 @@
         width: 256px;
         height: 187px;
         margin-bottom: 32px;
+        font-family:Digital-7;font-size:24
       }
    </style>
  	</h:head>
@@ -129,7 +130,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Monthly Budget</a>
+                    <a class="navbar-brand"  style="font-family:Digital-7;font-size:24" href="#">Monthly Budget</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
@@ -204,25 +205,26 @@
                           
                                     <div id="topLoader"  class="col-md-5"  >      
                                         </div>
-                                          <h4 class="title">Current Expenses <b><h:outputLabel styleClass="title" id="totalExpenses" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalExpenses}"></h:outputLabel></b></h4>
-                            <h4 class="title">Planned Expenses <b><h:outputLabel styleClass="title" id="totalExpectedExpenses" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalExpectedExpenses}"></h:outputLabel></b></h4>
-                               <h4 class="title">The Limit OF Expenses <b><h:outputLabel styleClass="title" id="totallimitExpenses" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalLimitExpenses}"></h:outputLabel></b></h4>
+                                          <h4 class="title" style="text-align:center;font-family:Digital-7">Current Expenses <b><h:outputLabel style="text-align:center;font-size:24;font-family:Digital-7" styleClass="title" id="totalExpenses" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalExpenses}"></h:outputLabel></b></h4>
+                            <h4 class="title" style="text-align:center;font-family:Digital-7">Planned Expenses <b><h:outputLabel  style="text-align:center;font-size:24;font-family:Digital-7" styleClass="title" id="totalExpectedExpenses" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalExpectedExpenses}"></h:outputLabel></b></h4>
+                               <h4 class="title" style="text-align:center;font-family:Digital-7">The Limit OF Expenses <b><h:outputLabel style="text-align:center;font-size:24;font-family:Digital-7" styleClass="title" id="totallimitExpenses" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalLimitExpenses}"></h:outputLabel></b></h4>
+                                 <h4 class="title" style="text-align:center;font-family:Digital-7;color:green;">Future Saving In Next Month <b><h:outputLabel style="text-align:center;font-size:24;font-family:Digital-7;color:green;" styleClass="title" id="futureSaving" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalIncomes-budgetView.monthlyBudgetVO.totalExpectedExpenses-budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h4>
                           
                            
                             </div>
                             <hr></hr>
                             <div class="text-center">
-                               <h:commandButton value="Open Budget"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control" 
+                               <h:commandButton value="Open Budget"  style="margin-left:1px;font-family:Digital-7;font-size:20"  class="btn btn-info btn-fill pull-right form-control" 
 																					 actionListener="#{budgetView.showAddPage}">
 										                   
 										        </h:commandButton>   
-                                <h:commandButton value="Edit Budget"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control" 
+                                <h:commandButton value="Edit Budget"  style="margin-left:1px;font-family:Digital-7;font-size:20"  class="btn btn-info btn-fill pull-right form-control" 
 																					 actionListener="#{budgetView.showEditPage}">
 										                   
 						 </h:commandButton>   
 						 
 						  
-						 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#closeMonthlyBudget">Close Budget</button>
+						 <button type="button" class="btn btn-info btn-lg" style="font-family:Digital-7;font-size:20" data-toggle="modal" data-target="#closeMonthlyBudget">Close Budget</button>
 						  
 						    
 						  
@@ -237,24 +239,24 @@
                             <div class="content">
                      
                              
-                            <h4 class="title"> Start Date <b><h:outputLabel styleClass="title" id="startDateId" class="form-control title" value="#{budgetView.monthlyBudgetVO.startDate}"></h:outputLabel></b></h4>
-                              <h4 class="title"> End Date <b><h:outputLabel styleClass="title" id="endDateId" class="form-control title" value="#{budgetView.monthlyBudgetVO.endDate}"></h:outputLabel></b></h4>
-                              <h4 class="title"> Creation Date <b><h:outputLabel styleClass="title" id="creationDateId" class="form-control title" value="#{budgetView.monthlyBudgetVO.creationDate}"></h:outputLabel></b></h4>
-                           <h4 class="title">Total Income <b><h:outputLabel styleClass="title" id="totalIncome" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalIncomes}"></h:outputLabel></b></h4>
-                             <h4 class="title">Saving within Limit <b><h:outputLabel styleClass="title" id="saving" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingValue}"></h:outputLabel></b></h4>
-                             <h4 class="title">Saving within Planned <b><h:outputLabel styleClass="title" id="savingPlanned" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingPlanned}"></h:outputLabel></b></h4>
-                             <h4 class="title">Exceed Limit within Planned <b><h:outputLabel styleClass="title" id="exceedLimit" class="form-control title" value="#{budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h4>
-                             <h4 class="title">Profit In Book <b><h:outputLabel styleClass="title" id="profileBook" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingPlanned-budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h4>
+                            <h4 class="title" style="text-align:center;;font-family:Digital-7"> Start Date <b><h:outputLabel styleClass="title" style="text-align:center;font-size:24" id="startDateId" class="form-control title" value="#{budgetView.monthlyBudgetVO.startDate}"></h:outputLabel></b></h4>
+                              <h4 class="title" style="text-align:center;font-family:Digital-7"> End Date <b><h:outputLabel styleClass="title" style="text-align:center;font-size:24" id="endDateId" class="form-control title" value="#{budgetView.monthlyBudgetVO.endDate}"></h:outputLabel></b></h4>
+                              <h4 class="title" style="text-align:center;font-family:Digital-7"> Creation Date <b><h:outputLabel styleClass="title" style="text-align:center;font-size:24" id="creationDateId" class="form-control title" value="#{budgetView.monthlyBudgetVO.creationDate}"></h:outputLabel></b></h4>
+                           <h4 class="title" style="text-align:center;font-family:Digital-7;color:green;">Total Income <b><h:outputLabel styleClass="title" style="text-align:center;font-size:24;font-family:Digital-7;color:green;" id="totalIncome" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalIncomes}"></h:outputLabel></b></h4>
+                             <h4 class="title" style="text-align:center;font-family:Digital-7">Saving within Limit <b><h:outputLabel style="text-align:center;font-size:24;;font-family:Digital-7" styleClass="title" id="saving" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingValue}"></h:outputLabel></b></h4>
+                             <h4 class="title" style="text-align:center;font-family:Digital-7">Saving within Planned <b><h:outputLabel style="text-align:center;font-size:24;;font-family:Digital-7" styleClass="title" id="savingPlanned" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingPlanned}"></h:outputLabel></b></h4>
+                             <h4 class="title" style="text-align:center;color:red;;font-family:Digital-7">Exceed Limit within Planned <b><h:outputLabel style="text-align:center;font-size:24;color:red;;font-family:Digital-7" styleClass="title" id="exceedLimit" class="form-control title" value="#{budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h4>
+                             <h4 class="title" style="text-align:center;color:green;;font-family:Digital-7">Profit In Book <b><h:outputLabel style="text-align:center;font-size:24;;color:green;;font-family:Digital-7" styleClass="title" id="profileBook" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingPlanned-budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h4>
                              
                             </div>
                             <hr></hr>
                             <div class="text-center">
-                                <h:commandButton value="Refersh"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control " 
+                                <h:commandButton value="Refersh"  style="margin-left:1px;font-family:Digital-7;font-size:20"  class="btn btn-info btn-fill pull-right form-control " 
 																					 action="#{budgetView.refesh}">
-										                    <f:ajax   execute="" render="totalIncome totalExpenses  totalExpectedExpenses exceedLimit saving savingPlanned totallimitExpenses startDateId endDateId creationDateId profileBook"  />
+										                    <f:ajax   execute="" render="totalIncome totalExpenses  totalExpectedExpenses exceedLimit saving savingPlanned totallimitExpenses startDateId endDateId creationDateId profileBook remaining futureSaving"  />
 										        </h:commandButton>
                               		 							
-		 							  <h:commandButton value="Add New Category"  style="margin-left:1px"  class="btn btn-info btn-fill pull-right form-control" 
+		 							  <h:commandButton value="Add New Category"  style="margin-left:1px;font-family:Digital-7;font-size:20"  class="btn btn-info btn-fill pull-right form-control" 
 																					 actionListener="#{categoryView.showAddPage}">
 										                   
 										        </h:commandButton> 
@@ -270,10 +272,10 @@
                              <div class="col-md-4">
                         <div class="card ">
                             <div class="header">
-                                <h4 class="title"> <script>document.write(new Date().getFullYear())</script> Budget</h4>
-                                <p class="category">All Incomes and Expenses  against Months</p>
+                                <h4 class="title" style="font-family:Digital-7;font-size:24"> <script>document.write(new Date().getFullYear())</script> Budget</h4>
+                                <p class="category" style="font-family:Digital-7;font-size:20">Incomes and Expenses</p>
                             </div>
-                            <div class="content">
+                            <div class="content"  style="font-family:Digital-7;font-size:24">
                                 <div id="chartActivity" class="ct-chart"></div>
 
                                 <div class="footer">
@@ -340,13 +342,13 @@
 		        <div class="modal-content alert alert-info alert-with-icon" style="background-color:white;color:black;padding: 0px">
 		            <div class="modal-header">
 		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		                <h4 class="modal-title">Close Monthly Budget</h4>
+		                <h4 class="modal-title" style="font-family:Digital-7;font-size:24">Close Monthly Budget</h4>
 		            </div>
-		            <div class="modal-body">
+		            <div class="modal-body" style="font-family:Digital-7;">
 		         
-		            <label class="form-control">Total Income</label>  <h:inputText  disabled="true" styleClass="title" id="totalIncome1" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalIncomes}"></h:inputText>  
-		             <label class="form-control">Total Expenses </label><h:inputText  disabled="true" styleClass="title" id="totalExpenses1" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalExpenses}"></h:inputText> 
-					  <label class="form-control">Remaining </label><h:inputText  disabled="true" styleClass="title" id="remaining" class="form-control title" value="#{budgetView.monthlyBudgetVO.remaining}"></h:inputText> 
+		            <label class="form-control">Total Income</label>  <h:inputText  disabled="true" style="text-align:center;font-size:24" styleClass="title" id="totalIncome1" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalIncomes}"></h:inputText>  
+		             <label class="form-control">Total Expenses </label><h:inputText  disabled="true" style="text-align:center;font-size:24" styleClass="title" id="totalExpenses1" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalExpenses}"></h:inputText> 
+					  <label class="form-control">Remaining </label><h:inputText  disabled="true" style="text-align:center;font-size:24" styleClass="title" id="remaining" class="form-control title" value="#{budgetView.monthlyBudgetVO.remaining}"></h:inputText> 
 					     <h:inputHidden   styleClass="title" id="remainingConstant" class="form-control title" value="#{budgetView.monthlyBudgetVO.remaining}"></h:inputHidden>
 		       
                            <h:panelGroup id="panel">
@@ -361,11 +363,11 @@
 		 
 									           <h:column  id="description">
 								    				<f:facet name="header"> Description</f:facet>
-								    				#{o.englishDescription}
+								    			<h:outputLabel style="font-family:Digital-7;font-size:24">	#{o.englishDescription}</h:outputLabel>
 								    			</h:column>
 								    			<h:column>
 								    				<f:facet name="header"> Value</f:facet>
-								    				#{o.actualValue}
+								    			<h:outputLabel style="font-family:Digital-7;font-size:24">	#{o.actualValue}</h:outputLabel>
 								    			</h:column>
 								    	
 								    		
@@ -439,19 +441,19 @@
 	        	 $("#waiting").modal('show'); 
 	             break;
 	         case "complete":
-	             break;
-	         case "success":
 	        	 if("block"==document.getElementById("errorMessage").style.display)//server Error
-	        		 {
-	        		    document.getElementById("successMessage").style.display="none";
-	        		 	setTimeout(Fail, 5000);
-	        		 }else//sucess
-	        		 {
-			        	document.getElementById("successMessage").style.display="block";
-			        	
-			        	setTimeout(Success, 3000);
-			        	setTimeout(closeMonthlyBudget,1000 );
-	        		 }
+        		 {
+        		    document.getElementById("successMessage").style.display="none";
+        		 	setTimeout(Fail, 5000);
+        		 }else//sucess
+        		 {
+		        	document.getElementById("successMessage").style.display="block";
+		        	
+		        	setTimeout(Success, 3000);
+		        	setTimeout(closeMonthlyBudget,1000 );
+        		 }
+	         case "success":
+	        	 
 	        	 break;
 	         case "serverError":
 	        	 document.getElementById("successMessage").style.display="none";

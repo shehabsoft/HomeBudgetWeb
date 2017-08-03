@@ -29,8 +29,6 @@
 			 error+=1;
 			 }
 		 //validate Number Values if display is true
-	     var price = document.getElementById("addPurchaseForm:price"); 
-		 successFalge=validateNumber(price,'PriceValueMessage');
 		 if(successFalge==false)
 		 {
 		   error+=1;
@@ -69,6 +67,8 @@
 	        	 document.getElementById("errorMessage").style.display="block";
 	        	 showError(data.errorMessage);
 	        	 break;
+	          
+	        	 
 			 }
 	}
 	function Success() {
@@ -151,6 +151,10 @@
                         <a href="categories.jsf" onclick="showWaiting()"> <i class="pe-7s-cart"></i>
                             <p>  Expenses Categories </p>
                         </a>
+                    </li>   <li  class="active">
+                        <a href="Cleansing_Categories.jsf" onclick="showWaiting()"> <i class="pe-7s-cart"></i>
+                            <p> Cleansing </p>
+                        </a>
                     </li>
                    
                          <li  >
@@ -172,7 +176,7 @@
         <div class="main-panel">
             <nav class="navbar navbar-default navbar-fixed">
                 <div class="container-fluid">
-                    <div class="navbar-header"> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">                        <span class="sr-only">Toggle navigation</span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                    </button> <a class="navbar-brand" href="#">Edit Purchase</a> </div>
+                    <div class="navbar-header"> <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">                        <span class="sr-only">Toggle navigation</span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                        <span class="icon-bar"></span>                    </button> <a class="navbar-brand" href="#">Cleansing</a> </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-left">
                             <li>
@@ -230,7 +234,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">Edit Purchace </h4> </div>
+                                    <h4 class="title">Approve Purchace </h4> </div>
                                       <h:form id="addPurchaseForm"> 
                                 <div class="content">
                                   
@@ -246,42 +250,8 @@
                                             
                                         </div>
                                        <div class="row"> 
-                                       	<div class="col-md-5">
-											<div class="form-group"> <label for="exampleInputEmail1">Current Price</label>
-												
-											<h:inputText  disabled="true" type="text" id="price" class="form-control" onblur="validateNumber(this,'PriceValueMessage')" required="true" value="#{purchaceView.purchaseVO.price}"/>
-												 <div class="col-md-8" id="PriceValueMessage"  style="color:red" ></div> 
-												
-											</div>
-											
-                                        </div>
+                                       	
                                         
-                                        <div class="col-md-5">
-											<div class="form-group"> <label for="exampleInputEmail1">Added Value</label>
-												
-											<h:inputText    type="text" id="newprice" class="form-control" onblur="validateNumber(this,'PriceValueMessage')" required="true" value="#{purchaceView.purchaseVO.newPrice}"/>
-												 <div class="col-md-8" id="PriceValueMessage"  style="color:red" ></div> 
-												
-											</div>
-											 
-                                        </div>
-                                        </div>
-                                           <div class="row"> 
-                                            <div class="col-md-5">
-                                                <div class="form-group"> <label>location</label> <h:selectOneMenu id="locationId" class="form-control" value="#{purchaceView.purchaseVO.locationId}">
-   														<f:selectItems value="#{purchaceView.locationList}" />
-   													</h:selectOneMenu> 
-   												  
-                                                 <h:commandButton value="Refersh"    class="btn btn-info btn-fill pull-right" image="assets/img/refresh blue.png"
-																					style="width:50px"  actionListener="#{purchaceView.getLocations}">
-										                    <f:ajax event="action" execute="@this" render="locationId"
-										                            onevent="function(data) { demo.validate(data)}"  />
-										                </h:commandButton>
-										        </div>	
-   													
-                                            </div>
-                                         
-										
                                            <div class="col-md-5">
                                                 <div class="form-group"> <label for="exampleInputEmail1">Category</label>
                                                 
@@ -296,6 +266,13 @@
 										                </h:commandButton>
 										                </div>
                                             </div>
+                                        
+                                        
+                                        </div>
+                                           <div class="row"> 
+                                     
+                                         
+										
 										</div>
                                         
                                         <div class="row">
@@ -308,13 +285,20 @@
                                             </div>
                                                 
 										            <h:panelGrid columns="2">
-										                <h:commandButton value="Edit"  type="submit"  class="btn btn-info btn-fill pull-right" onclick="return validate()"
-																					style="width:150px"  action="#{purchaceView.edit}">
-										                    <f:ajax event="action" execute="arabicDescription englishDescription price newprice details categoryId locationId" render="arabicDescription englishDescription price newprice details categoryId locationId"
+										                <h:commandButton value="Approve"  type="submit"  class="btn btn-info btn-fill pull-right" onclick="return validate()"
+																					style="width:150px"  action="#{purchaceView.approve}">
+										                    <f:ajax event="action" execute="arabicDescription englishDescription  details categoryId " render="arabicDescription englishDescription   details categoryId "
 										                            onevent="function(data) { submit(data,'success')}" onerror="function(data) { submit(data,'failure')}"  />
 										                </h:commandButton>
-										              
-										              
+										               
+													     <h:commandButton value="back"    class="btn btn-info btn-fill pull-right" 
+																						style="width:100px"  action="#{purchaceView.RefreshApprovedPurchases}">
+											                    <f:ajax       onevent="function(data) { if (data.status === 'complete') {
+											 
+											            window.history.back()
+											                  }}"/>				  
+										                     
+										        </h:commandButton>
 										               
 										            </h:panelGrid> <br/>
 										             
@@ -358,7 +342,7 @@
                 <div id="wait" style=""><img src='assets/img/3.gif'  />Please Wait</div>
                 <div class="alert alert-success" id="successMessage" style="display:none">
                 
-                   <span><img src='assets/img/success3.png'/><b> Success - </b> Edit Purchase Operation Done Successfully "</span>
+                   <span><img src='assets/img/success3.png'/><b> Success - </b>  Purchase Has Been Approved Successfully "</span>
                     </div>
                     	 <div id="error" style="display:none" >Please Solve Errors Before Submit</div>	
                     	    <div class="alert alert-danger" id="errorMessage" style="display:none">

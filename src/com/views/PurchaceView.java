@@ -46,7 +46,9 @@ public class PurchaceView extends JSFView {
 	CategoryView categoryView = new CategoryView();
 	LocationView locationView = new LocationView();
 	private PurchaseVO purchaseVO;
+	private int selectedCategoryId;
 	
+
 	private List<PurchaseVO> purchaseList = new ArrayList<PurchaseVO>();
 	private List<PurchaseHistoryVO> purchaseHistoryList = new ArrayList<PurchaseHistoryVO>();
 	private ArrayList<LocationVO> locationVOs = new ArrayList<LocationVO>();
@@ -165,6 +167,83 @@ public class PurchaceView extends JSFView {
 		setMessage(responseMessage);
 		reset();
 	}
+	@Action
+	public void approve() throws BusinessException {
+		String responseMessage = "";
+		try {
+			System.out.println("Calling Transaction Service Form Purchhase View");
+			String requestData = "<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"
+					+ Constants.APPROVE_PURCHASE_SERVICE + "</serviceCode><userId>" + getUserVO().getId()
+					+ "</userId><purchaseId>" + purchaseVO.getId() + "</purchaseId><arabicDescription>" + purchaseVO.getArabicDescription()
+					+ "</arabicDescription> <englishDescription>" + purchaseVO.getEnglishDescription()
+					+ "</englishDescription><categoryId>"
+					+ purchaseVO.getCategoryId() + "</categoryId><details>" + purchaseVO.getDetails() + "</details></createTransaction>]]>";
+			System.out.println("Request Data " + requestData);
+			String response = callTransactionService(requestData);
+			TransactionServiceParser transactionServiceParser = new TransactionServiceParser();
+			responseMessage = transactionServiceParser.parseCreateTransactionResponse(response);
+			System.out.println("response  Data " + responseMessage);
+			System.out.print(responseMessage);
+
+			setStatus(true);
+			
+		//	FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+			//.handleNavigation(FacesContext.getCurrentInstance(), null, "CleansingSalesList.xhtml");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			setStatus(false);
+			if (e instanceof BusinessException) {
+				System.out.println(e);
+				throw new BusinessException(e.toString());
+			}
+		} finally {
+			if (!getStatus()) {
+				setMessage("Error");
+			}
+
+		}
+	}
+		@Action
+		public void reject(ActionEvent event) throws BusinessException {
+			String responseMessage = "";
+			try {
+				int purchaseId = (Integer) event.getComponent().getAttributes().get("purchaseId");
+				System.out.println(purchaseId);
+				System.out.println("Calling Transaction Service Form Purchhase View");
+				String requestData = "<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"
+						+ Constants.REJECT_PURCHASE_SERVICE + "</serviceCode><userId>" + getUserVO().getId()
+						+ "</userId><purchaseId>" + purchaseId + "</purchaseId><arabicDescription>" + purchaseVO.getArabicDescription()
+						+ "</arabicDescription> <englishDescription>" + purchaseVO.getEnglishDescription()
+						+ "</englishDescription><categoryId>"
+						+ purchaseVO.getCategoryId() + "</categoryId><details>" + purchaseVO.getDetails() + "</details></createTransaction>]]>";
+				System.out.println("Request Data " + requestData);
+				String response = callTransactionService(requestData);
+				TransactionServiceParser transactionServiceParser = new TransactionServiceParser();
+				responseMessage = transactionServiceParser.parseCreateTransactionResponse(response);
+				System.out.println("response  Data " + responseMessage);
+				System.out.print(responseMessage);
+
+				setStatus(true);
+				
+			//	FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				//.handleNavigation(FacesContext.getCurrentInstance(), null, "CleansingSalesList.xhtml");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				setStatus(false);
+				if (e instanceof BusinessException) {
+					System.out.println(e);
+					throw new BusinessException(e.toString());
+				}
+			} finally {
+				if (!getStatus()) {
+					setMessage("Error");
+				}
+
+			}
+
+		setMessage(responseMessage);
+		//reset();
+	}
 
 	@Action
 	public void showEditPage(ActionEvent event) throws BusinessException {
@@ -172,6 +251,19 @@ public class PurchaceView extends JSFView {
 		System.out.println(purchaseId);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "editPurchase.xhtml");
+		for (PurchaseVO purchaseVo : purchaseList) {
+			if (purchaseVo.getId() == purchaseId) {
+				this.purchaseVO = purchaseVo;
+				break;
+			}
+		}
+	}
+	@Action
+	public void showApprovePage(ActionEvent event) throws BusinessException {
+		int purchaseId = (Integer) event.getComponent().getAttributes().get("purchaseId");
+		System.out.println(purchaseId);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "approvePurchase.xhtml");
 		for (PurchaseVO purchaseVo : purchaseList) {
 			if (purchaseVo.getId() == purchaseId) {
 				this.purchaseVO = purchaseVo;
@@ -199,6 +291,16 @@ public class PurchaceView extends JSFView {
 		purchaseList = getPurchasesByCategoryId(categoryId);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "salesList.xhtml");
+
+	}
+	@Action
+	public void showViewAllPurchasesHistoryPage(ActionEvent event) throws Exception {
+
+		int categoryId = (Integer) event.getComponent().getAttributes().get("categoryId");
+		System.out.println(categoryId);
+		purchaseList = getAllPurchasesByCategoryId(categoryId);
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+				.handleNavigation(FacesContext.getCurrentInstance(), null, "CleansingSalesList.xhtml");
 
 	}
 
@@ -315,6 +417,30 @@ public class PurchaceView extends JSFView {
 			throw new Exception(e);
 		}
 	}
+	public ArrayList<PurchaseVO> getAllPurchasesByCategoryId(int categoryId) throws Exception {
+		try {
+			String output = "";
+			System.out.println("Calling getِِِALLPurchasesByCategoryId  .... \n");
+			selectedCategoryId=categoryId;
+			output = callPostWebService("getAllPurchasesByCategoryId", "categoryId", categoryId);
+			System.out.println("Output From Server  .... " + output);
+			System.out.println(" .... \n");
+			Gson gson = new Gson();
+			Object obj = gson.fromJson(output, PurchasesKeyBasedDocument.class);
+			PurchasesKeyBasedDocument purchaseHistoryKeyBasedDocument = (PurchasesKeyBasedDocument) obj;
+			ArrayList<PurchaseVO> purchaseVOs = (ArrayList<PurchaseVO>) purchaseHistoryKeyBasedDocument.getPurchaseVO();
+			return purchaseVOs;
+
+		} catch (Exception e)
+
+		{
+			throw new Exception(e);
+		}
+	}
+	public void RefreshApprovedPurchases() throws Exception
+	{
+		purchaseList=getAllPurchasesByCategoryId(selectedCategoryId);
+	}
 
 	public ArrayList<PurchaseVO> getAllPurchases() throws Exception {
 		try {
@@ -344,7 +470,13 @@ public class PurchaceView extends JSFView {
 	public void setPurchaseList(List<PurchaseVO> purchaseList) {
 		this.purchaseList = purchaseList;
 	}
- 
+	public int getSelectedCategoryId() {
+		return selectedCategoryId;
+	}
+
+	public void setSelectedCategoryId(int selectedCategoryId) {
+		this.selectedCategoryId = selectedCategoryId;
+	}
 
 
 }

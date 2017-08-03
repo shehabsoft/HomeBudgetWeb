@@ -29,7 +29,7 @@ function validateArabicDescription(arabicValue)
 function validateEnglishName(englishValue,ID)
 {
 	var text=englishValue.value;
-    var arregex =/^[-_ a-zA-Z0-9]+$/;
+    var arregex = /^[0-9a-zA-Z-_ ]+$/;
    if(arregex.test(text))
 	   {
 	   	 document.getElementById(ID).innerHTML="";
@@ -98,7 +98,7 @@ function validateEnglishDescription(englishValue)
 {
 	
 	var text=englishValue.value;
-    var arregex = /^[0-9a-zA-Z-_]+$/;
+    var arregex = /^[0-9a-zA-Z-_ ]+$/;
    if(arregex.test(text))
 	   {
 	   document.getElementById('englishDescriptionMessage').innerHTML="";

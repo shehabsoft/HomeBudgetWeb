@@ -335,7 +335,7 @@ public class BudgetView extends JSFView {
 		savingPlanned=0;
 		for (CategoryVO categoryVO : categoryVOs) {
 			if (categoryVO.getActualValue() > categoryVO.getLimitValue()) {
-				exceedLimit += categoryVO.getActualValue() - categoryVO.getLimitValue();
+				exceedLimit += categoryVO.getActualValue() - categoryVO.getPlanedValue();
 			} else {
 				savingLimit += categoryVO.getLimitValue() - categoryVO.getActualValue();
 				savingPlanned+=categoryVO.getPlanedValue()-categoryVO.getActualValue();

@@ -91,6 +91,11 @@ $(document).ready(function() {
                         </a>
                     </li>
                    
+                     <li  class="active">
+                        <a href="Cleansing_Categories.jsf" onclick="showWaiting()"> <i class="pe-7s-cart"></i>
+                            <p> Cleansing </p>
+                        </a>
+                    </li>
                          <li  >
                         <a href="locations.jsf" onclick="showWaiting()"> <i class="pe-7s-culture"></i>
                             <p> Locations </p>
@@ -185,7 +190,7 @@ $(document).ready(function() {
                         
                            
                 
-                           <h:form  id="todoForm" prependId="false">
+                           <h:form  id="todoForm" >
                            <h:panelGroup id="panel">
 		                       <div class="display content table-responsive table-full-width">
 								          <h:dataTable value="#{purchaceView.purchaseList}" var="o" id="myTable"
@@ -201,9 +206,9 @@ $(document).ready(function() {
 								    			<h:outputLabel style="font-family:Digital-7;font-size:24">	#{o.arabicDescription}</h:outputLabel>
 								    			</h:column>
 									           
-								    			<h:column>
-								    				<f:facet name="header">Price</f:facet>
-								    			<h:outputLabel style="font-family:Digital-7;font-size:24">	#{o.price}</h:outputLabel>
+								    		 <h:column>
+								    				<f:facet name="header">English Description</f:facet>
+								    			<h:outputLabel style="font-family:Digital-7;font-size:24">	#{o.englishDescription}</h:outputLabel>
 								    			</h:column>
 								    			
 								    			
@@ -246,16 +251,22 @@ $(document).ready(function() {
 												</button>
 										<ul class="dropdown-menu">	
 					                              
-					                          <li>
-								    			<h:commandButton value="History"  style="font-family:Digital-7;font-size:24;border:none;width:100%"  class="btn btn-info btn-fill pull-right" 
-																					 actionListener="#{purchaceView.showViewHistoryPurchasePage}">
-										                  <f:attribute name="purchaseId" value="#{o.id}" />
-										        </h:commandButton>           
-										     </li>
+					                     
 										     <li>
-										       <h:commandButton value="Edit"  style="font-family:Digital-7;font-size:24;border:none;width:100%"  class="btn btn-info btn-fill pull-right" 
-																					 actionListener="#{purchaceView.showEditPage}">
+										       <h:commandButton value="Approve"  style="font-family:Digital-7;font-size:24;border:none;width:100%"  class="btn btn-info btn-fill pull-right" 
+																					 actionListener="#{purchaceView.showApprovePage}">
 										                  <f:attribute name="purchaseId" value="#{o.id}" />
+										        </h:commandButton>
+										     </li>
+										       <li>
+										       <h:commandButton value="Reject"  style="font-family:Digital-7;font-size:24;border:none;width:100%"  class="btn btn-info btn-fill pull-right" 
+																					 actionListener="#{purchaceView.reject}" >
+															
+										                  <f:attribute name="purchaseId" value="#{o.id}" />
+										                  <f:ajax   execute="" render="myTable"   onevent="function(data) { if (data.status === 'complete') {
+											 
+											            location.reload();
+											                  }}"/>
 										        </h:commandButton>
 										     </li>
 										</ul>
@@ -266,7 +277,14 @@ $(document).ready(function() {
 								
 								    		</h:dataTable>
 								    		</div>
-								    		 <h:commandLink  value="Back"  onclick="window.history.back()" style="height:50px;margin-left:1px"  class="btn btn-info btn-fill pull-right" >
+								    		<h:commandButton value="Refersh"    class="btn btn-info btn-fill pull-right" 
+																						style="width:100px"  action="#{purchaceView.RefreshApprovedPurchases}">
+											                    <f:ajax   execute="todoForm" render="myTable"   onevent="function(data) { if (data.status === 'complete') {
+											 
+											            location.reload();
+											                  }}"/>
+											        </h:commandButton>
+								    		 <h:commandLink  value="Back"  onclick="window.history.back()" style="margin-left:1px"  class="btn btn-info btn-fill pull-right" >
 													 						  
 										                     
 										        </h:commandLink>

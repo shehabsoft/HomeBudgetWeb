@@ -189,7 +189,7 @@ $(document).ready(function() {
                         
                             <div class="header">
                             
-                                <h4 class="title">Total Budget Categories </h4>
+                                <h4 class="title" style="font-family:Digital-7;font-size:24">Total Budget Categories </h4>
                               
                             </div>
                             
@@ -197,7 +197,7 @@ $(document).ready(function() {
                            <h:panelGroup id="panel">
 		                       <div class="display content table-responsive table-full-width">
 								          <h:dataTable value="#{budgetView.categoryIncomeList}" var="o" id="myTable"
-				 				    			styleClass="table table-hover table-striped"
+				 				    			styleClass="table table-hover table-striped" 
 								    			headerClass="order-table-header"
 								    			rowClasses="order-table-odd-row,order-table-even-row" 
 								    		>
@@ -206,15 +206,15 @@ $(document).ready(function() {
 		
 								    			<h:column>
 								    				<f:facet name="header">Arabic Description</f:facet>
-								    				#{o.arabicDescription}
+								    				<h:outputLabel style="font-family:Digital-7;font-size:24">#{o.arabicDescription}</h:outputLabel>
 								    			</h:column>
 									           <h:column>
 								    				<f:facet name="header">English Description</f:facet>
-								    				#{o.englishDescription}
+								    				<h:outputLabel style="font-family:Digital-7;font-size:24">#{o.englishDescription}</h:outputLabel>	
 								    			</h:column>
 								    			<h:column>
 								    				<f:facet name="header">Actual Value</f:facet>
-								    				#{o.actualValue}
+								    			<h:outputLabel style="font-family:Digital-7;font-size:24">#{o.actualValue}</h:outputLabel>	
 								    			</h:column>
 								    		<h:column>
 								    			<f:facet name="header">Chart</f:facet>

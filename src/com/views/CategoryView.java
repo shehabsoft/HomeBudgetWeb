@@ -63,8 +63,11 @@ public class CategoryView extends JSFView {
     String actualValue = "";
 	String limitValue = "";
    private String categoryName;
+   private double categoryTotalValue;
+   private double categoryAvergeValue;
+   private double categoryPlannedValue;
+   private double categoryLimitValue;
 
-	
 
 	public CategoryView() {
 		try {
@@ -219,14 +222,26 @@ public class CategoryView extends JSFView {
 	public void ajaxChart(AjaxBehaviorEvent event) throws Exception {
 		// monthlyChartPurchaseListByCategory Chart
 	    int categoryId = (Integer) event.getComponent().getAttributes().get("categoryId");
+	    double total=0;
+	    String actualValues[] = null;
+	    categoryTotalValue=0;
 		for(CategoryVO categoryVO :categoryList)
 		{
 			if(categoryId==categoryVO.getId())
 			{
 				categoryName=categoryVO.getEnglishDescription();
+				categoryPlannedValue=categoryVO.getPlanedValue();
+				categoryLimitValue=categoryVO.getLimitValue();
+				actualValues=categoryVO.getActualValueStr().split(",");
+				 for (String s : actualValues) {
+						categoryTotalValue+=Double.parseDouble(s);
+					}
+			 
+				
 				break;
 			}
 		}
+		categoryAvergeValue=Math.ceil(categoryTotalValue/actualValues.length);
 		System.out.println("Actual Value :::::::::::::"+categoryName);
 	}
 	@Action
@@ -508,5 +523,36 @@ public class CategoryView extends JSFView {
 	public void setLimitValue(String expenses) {
 		this.limitValue = expenses;
 	}
+
+	public double getCategoryTotalValue() {
+	return categoryTotalValue;
+}
+
+public void setCategoryTotalValue(double categoryTotalValue) {
+	this.categoryTotalValue = categoryTotalValue;
+}
+public double getCategoryAvergeValue() {
+return categoryAvergeValue;
+}
+
+public void setCategoryAvergeValue(double categoryAvergeValue) {
+this.categoryAvergeValue = categoryAvergeValue;
+}
+
+	public double getCategoryPlannedValue() {
+	return categoryPlannedValue;
+}
+
+public void setCategoryPlannedValue(double categoryPlannedValue) {
+	this.categoryPlannedValue = categoryPlannedValue;
+}
+
+public double getCategoryLimitValue() {
+	return categoryLimitValue;
+}
+
+public void setCategoryLimitValue(double categoryLimitValue) {
+	this.categoryLimitValue = categoryLimitValue;
+}
 
 }
