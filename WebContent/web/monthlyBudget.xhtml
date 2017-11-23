@@ -64,7 +64,7 @@
 	<h:body>
 	  <h:form  id="monthlyBudget">
 		   <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+    <div class="sidebar" data-color="none" data-image="assets/img/sidebar-7.jpg">
  
     <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
 
@@ -253,7 +253,7 @@
                             <div class="text-center">
                                 <h:commandButton value="Refersh"  style="margin-left:1px;font-family:Digital-7;font-size:20"  class="btn btn-info btn-fill pull-right form-control " 
 																					 action="#{budgetView.refesh}">
-										                    <f:ajax   execute="" render="totalIncome totalExpenses  totalExpectedExpenses exceedLimit saving savingPlanned totallimitExpenses startDateId endDateId creationDateId profileBook remaining futureSaving"  />
+										                    <f:ajax   execute="" render="totalIncome totalExpenses  totalExpectedExpenses exceedLimit saving savingPlanned totallimitExpenses startDateId endDateId creationDateId profileBook remaining futureSaving avergeExpenses avergeIncome"  />
 										        </h:commandButton>
                               		 							
 		 							  <h:commandButton value="Add New Category"  style="margin-left:1px;font-family:Digital-7;font-size:20"  class="btn btn-info btn-fill pull-right form-control" 
@@ -279,9 +279,9 @@
                                 <div id="chartActivity" class="ct-chart"></div>
 
                                 <div class="footer">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Income
-                                        <i class="fa fa-circle text-danger"></i> Expenses
+                                    <div class="legend" style="margin-left:70px">
+                                        <i class="fa fa-circle text-info"></i> Averge Income  <h:outputLabel style="text-align:center;font-size:24;;font-family:Digital-7" styleClass="title" id="avergeIncome" class="form-control title" value="#{budgetView.avergeIncome}"></h:outputLabel>
+                                        <i class="fa fa-circle text-danger"></i>Averge  Expenses <h:outputLabel style="text-align:center;font-size:24;font-family:Digital-7" styleClass="title" id="avergeExpenses" class="form-control title" value="#{budgetView.avergeExpenses}"></h:outputLabel>
                                     </div>
                                     <hr></hr>
                                     <div class="stats">
@@ -409,11 +409,11 @@
                 <h4 class="modal-title">Waiting.....</h4>
             </div>continue
                  <div class="modal-body">
-                <div id="wait" style=""><img src='assets/img/3.gif' /> Please Wait</div>
+                <div id="wait" style=""><img src="assets/img/3.gif" /> Please Wait</div>
                 <div class="alert alert-success" id="successMessage" style="display:none">
                 
                 
-                  <span><img src='assets/img/success3.png'/><b> Success - </b> Closing Budget  Operation Done Successfully "</span>
+                  <span><img src="assets/img/success3.png"/><b> Success - </b> Closing Budget  Operation Done Successfully "</span>
                     </div>
                     	 <div id="error" style="display:none" >Please Solve Errors Before Submit</div>	
                     	    <div class="alert alert-danger" id="errorMessage" style="display:none">

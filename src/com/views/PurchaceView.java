@@ -16,6 +16,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.xml.rpc.ServiceException;
 import javax.xml.ws.Action;
 
@@ -47,9 +48,15 @@ public class PurchaceView extends JSFView {
 	LocationView locationView = new LocationView();
 	private PurchaseVO purchaseVO;
 	private int selectedCategoryId;
-	
+	//for purchase History Chart 
+	private String creationDateStr;
+	private String  totalPriceStr;
+	private double purchaseTotalValue;
+	private double purchaseAvergeValue;
+	private String purchaseEnName;
 
 	private List<PurchaseVO> purchaseList = new ArrayList<PurchaseVO>();
+	private PurchaseVO purchaseHistoryChart = new PurchaseVO();
 	private List<PurchaseHistoryVO> purchaseHistoryList = new ArrayList<PurchaseHistoryVO>();
 	private ArrayList<LocationVO> locationVOs = new ArrayList<LocationVO>();
  
@@ -293,6 +300,37 @@ public class PurchaceView extends JSFView {
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "salesList.xhtml");
 
 	}
+	
+	@Action
+	public void showViewPurchaseHistoryChart(ActionEvent event) throws Exception {
+
+		int approvedPurchaseId = (Integer) event.getComponent().getAttributes().get("approvedPurchaseId");
+		System.out.println(approvedPurchaseId);
+		 double total=0;
+		    String actualValues[] = null;
+		    purchaseTotalValue=0;
+			for(PurchaseVO purchaseVO :purchaseList)
+			{
+				if(approvedPurchaseId==purchaseVO.getApprovedPurchaseId())
+				{
+					purchaseEnName=purchaseVO.getEnglishDescription();
+					
+					actualValues=purchaseVO.getTotalPriceStr().split(",");
+					 for (String s : actualValues) {
+						 purchaseTotalValue+=Double.parseDouble(s);
+						}
+				 
+					
+					break;
+				}
+			}
+			purchaseAvergeValue=Math.ceil(purchaseTotalValue/actualValues.length);
+			 
+	 
+	 
+		
+
+	}
 	@Action
 	public void showViewAllPurchasesHistoryPage(ActionEvent event) throws Exception {
 
@@ -401,7 +439,7 @@ public class PurchaceView extends JSFView {
 	public ArrayList<PurchaseVO> getPurchasesByCategoryId(int categoryId) throws Exception {
 		try {
 			String output = "";
-			System.out.println("Calling getPurchasesByCategoryId  .... \n");
+			System.out.println("Calling getPurchasesHistery By CategoryId  .... \n");
 			output = callPostWebService("getPurchasesByCategoryId", "categoryId", categoryId);
 			System.out.println("Output From Server  .... " + output);
 			System.out.println(" .... \n");
@@ -410,6 +448,25 @@ public class PurchaceView extends JSFView {
 			PurchasesKeyBasedDocument purchaseHistoryKeyBasedDocument = (PurchasesKeyBasedDocument) obj;
 			ArrayList<PurchaseVO> purchaseVOs = (ArrayList<PurchaseVO>) purchaseHistoryKeyBasedDocument.getPurchaseVO();
 			return purchaseVOs;
+
+		} catch (Exception e)
+
+		{
+			throw new Exception(e);
+		}
+	}
+	public  PurchaseVO getPurchasesHistoryChartByApprovedPurchaseId(int approvedPurchaseId) throws Exception {
+		try {
+			String output = "";
+			System.out.println("Calling getPurchasesHistoryChartByApprovedPurchaseId  .... \n");
+			output = callPostWebService("getPurchasesHistoryChartByApprovedPurchaseId", "approvedPurchaseId", approvedPurchaseId);
+			System.out.println("Output From Server  .... " + output);
+			System.out.println(" .... \n");
+			Gson gson = new Gson();
+			Object obj = gson.fromJson(output, PurchasesKeyBasedDocument.class);
+			PurchasesKeyBasedDocument purchaseHistoryKeyBasedDocument = (PurchasesKeyBasedDocument) obj;
+			 PurchaseVO purchaseVO = (PurchaseVO) purchaseHistoryKeyBasedDocument.getPurchaseVO();
+			return purchaseVO;
 
 		} catch (Exception e)
 
@@ -476,6 +533,48 @@ public class PurchaceView extends JSFView {
 
 	public void setSelectedCategoryId(int selectedCategoryId) {
 		this.selectedCategoryId = selectedCategoryId;
+	}
+
+ 
+
+	public String getCreationDateStr() {
+		return creationDateStr;
+	}
+
+	public void setCreationDateStr(String creationDateStr) {
+		this.creationDateStr = creationDateStr;
+	}
+
+	public String getTotalPriceStr() {
+		return totalPriceStr;
+	}
+
+	public void setTotalPriceStr(String totalPriceStr) {
+		this.totalPriceStr = totalPriceStr;
+	}
+
+	public double getPurchaseTotalValue() {
+		return purchaseTotalValue;
+	}
+
+	public void setPurchaseTotalValue(double purchaseTotalValue) {
+		this.purchaseTotalValue = purchaseTotalValue;
+	}
+
+	public double getPurchaseAvergeValue() {
+		return purchaseAvergeValue;
+	}
+
+	public void setPurchaseAvergeValue(double purchaseAvergeValue) {
+		this.purchaseAvergeValue = purchaseAvergeValue;
+	}
+
+	public String getPurchaseEnName() {
+		return purchaseEnName;
+	}
+
+	public void setPurchaseEnName(String purchaseEnName) {
+		this.purchaseEnName = purchaseEnName;
 	}
 
 

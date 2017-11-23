@@ -72,6 +72,8 @@ public class BudgetView extends JSFView {
 	private String dayStringByCategory = "";
 	private String totalPriceStringByCategory = "";
 	private double maxExpenses = 0;
+	private double avergeIncome=0;
+	private double avergeExpenses=0;
 	private List<CategoryHistoryVO> categoryHistoryList = new ArrayList<CategoryHistoryVO>();
 	private String actualValueStr="";
 
@@ -301,6 +303,7 @@ public class BudgetView extends JSFView {
 		for (CategoryVO categoryVO : categoryVOs) {
 			tatalExpenses += categoryVO.getActualValue();
 		}
+		
 		return tatalExpenses;
 	}
 
@@ -317,6 +320,7 @@ public class BudgetView extends JSFView {
 		for (CategoryVO categoryVO : categoryVOs) {
 			tatalExpenses += categoryVO.getActualValue();
 		}
+	
 		return tatalExpenses;
 	}
 
@@ -325,6 +329,7 @@ public class BudgetView extends JSFView {
 		for (CategoryVO categoryVO : categoryVOs) {
 			totalLimitExpenses += categoryVO.getLimitValue();
 		}
+		
 		return totalLimitExpenses;
 	}
 
@@ -369,16 +374,28 @@ public class BudgetView extends JSFView {
 	public void initializeChart() throws Exception {
 		incomes = "";
 		expenses = "";
+		double totalIncome=0;
+		double totalExpenses=0;
 		monthlyBudgetVOs = getAllMonthlyBudgetByUserId();
 		for (int i = 0; i < monthlyBudgetVOs.size(); i++) {
 			if (i == monthlyBudgetVOs.size() - 1) {
 				incomes += monthlyBudgetVOs.get(i).getTotalIncomes();
+				totalIncome+=monthlyBudgetVOs.get(i).getTotalIncomes();
 				expenses += monthlyBudgetVOs.get(i).getTotalExpenses();
+				totalExpenses+=monthlyBudgetVOs.get(i).getTotalExpenses();
 			} else {
 				incomes += monthlyBudgetVOs.get(i).getTotalIncomes() + ",";
+				totalIncome+=monthlyBudgetVOs.get(i).getTotalIncomes();
 				expenses += monthlyBudgetVOs.get(i).getTotalExpenses() + ",";
+				totalExpenses+=monthlyBudgetVOs.get(i).getTotalExpenses();
 			}
 		}
+		if(monthlyBudgetVOs.size()>0)
+		{
+		avergeIncome=Math.ceil(totalIncome/monthlyBudgetVOs.size());
+		avergeExpenses=Math.ceil(totalExpenses/monthlyBudgetVOs.size());
+		} 
+		
 		// Daily Sales Chart
 		monthlyChartPurchaseList = getMonthlyPurchases();
 		dayString = "";
@@ -848,6 +865,22 @@ public class BudgetView extends JSFView {
 
 	public void setSavingPlanned(double savingPlanned) {
 		this.savingPlanned = savingPlanned;
+	}
+
+	public double getAvergeIncome() {
+		return avergeIncome;
+	}
+
+	public void setAvergeIncome(double avergeIncome) {
+		this.avergeIncome = avergeIncome;
+	}
+
+	public double getAvergeExpenses() {
+		return avergeExpenses;
+	}
+
+	public void setAvergeExpenses(double avergeExpenses) {
+		this.avergeExpenses = avergeExpenses;
 	}
 
 }

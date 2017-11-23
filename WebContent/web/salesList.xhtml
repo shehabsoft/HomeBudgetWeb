@@ -34,7 +34,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
    
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'/>
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300" rel='stylesheet' type='text/css'/>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
     
    <script>
@@ -48,6 +48,14 @@ $(document).ready(function() {
 	{
 		 $("#ckeckMail").modal('show');
 	}	
+   
+     function go()
+     {
+    	 alert("go");
+     	var goButton=document.getElementById('go');
+     	goButton.click();
+     }
+     
 	</script>
 </h:head>
 <h:body>
@@ -258,6 +266,14 @@ $(document).ready(function() {
 										                  <f:attribute name="purchaseId" value="#{o.id}" />
 										        </h:commandButton>
 										     </li>
+										     
+										     <li><h:commandButton type="button" value="Chart" style="font-family:Digital-7;font-size:20;border:none;width:100%" class="btn btn-info btn-fill pull-right"   render="completedTasksChartGroup3 completedTasksChartGroup purchaseEnName purchaseTotalValue purchaseAvergeValue" onclick="demo.initalizePurchaseHistoryChart('#{o.totalPriceStr}','#{o.creationDateStr}')">
+													<f:attribute name="approvedPurchaseId" value="#{o.approvedPurchaseId}" />
+					   								
+					   																						
+					   							</h:commandButton></li>
+					   							
+					   							 
 										</ul>
 										                  </div>
 								    	</h:column>
@@ -273,6 +289,28 @@ $(document).ready(function() {
 								    	</h:panelGroup>
 										    </h:form>
 								    	</div>
+								    	
+					<a id="go"  style="display:none" href="#completedTasksChartGroup3">Contact</a>
+					<h:panelGroup id="completedTasksChartGroup3">
+						<div class="card ">
+                            <div class="header">
+                                <h4 class="title"> <script>document.write(new Date().getFullYear())</script> Budget</h4>
+             		    	  <div class="card-content table-responsive">  
+	                            
+	                                </div>
+                               
+                            
+                            </div>
+                            <div class="content">
+                            
+                           	<div class="card-header card-chart" data-background-color="red">
+									<h:panelGroup id="completedTasksChartGroup">
+									<div class="ct-chart" id="completedTasksChart3"></div>
+								     </h:panelGroup>
+								</div>
+                            </div>
+                        </div>
+                        </h:panelGroup>
 								           </div>
 								    		</div>
 								    		</div>
@@ -324,7 +362,7 @@ $(document).ready(function() {
     
       
 			
-                <div id="wait" style=""><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /><img src='assets/img/3.gif'  /></div>
+                <div id="wait" style=""><img src="assets/img/3.gif"  /><img src="assets/img/3.gif"  /><img src="assets/img/3.gif"  /><img src="assets/img/3.gif"  /><img src="assets/img/3.gif"  /></div>
         
             </div>
         </div>
@@ -349,7 +387,7 @@ $(document).ready(function() {
 	<script src="assets/js/light-bootstrap-dashboard.js"></script>
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<script src="assets/js/demo.js"></script>
+	<script src="assets2/js/demo.js"></script>
 
 	
 	
