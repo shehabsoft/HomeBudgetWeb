@@ -23,7 +23,7 @@
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-     
+   
 </head>
 
 <body>
@@ -161,47 +161,68 @@
 	                    <div class="card-content">
 	                        <div class="row">
 	                            <div class="col-md-6">
-	                                <h5>Notifications Style</h5>
-	                                <div class="alert alert-info">
-	                                    <span>This is a plain notification</span>
-	                                </div>
-	                                <div class="alert alert-info">
-	                                    <button type="button" aria-hidden="true" class="close">×</button>
-	                                    <span>This is a notification with close button.</span>
-	                                </div>
-	                                <div class="alert alert-info alert-with-icon" data-notify="container">
-	                                    <button type="button" aria-hidden="true" class="close">×</button>
-	                                    <i data-notify="icon" class="material-icons">add_alert</i>
-	                                    <span data-notify="message">This is a notification with close button and icon.</span>
-	                                </div>
-	                                <div class="alert alert-info alert-with-icon" data-notify="container">
-	                                    <button type="button" aria-hidden="true" class="close">×</button>
-	                                    <i data-notify="icon" class="material-icons">add_alert</i>
-	                                    <span data-notify="message">This is a notification with close button and icon and have many lines. You can see that the icon and the close button are always vertically aligned. This is a beautiful notification. So you don't have to worry about the style.</span>
-	                                </div>
+	                                  <div class="row">
+     
+          <div class="col-md-6">
+              <div class="form-group"> <label>start</label>
+              </div>
+  
+    <select id="start"  class="col-md-6 form-control">
+      <option value="التجمع الثالث, مدينة نصر, محافظة القاهرة‬, مصر">التجمع الثالث, مدينة نصر, محافظة القاهرة‬, مصر</option>
+      <option value="مدينة العبور">مدينة العبور</option>
+	   <option value="مدينة نصر">مدينة نصر</option>
+      <option value="مدينة الشيخ زايد, الجيزة">مدينة الشيخ زايد, الجيزة</option>
+      <option value="مدينة الشروق, محافظة القاهرة‬">مدينة الشروق, محافظة القاهرة‬</option>
+	  <option value="نادى مدينة 6 أكتوبر الاجتماعى">نادى مدينة 6 أكتوبر الاجتماعى</option>
+	  <option value="مدينة العاشر من رمضان, الشرقية">مدينة العاشر من رمضان, الشرقية</option>
+	  
+	  
+    </select>
+     
+    </div>
+    
+    
+    
+ 
+          <div class="col-md-6">
+              <div class="form-group"> <label>(Ctrl+Click or Cmd+Click for multiple selection)</label>
+  </div> 
+    
+    <select multiple id="waypoints" class="col-md-6 form-control">
+      <option value="التجمع الخامس">التجمع الخامس</option>
+      <option value="toronto, ont">Toronto, ONT</option>
+      <option value="chicago, il">Chicago</option>
+      <option value="winnipeg, mb">Winnipeg</option>
+      <option value="fargo, nd">Fargo</option>
+      <option value="calgary, ab">Calgary</option>
+      <option value="spokane, wa">Spokane</option>
+    </select>
+    </div>
+    
+          <div class="col-md-6">
+              <div class="form-group"> <label>END</label>
+  </div> 
+    <select id="end" class="col-md-6 form-control">
+      <option value="مسجد ناصر, شارع النميس, أسيوط, قسم ثان أسيوط, مصر">مسجد ناصر, شارع النميس, أسيوط, قسم ثان أسيوط, مصر</option>
+      <option value="الاسكندرية الدولى, الإسكندرية, عزبة سعد, قسم سيدى جابر">الاسكندرية الدولى, الإسكندرية, عزبة سعد, قسم سيدى جابر</option>
+      <option value="مكتبة الاسكندريه الجديدة">مكتبة الاسكندريه الجديدة</option>
+      <option value="مرسى مطروح، قسم مرسى مطروح">مرسى مطروح، قسم مرسى مطروح</option>
+    </select>
+    <br>
+    </div>
+    </div>
+      <div class="col-md-6">
+                                            <div class="form-group">
+                                         <input type="submit" class="btn btn-white btn-round btn-just-icon" id="submit" Value="Search">
+                                         </div>
+                                         </div>
 	                            </div>
 	                            <div class="col-md-6">
 	                                <h5>Notification states</h5>
 	                                <div class="alert alert-info">
-	                                    <button type="button" aria-hidden="true" class="close">×</button>
-	                                    <span><b> Info - </b> This is a regular notification made with ".alert-info"</span>
+	                                    <div class="" id="directions-panel"></div>
 	                                </div>
-	                                <div class="alert alert-success">
-	                                    <button type="button" aria-hidden="true" class="close">×</button>
-	                                    <span><b> Success - </b> This is a regular notification made with ".alert-success"</span>
-	                                </div>
-	                                <div class="alert alert-warning">
-	                                    <button type="button" aria-hidden="true" class="close">×</button>
-	                                    <span><b> Warning - </b> This is a regular notification made with ".alert-warning"</span>
-	                                </div>
-	                                <div class="alert alert-danger">
-	                                    <button type="button" aria-hidden="true" class="close">×</button>
-	                                    <span><b> Danger - </b> This is a regular notification made with ".alert-danger"</span>
-	                                </div>
-									<div class="alert alert-primary">
-	                                    <button type="button" aria-hidden="true" class="close">×</button>
-	                                    <span><b> Primary - </b> This is a regular notification made with ".alert-primary"</span>
-	                                </div>
+	                                 <div id="map" style="overflow: scroll;"></div>
 	                            </div>
 	                        </div>
 

@@ -1,9 +1,6 @@
-<h:html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" 
-xmlns:c="http://java.sun.com/jsp/jstl/core">
-<h:head>
+<!DOCTYPE html>
+<html>
+  <head>
     <!--  meta  -->
     <meta charset="utf-8" />
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico"/>
@@ -31,15 +28,51 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
-  <script>
-  $( function() {
-    $("#datepicker").datepicker();
-  } );
-  </script>
-</h:head>
-<h:body>
- <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+    <title>Waypoints in directions</title>
+    <style>
+      #right-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #right-panel select, #right-panel input {
+        font-size: 15px;
+      }
+
+      #right-panel select {
+        width: 100%;
+      }
+
+      #right-panel i {
+        font-size: 12px;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+        float: left;
+        width: 70%;
+        height: 100%;
+      }
+      #right-panel {
+        margin: 50px;
+        border-width: 2px;
+        width: 20%;
+        height: 400px;
+        float: left;
+        text-align: left;
+        padding-top: 0;
+      }
+       
+    </style>
+  </head>
+  <body>
+<div class="wrapper">
+   <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
 
     <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
 
@@ -116,8 +149,9 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                 </ul>
     	</div>
     </div>
-      <div class="main-panel">
-        <nav class="navbar navbar-default navbar-fixed">
+ <div class="main-panel">
+	 
+          <nav class="navbar navbar-default navbar-fixed">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
@@ -186,136 +220,154 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
                 </div>
             </div>
         </nav>
-          
-        <div class="content">
-          <h:form prependId="false">
-            <div class="container-fluid">
-            <div class="row">
-                    <div class="col-md-8">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title">Open Monthly Budget</h4>
+                             
+ 
+    
+   
+  
+    <div id="content">
+    <div id="container-fluid">
+     <div class="header">
+                                <h4 class="title">Edit Profile</h4>
                             </div>
-                            <div class="row">
-				                            <div class="col-md-5">
-				                               <label><h5>Select Start Date</h5></label>
-				                                       
-				                            </div>
-		                            <div class="content">
-						              <p>Date: <h:inputText id="datepicker" value="#{budgetView.startDate}"/></p>
-						            </div>
-				            </div>
-				             <div class="row">
-                                     
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                <label ><h5>Expenses Categories List</h5></label>
-                                                	<h:selectManyCheckbox value="#{budgetView.categoryId}" id="expenseBudgetId">
-											   			<f:selectItems value="#{budgetView.categoryList}"  var="n"
-   															itemLabel="#{n.englishDescription}" itemValue="#{n.id}"/>
-											   		</h:selectManyCheckbox>
-                                            </div>
-                                        </div>
-                             		 </div>
-                                          <div class="col-md-5">
-                                            <div class="form-group">
-                                                <label><h5>Income Categories List</h5></label>
-                                                	<h:selectManyCheckbox value="#{budgetView.categoryIncomeId}"  id="categoryIncomeId">
-											   			<f:selectItems value="#{budgetView.categoryIncomeList}"  var="n"
-   															itemLabel="#{n.englishDescription}" itemValue="#{n.id}"/>
-											   		</h:selectManyCheckbox>
-                                            </div>
-                                        </div>
-                                      
-                               
-
-                               
-
-                                    
-
-                                    
-
-                                    
-                                          <div class="row">
-		                                          <h:panelGrid columns="2"> 
-												                <h:commandButton value="Add Monthly Budget"  type="submit"  class="btn btn-info btn-fill pull-right" actionListener="#{budgetView.add}" 
-																							style="width:150px"  > 
-												                    <f:ajax event="action" execute="categoryIncomeId datepicker expenseBudgetId" render="datepicker" onclick=""
-		 										                            onevent="function(data) { demo.validate(data,'success')}" onerror="function(data) {  demo.validate(data,'failure')}" /> 
-		 										                </h:commandButton> 
-												              
-												      </h:panelGrid>
-										            </div>
-                                    <div class="clearfix"></div>
-			          </div>
-			       </div>
-			 </div>
-			 
-            
-            </div>
-            </h:form>
-        </div>
-        
-        <footer class="footer">
-            <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul>
-                        <li>
-                            <a href="#">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Company
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                               Blog
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <p class="copyright pull-right">
-                   2016 <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                </p>
-            </div>
-        </footer>
-        </div>
- </div>
-
-       
+      <div class="row">
+     
+          <div class="col-md-6">
+	      
+	             
+  
+    <select id="start"  class="col-md-6 form-control">
+      <option value="التجمع الثالث, مدينة نصر, محافظة القاهرة‬, مصر">التجمع الثالث, مدينة نصر, محافظة القاهرة‬, مصر</option>
+      <option value="مدينة العبور">مدينة العبور</option>
+	   <option value="مدينة نصر">مدينة نصر</option>
+      <option value="مدينة الشيخ زايد, الجيزة">مدينة الشيخ زايد, الجيزة</option>
+      <option value="مدينة الشروق, محافظة القاهرة‬">مدينة الشروق, محافظة القاهرة‬</option>
+	  <option value="نادى مدينة 6 أكتوبر الاجتماعى">نادى مدينة 6 أكتوبر الاجتماعى</option>
+	  <option value="مدينة العاشر من رمضان, الشرقية">مدينة العاشر من رمضان, الشرقية</option>
+	  
+	  
+    </select>
+     
+    </div>
+    
+    
+    <br>
  
- 
- 
- 
- 
- 
- 
-</h:body>
-<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
+          <div class="col-md-6">
+              <div class="form-group"> <label>(Ctrl+Click or Cmd+Click for multiple selection)</label>
+  </div> 
+    
+    <select multiple id="waypoints" class="col-md-6 form-control">
+      <option value="التجمع الخامس">التجمع الخامس</option>
+      <option value="toronto, ont">Toronto, ONT</option>
+      <option value="chicago, il">Chicago</option>
+      <option value="winnipeg, mb">Winnipeg</option>
+      <option value="fargo, nd">Fargo</option>
+      <option value="calgary, ab">Calgary</option>
+      <option value="spokane, wa">Spokane</option>
+    </select>
+    </div>
+    </div>
+    <br>
+    <div class="row">
+          <div class="col-md-6">
+              <div class="form-group"> <label>END</label>
+  </div> 
+    <select id="end" class="col-md-6 form-control">
+      <option value="مسجد ناصر, شارع النميس, أسيوط, قسم ثان أسيوط, مصر">مسجد ناصر, شارع النميس, أسيوط, قسم ثان أسيوط, مصر</option>
+      <option value="الاسكندرية الدولى, الإسكندرية, عزبة سعد, قسم سيدى جابر">الاسكندرية الدولى, الإسكندرية, عزبة سعد, قسم سيدى جابر</option>
+      <option value="مكتبة الاسكندريه الجديدة">مكتبة الاسكندريه الجديدة</option>
+      <option value="مرسى مطروح، قسم مرسى مطروح">مرسى مطروح، قسم مرسى مطروح</option>
+    </select>
+    <br>
+    </div>
+    </div>
+    
+      <input type="submit" class="btn btn-white btn-round btn-just-icon" id="submit" Value="Search">
+    </div>
+   
+    <div class="" id="directions-panel"></div>
+  
+    </div>
+  
+       <div id="map" style="overflow: scroll;"></div>
+       </div>
+  
+    
+    </div>
+    
 
-	<!--  Checkbox, Radio & Switch Plugins -->
-	<script src="assets/js/bootstrap-checkbox-radio-switch.js"></script>
+     
+  
+		    
+		     
+		  
+		 
+		  
+		
+                  
+		   
+		  
+		    
+		 
+     
+    <script>
+      function initMap() {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 6,
+          center: {lat: 29.98468639999999, lng: 31.42303179999999}
+        });
+        directionsDisplay.setMap(map);
 
-	<!--  Charts Plugin -->
-	<script src="assets/js/chartist.min.js"></script>
+        document.getElementById('submit').addEventListener('click', function() {
+          calculateAndDisplayRoute(directionsService, directionsDisplay);
+        });
+      }
 
-    <!--  Notifications Plugin    -->
-    <script src="assets/js/bootstrap-notify.js"></script>
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        var waypts = [];
+        var checkboxArray = document.getElementById('waypoints');
+        for (var i = 0; i < checkboxArray.length; i++) {
+          if (checkboxArray.options[i].selected) {
+            waypts.push({
+              location: checkboxArray[i].value,
+              stopover: true
+            });
+          }
+        }
 
-
-
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<script src="assets/js/light-bootstrap-dashboard.js"></script>
-
-	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<script src="assets/js/demo.js"></script>
-	
-</h:html>
+        directionsService.route({
+          origin: document.getElementById('start').value,
+          destination: document.getElementById('end').value,
+          waypoints: waypts,
+          optimizeWaypoints: true,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+            var route = response.routes[0];
+            var summaryPanel = document.getElementById('directions-panel');
+            summaryPanel.innerHTML = '';
+            // For each route, display summary information.
+            for (var i = 0; i < route.legs.length; i++) {
+              var routeSegment = i + 1;
+              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                  '</b><br>';
+              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+			  summaryPanel.innerHTML += (((route.legs[i].distance.value)/1000)*2.75) + '<br><br>';
+            }
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFZvd32Y8dc-WDoRT3pHOObggBcAXwGgU&callback=initMap">
+    </script>
+  </body>
+</html>

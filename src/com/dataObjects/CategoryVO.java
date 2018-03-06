@@ -9,11 +9,19 @@ public class CategoryVO extends DataObjectVO{
 	private String englishDescription;
 
 	private int parentCategoryId;
-	
+	private double percentageExpenses;
 	private double limitValue;
 	private String statusDate;
 	public String getStatusDate() {
 		return statusDate;
+	}
+
+	public double getPercentageExpenses() {
+		return percentageExpenses;
+	}
+
+	public void setPercentageExpenses(double percentageExpenses) {
+		this.percentageExpenses = percentageExpenses;
 	}
 
 	public void setStatusDate(String statusDate) {

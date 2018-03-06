@@ -270,9 +270,26 @@ $(document).ready(function() {
 								    			</h:column>
 								    		
 								          <h:column>
-								    				<f:facet name="header">Status</f:facet>
-								    			<h:outputLabel rendered="#{o.withenLimit eq true}"><i  class="fa fa-check text-success"/></h:outputLabel>
-								    			<h:outputLabel rendered="#{o.withenLimit  eq false}"><i  class="fa fa-times text-danger"/></h:outputLabel>	
+								       
+								             
+								    			 	<f:facet name="header">Status</f:facet>
+								    			 	
+								  
+													<div class="progress">
+											  <div class="progress-bar progress-bar-info  progress-bar-striped" role="progressbar"
+											  aria-valuenow="#{o.percentageExpenses}" aria-valuemin="0" aria-valuemax="#{o.percentageExpenses}" style="width:#{o.percentageExpenses }%">
+											   #{o.percentageExpenses}
+											  </div>
+											</div> 
+											
+										 
+									 
+								 
+								    			 
+								    			 
+								    
+											 
+								    			
 								    			</h:column>
 										     
 								    		
@@ -280,13 +297,15 @@ $(document).ready(function() {
 								    		</h:dataTable>
 								    		</div>
 								    		
-								    		  <h:commandButton value="Refersh"    class="btn btn-info btn-fill pull-right" 
+								     		  <h:commandButton value="Refersh"    class="btn btn-info btn-fill pull-right" 
 																						style="width:100px"  action="#{categoryView.refesh}">
 											                    <f:ajax   execute="todoForm" render="myTable"   onevent="function(data) { if (data.status === 'complete') {
 											 
 											            location.reload();
 											                  }}"/>
-											        </h:commandButton>
+											        </h:commandButton> 
+											        
+											  
 										        </h:panelGroup>
 										    
 								    	</div>
@@ -379,11 +398,11 @@ $(document).ready(function() {
                 <h4 class="modal-title">Waiting.....</h4>
             </div>
                  <div class="modal-body">
-                      <div id="wait" style="">  <img src='assets/img/3.gif'  /> Please Wait</div>
+                      <div id="wait" style="">  <img src="assets/img/3.gif"  /> Please Wait</div>
                 <div class="alert alert-success" id="successMessage" style="display:none">
                 
                 
-                  <span><img src='assets/img/success3.png'/><b> Success - </b> Adding Category Operation Done Successfully "</span>
+                  <span><img src="assets/img/success3.png"/><b> Success - </b> Adding Category Operation Done Successfully "</span>
                     </div>
                     	 <div id="error" style="display:none" >Please Solve Errors Before Submit</div>	
                     	    <div class="alert alert-danger" id="errorMessage" style="display:none">

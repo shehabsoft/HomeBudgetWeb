@@ -193,120 +193,93 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="card">
+                        <div class="cardE">
                             <div class="header">
                                 <h4 class="title">Edit Profile</h4>
                             </div>
-                            <div class="content">
-                                <form>
+                            <div class="content1">
+                             
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>Company (disabled)</label>
-                                                <input type="text" class="form-control" disabled placeholder="Company" value="Intellisc Inc.">
+                                                <label>Start</label>
+                                                <select id="start"  class="col-md-6 form-control">
+											      <option value="التجمع الثالث, مدينة نصر, محافظة القاهرة‬, مصر">التجمع الثالث, مدينة نصر, محافظة القاهرة‬, مصر</option>
+											      <option value="مدينة العبور">مدينة العبور</option>
+												   <option value="مدينة نصر">مدينة نصر</option>
+											      <option value="مدينة الشيخ زايد, الجيزة">مدينة الشيخ زايد, الجيزة</option>
+											      <option value="مدينة الشروق, محافظة القاهرة‬">مدينة الشروق, محافظة القاهرة‬</option>
+												  <option value="نادى مدينة 6 أكتوبر الاجتماعى">نادى مدينة 6 أكتوبر الاجتماعى</option>
+												  <option value="مدينة العاشر من رمضان, الشرقية">مدينة العاشر من رمضان, الشرقية</option>
+												  
+												  
+											    </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-5">
                                             <div class="form-group">
-                                                <label>Username</label>
-                                                <input type="text" class="form-control" placeholder="Username" value="shehabsoft94">
+                                                <label>( multiple selection)</label>
+                                                <select multiple id="waypoints" class="col-md-6 form-control">
+											      <option value="التجمع الخامس">التجمع الخامس</option>
+											      <option value="toronto, ont">Toronto, ONT</option>
+											      <option value="chicago, il">Chicago</option>
+											      <option value="winnipeg, mb">Winnipeg</option>
+											      <option value="fargo, nd">Fargo</option>
+											      <option value="calgary, ab">Calgary</option>
+											      <option value="spokane, wa">Spokane</option>
+											    </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" placeholder="Email"value="shehabsoft94@gmail.com">
-                                            </div>
-                                        </div>
+                                       
                                     </div>
 
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>First Name</label>
-                                                <input type="text" class="form-control" placeholder="Company" value="shehab">
+                                                <label>END</label>
+                                               <select id="end" class="col-md-6 form-control">
+											      <option value="مسجد ناصر, شارع النميس, أسيوط, قسم ثان أسيوط, مصر">مسجد ناصر, شارع النميس, أسيوط, قسم ثان أسيوط, مصر</option>
+											      <option value="الاسكندرية الدولى, الإسكندرية, عزبة سعد, قسم سيدى جابر">الاسكندرية الدولى, الإسكندرية, عزبة سعد, قسم سيدى جابر</option>
+											      <option value="مكتبة الاسكندريه الجديدة">مكتبة الاسكندريه الجديدة</option>
+											      <option value="مرسى مطروح، قسم مرسى مطروح">مرسى مطروح، قسم مرسى مطروح</option>
+											    </select>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Last Name</label>
-                                                <input type="text" class="form-control" placeholder="Last Name" value="eldin tarek">
-                                            </div>
-                                        </div>
+                                         <input type="submit" class="btn btn-white btn-round btn-just-icon" id="submit" Value="Search">
+                                         </div>
+                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Address</label>
-                                                <input type="text" class="form-control" placeholder="Home Address" value="Fifth Statement , nr. 8 Bl 1, Sc 1, Ap 09">
-                                            </div>
-                                        </div>
-                                    </div>
+                              
 
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>City</label>
-                                                <input type="text" class="form-control" placeholder="City" value="Cairo">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Country</label>
-                                                <input type="text" class="form-control" placeholder="Country" value="Egypt">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label>Postal Code</label>
-                                                <input type="number" class="form-control" placeholder="ZIP Code">
-                                            </div>
-                                        </div>
-                                    </div>
+                               
 
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>About Me</label>
-                                                <textarea rows="5" class="form-control" placeholder="Here can be your description" value="Mike"> Iam Senior Soft Engineer .</textarea>
+                                                 
+                                                <textarea rows="5" id="directions-panel" class="form-control" placeholder="Here can be your description" value="Mike"> </textarea>
                                             </div>
                                         </div>
+                                        
                                     </div>
-
-                                    <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
+ 
+                                     
                                     <div class="clearfix"></div>
-                                </form>
+                                
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="card card-user">
-                            <div class="image">
-                                <img src="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400" alt="..."/>
-                            </div>
-                            <div class="content">
-                                <div class="author">
-                                     <a href="#">
-                                    <img class="avatar border-gray" src="assets/img/faces/face-3.jpg" alt="..."/>
-
-                                      <h4 class="title">shehab eldin <br />
-                                         <small>Tarek</small>
-                                      </h4>
-                                    </a>
-                                </div>
-                                <p class="description text-center"> "Lamborghini Mercy <br>
-                                                    Your chick she so thirsty <br>
-                                                    I'm in that two seat Lambo"
-                                </p>
-                            </div>
+                    <div class="col-md-4" style=" ">
+                        <div class="cardE cardE-user" style=" ">
+                             
+                            <div class="content" style="overflow:">
+                               <div id="map" class="col-md-12" style="overflow:"></div>
                             <hr>
-                            <div class="text-center">
-                                <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
-                                <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
-                                <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i></button>
-
-                            </div>
+                             
                         </div>
                     </div>
 
@@ -349,7 +322,7 @@
 
     </div>
 </div>
-
+</div>
 
 </body>
 
@@ -367,12 +340,72 @@
     <script src="assets/js/bootstrap-notify.js"></script>
 
     <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+   
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="assets/js/light-bootstrap-dashboard.js"></script>
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="assets/js/demo.js"></script>
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFZvd32Y8dc-WDoRT3pHOObggBcAXwGgU&callback=initMap">
+    </script>
+    <script>
+      function initMap() {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 6,
+          center: {lat: 29.98468639999999, lng: 31.42303179999999}
+        });
+        directionsDisplay.setMap(map);
 
+        document.getElementById('submit').addEventListener('click', function() {
+          calculateAndDisplayRoute(directionsService, directionsDisplay);
+        });
+      }
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        var waypts = [];
+        var checkboxArray = document.getElementById('waypoints');
+        for (var i = 0; i < checkboxArray.length; i++) {
+          if (checkboxArray.options[i].selected) {
+            waypts.push({
+              location: checkboxArray[i].value,
+              stopover: true
+            });
+          }
+        }
+
+        directionsService.route({
+          origin: document.getElementById('start').value,
+          destination: document.getElementById('end').value,
+          waypoints: waypts,
+          optimizeWaypoints: true,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+            var route = response.routes[0];
+            var summaryPanel = document.getElementById('directions-panel');
+            document.getElementById('map').style.overflow=null;
+            
+            summaryPanel.innerHTML = '';
+            // For each route, display summary information.
+            for (var i = 0; i < route.legs.length; i++) {
+              var routeSegment = i + 1;
+              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+                  '</b><br>';
+              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+			  summaryPanel.innerHTML += (((route.legs[i].distance.value)/1000)*2.75) + '<br><br>';
+            }
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+    </script>
+    
 </html>

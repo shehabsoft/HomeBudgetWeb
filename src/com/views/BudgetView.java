@@ -99,6 +99,7 @@ public class BudgetView extends JSFView {
 			if (actionMode.equals(Constants.EDIT_ACTION_MODE)) {
 				filterCategoeries();
 			}
+			
 			getLimits(categoryList);
 			monthlyBudgetVO.setExceedLimit(exceedLimit);
 			monthlyBudgetVO.setSavingValue(savingLimit);
@@ -115,6 +116,8 @@ public class BudgetView extends JSFView {
 			logger.info("Ratio: " + monthlyBudgetVO.getCompletedRatio());
 
 			initializeChart();
+			getFutureSaving();
+			
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -293,11 +296,28 @@ public class BudgetView extends JSFView {
 			style = "width:" + monthlyBudgetVO.getCompletedRatio() + "%";
 			logger.info("Ratio: " + monthlyBudgetVO.getCompletedRatio());
 			initializeChart();
+			getFutureSaving();
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
 	}
-
+		public void getFutureSaving()
+		{
+			if(monthlyBudgetVO.getTotalExpenses()>monthlyBudgetVO.getTotalExpectedExpenses())//exceed planned Expenses 
+			{
+				double different=monthlyBudgetVO.getTotalIncomes()-monthlyBudgetVO.getTotalExpenses();
+				if(different<0)
+				{
+					monthlyBudgetVO.setFutureSaving(monthlyBudgetVO.getTotalIncomes()-monthlyBudgetVO.getTotalExpenses());
+				}else
+				{
+				monthlyBudgetVO.setFutureSaving(monthlyBudgetVO.getTotalIncomes()-monthlyBudgetVO.getTotalExpenses()-monthlyBudgetVO.getExceedLimit());
+				}
+			}else
+			{
+				monthlyBudgetVO.setFutureSaving(monthlyBudgetVO.getTotalIncomes()-monthlyBudgetVO.getTotalExpectedExpenses()-monthlyBudgetVO.getExceedLimit());
+			}
+		}
 	public double getTotalIncomes(List<CategoryVO> categoryVOs) {
 		double tatalExpenses = 0;
 		for (CategoryVO categoryVO : categoryVOs) {
@@ -343,8 +363,11 @@ public class BudgetView extends JSFView {
 				exceedLimit += categoryVO.getActualValue() - categoryVO.getPlanedValue();
 			} else {
 				savingLimit += categoryVO.getLimitValue() - categoryVO.getActualValue();
+				if(categoryVO.getPlanedValue()>categoryVO.getActualValue())
+				{
 				savingPlanned+=categoryVO.getPlanedValue()-categoryVO.getActualValue();
-						}
+				}
+			}
 		}
 		return exceedLimit;
 	}
