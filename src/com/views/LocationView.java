@@ -47,7 +47,7 @@ public class LocationView extends JSFView {
 
 	private LocationVO locationVO;
 	private ArrayList<LocationVO> locationVOs=new ArrayList<LocationVO>();
-	public LocationView()
+	public LocationView() throws Exception
 	{
 		if(getUserVO()==null)
 			return;

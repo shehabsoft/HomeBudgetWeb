@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.rpc.ServiceException;
@@ -28,7 +29,7 @@ import util.Configurations;
 @ManagedBean
 @SessionScoped
 public abstract class JSFView {
-   private static UserVO userVO;
+   private  UserVO userVO;
    private static String backendUrl;
    private Configurations configurations;
    private String message;
@@ -45,6 +46,7 @@ public JSFView()
 		   if(userVO==null)
 		   {
 			   userVO=getCurrentUser();
+			   
 		   }
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
@@ -53,15 +55,18 @@ public JSFView()
 	   
    }
   
-   public UserVO getUserVO() {
-	return userVO;
+   public UserVO getUserVO() throws Exception {
+	   if(userVO!=null)
+	   System.out.println("get Current User : "+userVO.getId());
+	return getCurrentUser();
 }
 
 public void setUserVO(UserVO userVO) {
-	JSFView.userVO = userVO;
+	 System.out.println("set Current User : "+userVO.getId());
+	 this.userVO = userVO;
 }
 
-public abstract void add() throws BusinessException, Exception;
+   public abstract void add() throws BusinessException, Exception;
    public abstract void refesh() throws Exception;
    public abstract void reset();
    
@@ -71,7 +76,13 @@ public abstract void add() throws BusinessException, Exception;
 	    String serviceUrl = backendUrl+ "/" + webServiceName;
 		URL url = new URL(serviceUrl);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		if(userVO==null)
+		   {
+			   userVO=getCurrentUser();
+			   System.out.println("Call Web Service Current User : "+userVO.getId());
+		   }
 		String userId="userId="+userVO.getId();
+		System.out.println("Call Web Service Current User : "+userVO.getId());
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Content-Type", "application/json");
 		conn.setRequestProperty("userId", userId);
@@ -99,6 +110,11 @@ public abstract void add() throws BusinessException, Exception;
 	    String serviceUrl = backendUrl+ "/" + webServiceName;
 		URL url = new URL(serviceUrl);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		if(userVO==null)
+		   {
+			   userVO=getCurrentUser();
+			   System.out.println("Call Web Service Current User : "+userVO.getId());
+		   }
 		String userId="userId="+userVO.getId();
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Content-Type", "application/json");
@@ -187,7 +203,12 @@ public abstract void add() throws BusinessException, Exception;
 		try {
 
 			HttpSession session = getSession(true);
+		 
 			UserVO userVO=(UserVO)session.getAttribute("UserVo");
+			if(userVO!=null)
+			{
+				System.out.println("Current User(getCurrentUser method) "+userVO.getId());
+			}
 		    return userVO;
 
 	}catch(Exception e)

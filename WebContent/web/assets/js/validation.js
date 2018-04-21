@@ -143,3 +143,11 @@ function showError(error)
 	 document.getElementById('errorMessage').innerHTML=""+message;
 	 setTimeout(Fail, 5000);
 }
+function showMessageError(error)
+{
+	 
+	var message= error ;
+	 document.getElementById("successMessage").style.display="none";
+	 document.getElementById('errorMessage').innerHTML=""+message;
+	 setTimeout(Fail, 5000);
+}

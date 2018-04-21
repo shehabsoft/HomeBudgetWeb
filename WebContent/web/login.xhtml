@@ -49,21 +49,20 @@ body {
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
     <!--     Fonts and icons     -->
-	 <link rel="stylesheet" type="text/css" media="screen"
-     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css" />
+	
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
    
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
     <script src="assets/js/validation.js"></script>
     <script>
     function validate(data,status)
-    {
+    {    
     		 switch(data.status) {
              case "begin":
-            	 $("#myModal").modal('show'); 
+             	 $("#myModal").modal('show'); 
                  break;
              case "complete":
-            	 SuccessReg();
+          
             	 break;
              case "success":
             	 if("block"==document.getElementById("errorMessage").style.display)//server Error
@@ -78,8 +77,21 @@ body {
              case "serverError":
             	 document.getElementById("successMessage").style.display="none";
             	 document.getElementById("errorMessage").style.display="block";
-            	 showError(data.errorMessage);
+            	 showMessageError(data.errorMessage);
             	 break;
+             case "malformedXML":
+            	 //alert('#{userView.status}');
+            	if(document.getElementById("signUp:status").innerHTML=="true")
+            		{
+            		 setTimeout(SuccessReg, 3000);
+            		}else
+            			{
+            			 document.getElementById("errorMessage").style.display="block";
+            			 document.getElementById('errorMessage').innerHTML="Invalid User ....."
+            			setTimeout(FailReg, 5000);
+            			}
+            	 
+            	 
     		 }
     }
     function SuccessReg() {
@@ -92,11 +104,12 @@ body {
     function FailReg() {
    	 document.getElementById("successMessage").style.display="none";
    	 document.getElementById("errorMessage").style.display="none";
-   	 $("#myModal").modal('hide');
+   	 $("#waiting").modal('hide');
    	 document.getElementById('errorMessage').innerHTML="";
     }
     function ckeck() {
-    	$("#waiting").modal('show'); 
+    $("#waiting").modal('show'); 
+    	
     	return true;
     }
     
@@ -112,8 +125,9 @@ body {
                 </div>
                 
                 <div class="panel-body">
-                 <h:form id="signUp" class="form-horizontal" onsubmit="return ckeck()" role="form">
-                   
+                 <h:form id="signUp" class="form-horizontal" onsubmit="return ckeck()" >
+                   <h:outputText id="status" value="#{userView.status}"></h:outputText>
+                
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
                             <div class="col-sm-9">
@@ -142,8 +156,8 @@ body {
 									 <h:commandButton value="Login"  type="submit"  class="btn btn-info btn-fill pull-right" actionListener="#{userView.checkAuthority}"   onclick="return ckeck()"
 																							style="width:150px;"  > 
 																  
-												                    <f:ajax event="action" execute="password email"
-		 										                            onevent="function(data) {  validate(data,'success')}" onerror="function(data) {  validate(data,'failure')}" /> 
+												                    <f:ajax event="action" execute="password email  status" render="status"
+		 										                            onevent="function(data) {  validate(data,'success')}" onerror="function(data) {  validate(data,'failure')}  " /> 
 		 							 </h:commandButton> 
 		 								
 		 						  </div>
@@ -194,8 +208,7 @@ body {
 <script src="assets/js/chartist.min.js"></script>
 <!--  Notifications Plugin    -->
 <script src="assets/js/bootstrap-notify.js"></script>
-<!--  Google Maps Plugin    -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
 <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 <script src="assets/js/light-bootstrap-dashboard.js"></script>
 <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->

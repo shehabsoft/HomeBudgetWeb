@@ -52,8 +52,10 @@ import util.TransactionServiceParser;
 @ManagedBean
 @SessionScoped
 public class UserView extends JSFView {
-
-
+   
+	CategoryView categoryView=new CategoryView();
+	BudgetView budgetView=new BudgetView();
+	PurchaceView purchaceView=new PurchaceView();
 	public List<CurrencyVO> getCurrencyList() {
 		return currencyList;
 	}
@@ -69,7 +71,7 @@ public class UserView extends JSFView {
 	public void setCountryList(ArrayList<CountryVO> countryList) {
 		this.countryList = countryList;
 	}
-    private UserVO userVO;
+    private    UserVO userVO;
 	
 
 
@@ -175,8 +177,10 @@ public class UserView extends JSFView {
 	}
 	public void reset()
 	{
-		setUserVO(null);
-		
+	//	setUserVO(null);
+		categoryView.reset();
+		budgetView.reset();
+		purchaceView.reset();
 		
 	}
 	
@@ -233,26 +237,36 @@ public class UserView extends JSFView {
 		System.out.println("Login");
 	}
 	@Action
-	public void checkAuthority() throws IOException
+	public void checkAuthority() throws Exception
 	{
 		   System.out.println("Login");
 		    HttpSession session = super.getSession(true);
 		    UserVO userVO= checkAccount();
 	        if(userVO!=null)
 	        {
-	        	session.setAttribute("UserVo", userVO.getName());
+	        //	session.setAttribute("UserVo", userVO.getName());
 	        	session.setAttribute("UserVo", userVO);
-	        
+	        	System.out.println("Login User : "+userVO.getId());
+	        	 setStatus(true);
 	        	
-	        }  
+	        }  else
+	        {
+	        	setStatus(false);
+	        	session.setAttribute("UserVo",null);
+	        }
 	}
 	@Action
 	public String logOut() throws IOException
 	{
 		    HttpSession session = super.getSession(true);
+		    session.getAttribute("UserVo");
+		    System.out.println("Logout Login User : "+userVO.getId());
 	        session.setAttribute("UserVo",null);
 	        FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 			.handleNavigation(FacesContext.getCurrentInstance(), null, "login.jsf");
+	        session.invalidate(); 
+	        reset();
+	        
 	        return "logOut";
 	        	
 	        
