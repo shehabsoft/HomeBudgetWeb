@@ -1,40 +1,14 @@
 package com.views;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.rpc.ServiceException;
 import javax.xml.ws.Action;
-import javax.xml.ws.WebServiceException;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import com.TransactionService;
-import com.TransactionServiceProxy;
-import com.TransactionServiceService;
-import com.TransactionServiceServiceLocator;
-import com.TransactionServiceSoapBindingStub;
-
-import com.dataObjects.CategoryVO;
 import com.dataObjects.Constants;
 import com.dataObjects.LocationVO;
 import com.google.gson.Gson;
-import com.models.Documents.CategoriesKeyBasedDocument;
 import com.models.Documents.LocationKeyBasedDocument;
 
 import util.BusinessException;

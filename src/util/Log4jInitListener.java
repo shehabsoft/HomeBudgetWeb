@@ -4,7 +4,7 @@ package util;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
- 
+
 import org.apache.log4j.xml.DOMConfigurator;
  
 @WebListener

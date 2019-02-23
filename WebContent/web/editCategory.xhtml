@@ -54,7 +54,15 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 		        	 $("#waiting").modal('show'); 
 		             break;
 		         case "complete":
-		             break;
+		        	 if("block"==document.getElementById("errorMessage").style.display)//server Error
+	        		 {
+	        		    document.getElementById("successMessage").style.display="none";
+	        		 	setTimeout(Fail, 5000);
+	        		 }else//sucess
+	        		 {
+			        	document.getElementById("successMessage").style.display="block";
+			        	setTimeout(Success, 4000);
+	        		 }
 		         case "success":
 		        	 if("block"==document.getElementById("errorMessage").style.display)//server Error
 		        		 {
@@ -63,7 +71,7 @@ xmlns:c="http://java.sun.com/jsp/jstl/core">
 		        		 }else//sucess
 		        		 {
 				        	document.getElementById("successMessage").style.display="block";
-				        	setTimeout(Success, 3000);
+				        	setTimeout(Success, 4000);
 		        		 }
 		        	 break;
 		         case "serverError":

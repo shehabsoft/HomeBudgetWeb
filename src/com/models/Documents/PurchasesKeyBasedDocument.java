@@ -3,7 +3,6 @@ package com.models.Documents;
 
 import java.util.List;
 
-import com.dataObjects.CategoryVO;
 import com.dataObjects.PurchaseVO;
 
 public class PurchasesKeyBasedDocument  extends KeyBasedDocument{

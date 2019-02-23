@@ -5,44 +5,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.rpc.ServiceException;
 import javax.xml.ws.Action;
 
-import com.TransactionService;
-import com.TransactionServiceProxy;
-import com.TransactionServiceService;
-import com.TransactionServiceServiceLocator;
-import com.TransactionServiceSoapBindingStub;
 import com.dataObjects.CategoryVO;
 import com.dataObjects.Constants;
 import com.dataObjects.CountryVO;
 import com.dataObjects.CurrencyVO;
-import com.dataObjects.LocationVO;
-import com.dataObjects.PurchaseVO;
 import com.dataObjects.StatusVO;
 import com.dataObjects.UserVO;
 import com.google.gson.Gson;
-import com.models.Documents.CategoriesKeyBasedDocument;
 import com.models.Documents.CountriesKeyBasedDocument;
 import com.models.Documents.CurrenciesKeyBasedDocument;
-import com.models.Documents.LocationKeyBasedDocument;
-import com.models.Documents.PurchasesKeyBasedDocument;
 import com.models.Documents.StatusKeyBasedDocument;
 import com.models.Documents.UserKeyBasedDocument;
 
@@ -244,10 +227,11 @@ public class UserView extends JSFView {
 		    UserVO userVO= checkAccount();
 	        if(userVO!=null)
 	        {
-	        //	session.setAttribute("UserVo", userVO.getName());
+	      
 	        	session.setAttribute("UserVo", userVO);
 	        	System.out.println("Login User : "+userVO.getId());
-	        	 setStatus(true);
+	        	setStatus(true);
+	        	sendRedirect("/web/monthlyBudget.jsf?faces-redirect=true"); 
 	        	
 	        }  else
 	        {
@@ -274,7 +258,7 @@ public class UserView extends JSFView {
 	@Action
 	public void checkEmail() throws IOException
 	{
-		String serviceUrl = "http://localhost:8080/WebServices/getData" + "/" + "checkEmail";
+		String serviceUrl = "http://localhost:8085/WebServices/getData" + "/" + "checkEmail";
 		URL url = new URL(serviceUrl);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		Gson gson2 = new Gson();
@@ -316,7 +300,7 @@ public class UserView extends JSFView {
 	@Action
 	public UserVO checkAccount() throws IOException
 	{
-		String serviceUrl = "http://localhost:8080/WebServices/getData" + "/" + "checkAccount";
+		String serviceUrl = "http://localhost:8085/WebServices/getData" + "/" + "checkAccount";
 		URL url = new URL(serviceUrl);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		Gson gson2 = new Gson();

@@ -12,8 +12,11 @@
 package util;
 
 
+import java.net.URLDecoder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
 
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -21,17 +24,9 @@ import javax.xml.ws.WebServiceException;
 
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.NamedNodeMap;
-
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-import java.util.Date;
-
-import java.net.URLDecoder;
-
-import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * Used to encapsulate common functionality needed by SOAP clients.

@@ -1,54 +1,28 @@
 package com.views;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CancellationException;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.rpc.ServiceException;
 import javax.xml.ws.Action;
-import javax.xml.ws.WebServiceException;
 
 import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
-import com.TransactionService;
-import com.TransactionServiceProxy;
-import com.TransactionServiceService;
-import com.TransactionServiceServiceLocator;
-import com.TransactionServiceSoapBindingStub;
 import com.dataObjects.CategoryHistoryVO;
 import com.dataObjects.CategoryVO;
 import com.dataObjects.Constants;
 import com.dataObjects.MonthlyBudgetVO;
-import com.dataObjects.PurchaseHistoryVO;
 import com.dataObjects.PurchaseVO;
-import com.dataObjects.UserVO;
 import com.google.gson.Gson;
 import com.models.Documents.CategoriesKeyBasedDocument;
 import com.models.Documents.CategoryHistoryKeyBasedDocument;
 import com.models.Documents.MonthlyBudgetKeyBasedDocument;
-import com.models.Documents.PurchaseHistoryKeyBasedDocument;
-import com.models.Documents.PurchasesKeyBasedDocument;
 
 import util.BusinessException;
 import util.TransactionServiceParser;
@@ -324,6 +298,7 @@ public class CategoryView extends JSFView {
 			System.out.print(responseMessage);
 
 			setStatus(true);
+			sendRedirect("/web/categories.jsf?faces-redirect=true"); 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			setStatus(false);

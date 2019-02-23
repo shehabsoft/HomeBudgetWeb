@@ -1,30 +1,28 @@
 package com.views;
 
 import java.io.BufferedReader;
-
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.rpc.ServiceException;
 
 import com.TransactionService;
 import com.TransactionServiceServiceLocator;
 import com.dataObjects.UserVO;
-import com.google.gson.Gson;
-import com.models.Documents.UserKeyBasedDocument;
 
 import util.BusinessException;
 import util.Configurations;
+import util.GlobalUtilities;
 
 @ManagedBean
 @SessionScoped
@@ -266,5 +264,98 @@ public void setUserVO(UserVO userVO) {
      */
     public HttpSession getSession() {
         return (HttpSession) getExternalContext().getSession( false );
+    }
+
+    /**
+     * Redirect user reponse to requested path.
+     *
+     * @param path requested relative path.
+     * @throws Exception 
+     */
+    public void sendRedirect(String path) throws Exception {
+        sendRedirect(path, null);
+    }
+    /**
+     * Redirect user reponse to requested path.
+     *
+     * @param path requested relative path.
+     * @param parameters New request parameters.
+     * @throws Exception 
+     */
+    public void sendRedirect(String path, Map parameters) throws Exception {
+        // Validate path
+        if (isBlankOrNull(path)) {
+            throw new Exception("Missing path parameter");
+        }
+
+        // Build requested URL
+        StringBuffer url = new StringBuffer(getRequest().getContextPath());
+
+        if (!path.trim().startsWith("/")) {
+            url.append("/");
+        }
+
+        url.append(path);
+
+        try {
+            // Check if parameters array is empty
+            if (parameters == null || parameters.isEmpty()) {
+                redirect(getResponse(), url.toString());
+                return;
+            }
+
+            // Append parameters
+            Iterator keys = parameters.keySet().iterator();
+            while (keys.hasNext()) {
+                Object name = keys.next();
+
+                if (url.indexOf("?") > 0) {
+                    url.append("&");
+                } else {
+                    url.append("?");
+                }
+
+                url.append(name);
+                url.append("=");
+                url.append(parameters.get(name));
+            }
+
+            redirect(getResponse(), url.toString());
+
+        } catch (Exception ex) {
+            throw new Exception(ex);
+        }
+    }
+    /**
+     * Redirect to target URL.
+     *
+     * @param response Current HTTP response.
+     * @param url target URL
+     */
+    private void redirect(HttpServletResponse response, String url) throws Exception {
+        if (getExternalContext() != null) {
+            getExternalContext().redirect(url);
+            return;
+        }
+
+        response.sendRedirect(response.encodeRedirectURL(url.toString()));
+    }
+
+    /**
+     * Get related HttpServletResponse.
+     *
+     * @return Related HttpServletResponse.
+     */
+    public HttpServletResponse getResponse() {
+        return (HttpServletResponse) getExternalContext().getResponse();
+    }
+    /**
+     * Checks if the field is not null or contains only blank spaces.
+     *
+     * @param value String value to be checked.
+     * @return true if the field is not null or blank.
+     */
+    public boolean isBlankOrNull(Object value) {
+        return GlobalUtilities.isBlankOrNull(value);
     }
 }

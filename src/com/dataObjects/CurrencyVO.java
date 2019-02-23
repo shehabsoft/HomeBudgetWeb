@@ -1,7 +1,5 @@
 package com.dataObjects;
 
-import java.util.Date;
-
 public class CurrencyVO extends DataObjectVO {
 
 	

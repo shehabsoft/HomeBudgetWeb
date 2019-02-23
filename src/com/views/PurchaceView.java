@@ -1,39 +1,22 @@
 package com.views;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.xml.rpc.ServiceException;
 import javax.xml.ws.Action;
 
-import com.TransactionService;
-import com.TransactionServiceProxy;
-import com.TransactionServiceService;
-import com.TransactionServiceServiceLocator;
-import com.TransactionServiceSoapBindingStub;
 import com.dataObjects.CategoryVO;
 import com.dataObjects.Constants;
 import com.dataObjects.LocationVO;
 import com.dataObjects.PurchaseHistoryVO;
 import com.dataObjects.PurchaseVO;
-import com.dataObjects.UserVO;
 import com.google.gson.Gson;
-import com.models.Documents.CategoriesKeyBasedDocument;
-import com.models.Documents.LocationKeyBasedDocument;
 import com.models.Documents.PurchaseHistoryKeyBasedDocument;
 import com.models.Documents.PurchasesKeyBasedDocument;
 
@@ -378,9 +361,10 @@ public class PurchaceView extends JSFView {
 			responseMessage = transactionServiceParser.parseCreateTransactionResponse(response);
 			System.out.println("response  Data " + responseMessage);
 			System.out.print(responseMessage);
-			
+			purchaseVO.setPrice(purchaseVO.getPrice()+ purchaseVO.getNewPrice());
 
 			setStatus(true);
+			sendRedirect("/web/salesList.jsf?faces-redirect=true"); 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			setStatus(false);
@@ -481,7 +465,7 @@ public class PurchaceView extends JSFView {
 	public ArrayList<PurchaseVO> getAllPurchasesByCategoryId(int categoryId) throws Exception {
 		try {
 			String output = "";
-			System.out.println("Calling getِِِALLPurchasesByCategoryId  .... \n");
+			System.out.println("Calling getÙ�Ù�Ù�ALLPurchasesByCategoryId  .... \n");
 			selectedCategoryId=categoryId;
 			output = callPostWebService("getAllPurchasesByCategoryId", "categoryId", categoryId);
 			System.out.println("Output From Server  .... " + output);

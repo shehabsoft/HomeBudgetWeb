@@ -3,7 +3,6 @@
  */
 package com.dataObjects;
 
-import java.util.Date;
 /**
  * @author Shehab
  *

@@ -1,11 +1,6 @@
 package com.models.Documents;
 
 
-import java.util.List;
-
-import com.dataObjects.CategoryVO;
-import com.dataObjects.LocationVO;
-import com.dataObjects.PurchaseVO;
 import com.dataObjects.UserVO;
 
 public class UserKeyBasedDocument extends KeyBasedDocument {

@@ -1,11 +1,9 @@
 package util;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 
 
@@ -218,7 +216,28 @@ public abstract class GlobalUtilities {
 //    
 
 	
-	/**
+	 
+    /**
+     * Checks if the passed value object is null based on its type
+     * Note: Supported objects type are only : String , Collection , Map , Number
+     * Other wise this method will throw runtime exception
+     *
+     * @param value Object to be checked.
+     * @return true if the value is not null nor empty collection nor emprty or blank string
+     */
+    public static boolean isBlankOrNull( Object value ) {
+        
+        if ( value == null ) {
+            return true;
+        }    else if ( value instanceof String ) {
+            return isBlankOrNull( value.toString() );
+        }
+          else {
+            return isBlankOrNull( value.toString() );
+       }       
+    }
+    
+    /**
      * Checks if the field is not null or contains only blank spaces.
      * 
      * @param value String value to be checked.
@@ -227,7 +246,7 @@ public abstract class GlobalUtilities {
     public static boolean isBlankOrNull(String value) {
        return ((value == null) || (value.trim().length() == 0) || (value.trim().equals("null")));
     }
-    
+
     /**
      * Get Integer object or null if the value is null or empty string.
      * 

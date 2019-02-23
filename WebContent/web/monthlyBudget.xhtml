@@ -12,7 +12,7 @@
 			    <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="assets/img/favicon.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Home Budget by Shehab eldin tarek</title>
+    <title>Home Budget DashBoard</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -72,7 +72,7 @@
 
     	<div class="sidebar-wrapper">
             <div class="logo">
-                <a href="http://www.creative-tim.com" class="simple-text">
+                <a href="" class="simple-text">
                     Home Budegt
                 </a>
             </div>
@@ -246,7 +246,9 @@
                            <h4 class="title" style="text-align:center;font-family:Digital-7;color:green;">Total Income <b><h:outputLabel styleClass="title" style="text-align:center;font-size:24;font-family:Digital-7;color:green;" id="totalIncome" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalIncomes}"></h:outputLabel></b></h4>
                              <h4 class="title" style="text-align:center;font-family:Digital-7">Saving within Limit <b><h:outputLabel style="text-align:center;font-size:24;;font-family:Digital-7" styleClass="title" id="saving" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingValue}"></h:outputLabel></b></h4>
                              <h4 class="title" style="text-align:center;font-family:Digital-7">Saving within Planned <b><h:outputLabel style="text-align:center;font-size:24;;font-family:Digital-7" styleClass="title" id="savingPlanned" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingPlanned}"></h:outputLabel></b></h4>
-                             <h4 class="title" style="text-align:center;color:red;;font-family:Digital-7">Exceed Limit within Planned <b><h:outputLabel style="text-align:center;font-size:24;color:red;;font-family:Digital-7" styleClass="title" id="exceedLimit" class="form-control title" value="#{budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h4>
+                             <h4 class="title" style="text-align:center;color:red;;font-family:Digital-7;">Exceed Limit within Planned <b><h:outputLabel style="text-align:center;font-size:24;color:red;;font-family:Digital-7;
+	-webkit-animation: flash linear 1s infinite;
+	animation: flash linear 1s infinite;" styleClass="title" id="exceedLimit" class="form-control title" value="#{budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h4>
                              <h4 class="title" style="text-align:center;color:green;;font-family:Digital-7">Profit In Book <b><h:outputLabel style="text-align:center;font-size:24;;color:green;;font-family:Digital-7" styleClass="title" id="profileBook" class="form-control title" value="#{budgetView.monthlyBudgetVO.savingPlanned-budgetView.monthlyBudgetVO.exceedLimit}"></h:outputLabel></b></h4>
                              
                             </div>
@@ -349,7 +351,8 @@
 		         
 		            <label class="form-control">Total Income</label>  <h:inputText  disabled="true" style="text-align:center;font-size:24" styleClass="title" id="totalIncome1" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalIncomes}"></h:inputText>  
 		             <label class="form-control">Total Expenses </label><h:inputText  disabled="true" style="text-align:center;font-size:24" styleClass="title" id="totalExpenses1" class="form-control title" value="#{budgetView.monthlyBudgetVO.totalExpenses}"></h:inputText> 
-					  <label class="form-control">Remaining </label><h:inputText  disabled="true" style="text-align:center;font-size:24" styleClass="title" id="remaining" class="form-control title" value="#{budgetView.monthlyBudgetVO.remaining}"></h:inputText> 
+					  <label class="form-control">Remaining </label><h:inputText  disabled="true" style="text-align:center;font-size:24;-webkit-animation: flash linear 1s infinite;
+	animation: flash linear 1s infinite;" styleClass="title" id="remaining" class="form-control title" value="#{budgetView.monthlyBudgetVO.remaining}"></h:inputText> 
 					     <h:inputHidden   styleClass="title" id="remainingConstant" class="form-control title" value="#{budgetView.monthlyBudgetVO.remaining}"></h:inputHidden>
 		       
                            <h:panelGroup id="panel">

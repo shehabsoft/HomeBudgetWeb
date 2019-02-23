@@ -2,14 +2,10 @@ package util;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.text.ParseException;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.ws.WebServiceException;
 
-import org.eclipse.jdt.internal.compiler.ast.ThrowStatement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
