@@ -57,6 +57,27 @@ function ValidateEmailPattern(email)
 			return false;
 			}
 }
+function validatePassword(password,confirmpassword)
+{       
+ 
+		if(password.value!=confirmpassword.value)
+			{
+			document.getElementById('PasswordMessage').style.color="red";
+			 document.getElementById('PasswordMessage').innerHTML="Missmatch Password";
+			 return false;
+			}else
+			{
+				if(password.value.length<8)
+					{
+					 document.getElementById('PasswordMessage').style.color="red";
+					 document.getElementById('PasswordMessage').innerHTML="Password Should be Greater than 8 Digits";
+					return false;
+					}
+				document.getElementById('PasswordMessage').style.color="Green";
+			document.getElementById('PasswordMessage').innerHTML="Valid Password ";
+			return true;
+			}
+}
 
 
 function validatePhoneNumber(number,ID)

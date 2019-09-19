@@ -129,6 +129,7 @@ public class UserView extends JSFView {
 	
 		String content="";
 		String responseMessage="";
+		System.out.println("Sign UP----------------");
 		try {
 		String requestData="<![CDATA[<?xml version=\"1.0\" encoding=\"UTF-8\" ?><createTransaction><serviceCode>"+Constants.ADD_USER_SERVICE+"</serviceCode><name>"+userVO.getName()+"</name><password>"+userVO.getPassword()+"</password><email>"+userVO.getEmail()+"</email><address>"+userVO.getAddress()+"</address><currencyId>"+userVO.getCurrencyId()+"</currencyId><countryId>"+userVO.getCountryId()+"</countryId><genderId>"+userVO.getGenderId()+"</genderId><statusId>"+userVO.getStatusId()+"</statusId><mobileNumber>"+userVO.getMobile_number()+"</mobileNumber></createTransaction>]]>";
 	 	String response=callTransactionService(requestData);
@@ -136,6 +137,8 @@ public class UserView extends JSFView {
  		responseMessage=transactionServiceParser.parseCreateTransactionResponse(response);
  		System.out.print(responseMessage);	
 		status=true;
+		setStatus(true);
+    	sendRedirect("/web/monthlyBudget.jsf?faces-redirect=true"); 
  
 		} catch (Exception e) {
 			// TODO Auto-generated catch block	
@@ -293,7 +296,7 @@ public class UserView extends JSFView {
 	    }else
 	    {
 	    	emailExit=false;
-	    	emailExitMessage="Good Mail";
+	    	emailExitMessage="Valid Mail";
 	    }
 	    
 	}

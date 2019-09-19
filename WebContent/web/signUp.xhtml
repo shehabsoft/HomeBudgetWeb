@@ -32,7 +32,7 @@
 		 document.getElementById("successMessage").style.display="none";
 		 document.getElementById("errorMessage").style.display="none";
 		 document.getElementById('error').style.display="none";
-		 document.getElementById('errorMailMessage').style.display="none";
+	 
 	});
 </script>
     <script>
@@ -115,9 +115,7 @@ function validate(data,status)
         	 $("#myModal").modal('show'); 
              break;
          case "complete":
-             break;
-         case "success":
-        	 if("block"==document.getElementById("errorMessage").style.display)//server Error
+          	 if("block"==document.getElementById("errorMessage").style.display)//server Error
         		 {
         		 setTimeout(FailReg, 5000);
         		 }else
@@ -125,6 +123,9 @@ function validate(data,status)
 		        	document.getElementById("successMessage").style.display="block";
 		        	setTimeout(SuccessReg, 3000);
         			}
+             break;
+         case "success":
+        
         	 break;
          case "serverError":
         	 document.getElementById("successMessage").style.display="none";
@@ -141,12 +142,13 @@ function validate(data,status)
 	 document.getElementById("errorMessage").style.display="none";
 	 $("#myModal").modal('hide');
 	 document.getElementById('errorMessage').innerHTML="";
-	 window.location.href = 'http://localhost:8080/HomeBudgetWeb/web/monthlyBudget.jsf';
+	// window.location.href = 'http://localhost:8085/HomeBudgetWeb/web/monthlyBudget.jsf';
  }
  function FailReg() {
 	 document.getElementById("successMessage").style.display="none";
 	 document.getElementById("errorMessage").style.display="none";
 	 $("#myModal").modal('hide');
+	  $("#waiting").modal('hide');
 	 document.getElementById('errorMessage').innerHTML="";
  }
  function showError(error)
@@ -208,7 +210,7 @@ function validate(data,status)
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="passwordinput">Password</label>
 			  <div class="col-md-5">
-			    <h:inputSecret id="passwordinput"  required="true " name="passwordinput" type="password" placeholder="" class="form-control input-md" value="#{userView.userVO.password}" />
+			    <h:inputSecret id="passwordinput"   name="passwordinput" type="password" placeholder="" class="form-control input-md" value="#{userView.userVO.password}" />
 			    <span class="help-block">max 16 characters</span>
 			  </div>
 			</div>
@@ -217,7 +219,7 @@ function validate(data,status)
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="confirm_password">Confirm Password</label>
 			  <div class="col-md-5">
-			    <h:inputSecret id="confirm_password" name="confirm_password" required="true" onblur="validatePasswordMatch()"  type="password" placeholder="Re-type password" class="form-control input-md" value="#{userView.userVO.rePassword}"/>
+			    <h:inputSecret id="confirm_password" name="confirm_password"   type="password" placeholder="Re-type password" class="form-control input-md" value="#{userView.userVO.rePassword}"/>
 			     <div class="col-md-8" id="passwordMessage"  style="color:red" ><i  class="fa fa-times text-danger"/></div> 
 			  </div>
 			</div>
@@ -227,7 +229,7 @@ function validate(data,status)
 			  <label class="col-md-4 control-label" for="genderId">Gender</label>
 			  <div class="col-md-5"> 
 			    
-			      <h:selectOneRadio type="radio" name="gender"  required="true"  id="genderId" value="#{userView.userVO.genderId}" >
+			      <h:selectOneRadio type="radio" name="gender"   id="genderId" value="#{userView.userVO.genderId}" >
 			      
 			         	<f:selectItem itemValue="1" itemLabel="Male" />
 				   	    <f:selectItem itemValue="2" itemLabel="Female" />
@@ -242,7 +244,7 @@ function validate(data,status)
 			  <label class="col-md-4 control-label" for="status">Status</label>
 			  <div class="col-md-5"> 
 			    
-			      <h:selectOneRadio type="radio" name="status"   required="true" id="status" value="#{userView.userVO.statusId}" >
+			      <h:selectOneRadio type="radio" name="status"    id="status" value="#{userView.userVO.statusId}" >
 			      
 			         	<f:selectItem itemValue="1" itemLabel="Single" />
 				   	    <f:selectItem itemValue="2" itemLabel="Married" />
@@ -258,7 +260,7 @@ function validate(data,status)
 			  <label class="col-md-4 control-label" for="address">Address</label>
 			  <div class="col-md-4">                     
 			<div class="col-md-10">
-               <h:inputText type="text" class="form-control" required="true" onblur="validateEnglishName(this,'addressMessage')" id="address" value="#{userView.userVO.address}"/>
+               <h:inputText type="text" class="form-control"  onblur="validateEnglishName(this,'addressMessage')" id="address" value="#{userView.userVO.address}"/>
              <div class="col-md-8" id="addressMessage"  style="color:red" ><i  class="fa fa-times text-danger"/></div> 
       </div>
 			  </div>
@@ -312,6 +314,7 @@ function validate(data,status)
 		 										  </div>
 		 										  
 		  </div>
+		  
  
 <div id="waiting" class="modal fade " >
     <div class="modal-dialog ">

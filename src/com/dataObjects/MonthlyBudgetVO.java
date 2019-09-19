@@ -22,6 +22,7 @@ public class MonthlyBudgetVO extends DataObjectVO{
 	private double actualValue;
 	private double savingPlanned = 0;
 	private double futureSaving=0;
+	private Integer unApprovedPurchaseCount=0;
 	public double getFutureSaving() {
 		return futureSaving;
 	}
@@ -223,6 +224,18 @@ public class MonthlyBudgetVO extends DataObjectVO{
 	public void setFutureSaving(double futureSaving2) {
 		this.futureSaving = futureSaving2;
 		
+	}
+
+
+
+	public Integer getUnApprovedPurchaseCount() {
+		return unApprovedPurchaseCount;
+	}
+
+
+
+	public void setUnApprovedPurchaseCount(Integer unApprovedPurchaseCount) {
+		this.unApprovedPurchaseCount = unApprovedPurchaseCount;
 	}
 
 

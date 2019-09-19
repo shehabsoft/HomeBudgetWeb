@@ -39,6 +39,7 @@ public class PurchaceView extends JSFView {
 	private String purchaseEnName;
 
 	private List<PurchaseVO> purchaseList = new ArrayList<PurchaseVO>();
+	private List<PurchaseVO> unApprovedPurchaseList = new ArrayList<PurchaseVO>();
 	private PurchaseVO purchaseHistoryChart = new PurchaseVO();
 	private List<PurchaseHistoryVO> purchaseHistoryList = new ArrayList<PurchaseHistoryVO>();
 	private ArrayList<LocationVO> locationVOs = new ArrayList<LocationVO>();
@@ -254,7 +255,7 @@ public class PurchaceView extends JSFView {
 		System.out.println(purchaseId);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "approvePurchase.xhtml");
-		for (PurchaseVO purchaseVo : purchaseList) {
+		for (PurchaseVO purchaseVo : unApprovedPurchaseList) {
 			if (purchaseVo.getId() == purchaseId) {
 				this.purchaseVO = purchaseVo;
 				break;
@@ -315,14 +316,22 @@ public class PurchaceView extends JSFView {
 
 	}
 	@Action
-	public void showViewAllPurchasesHistoryPage(ActionEvent event) throws Exception {
+	public void showUnApprovedPurchases(ActionEvent event) throws Exception {
 
 		int categoryId = (Integer) event.getComponent().getAttributes().get("categoryId");
 		System.out.println(categoryId);
-		purchaseList = getAllPurchasesByCategoryId(categoryId);
+		unApprovedPurchaseList = showUnApprovedPurchases(categoryId);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "CleansingSalesList.xhtml");
 
+	}
+
+	public List<PurchaseVO> getUnApprovedPurchaseList() {
+		return unApprovedPurchaseList;
+	}
+
+	public void setUnApprovedPurchaseList(List<PurchaseVO> unApprovedPurchaseList) {
+		this.unApprovedPurchaseList = unApprovedPurchaseList;
 	}
 
 	@Action
@@ -462,12 +471,12 @@ public class PurchaceView extends JSFView {
 			throw new Exception(e);
 		}
 	}
-	public ArrayList<PurchaseVO> getAllPurchasesByCategoryId(int categoryId) throws Exception {
+	public ArrayList<PurchaseVO> showUnApprovedPurchases(int categoryId) throws Exception {
 		try {
 			String output = "";
 			System.out.println("Calling getÙ�Ù�Ù�ALLPurchasesByCategoryId  .... \n");
 			selectedCategoryId=categoryId;
-			output = callPostWebService("getAllPurchasesByCategoryId", "categoryId", categoryId);
+			output = callPostWebService("showUnApprovedPurchases", "categoryId", categoryId);
 			System.out.println("Output From Server  .... " + output);
 			System.out.println(" .... \n");
 			Gson gson = new Gson();
@@ -484,7 +493,7 @@ public class PurchaceView extends JSFView {
 	}
 	public void RefreshApprovedPurchases() throws Exception
 	{
-		purchaseList=getAllPurchasesByCategoryId(selectedCategoryId);
+		unApprovedPurchaseList=showUnApprovedPurchases(selectedCategoryId);
 	}
 
 	public ArrayList<PurchaseVO> getAllPurchases() throws Exception {

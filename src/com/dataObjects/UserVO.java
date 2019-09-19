@@ -9,14 +9,14 @@ public class UserVO extends DataObjectVO{
 	private int genderId;
 	private int statusId;
 	private int currencyId;
-	public int getMobile_number() {
+	public String getMobile_number() {
 		return mobile_number;
 	}
-	public void setMobile_number(int mobile_number) {
+	public void setMobile_number(String mobile_number) {
 		this.mobile_number = mobile_number;
 	}
 	private int countryId;
-	private int mobile_number;
+	private String mobile_number;
 	public String getName() {
 		return name;
 	}

@@ -41,6 +41,7 @@ public class CategoryView extends JSFView {
    private double categoryAvergeValue;
    private double categoryPlannedValue;
    private double categoryLimitValue;
+   private Integer totalUnApprovedPurchases=0;
 
 
 	public CategoryView() {
@@ -53,6 +54,7 @@ public class CategoryView extends JSFView {
 			categoryVO = new CategoryVO();
 			if (categoryList.size() == 0 || categoryIncomeList.size() == 0) {
 				categoryList = getExpensesCategories();
+				getTotalUnApprovedPurchasesByCategoryList(categoryList);
 				categoryIncomeList = getBudgetCategories();
 				categoryAllList = getAllExpensesCategories();
 				categoryAllIncomeList = getAllBudgetCategories();
@@ -153,9 +155,19 @@ public class CategoryView extends JSFView {
 	public void refesh() throws Exception {
 		logger.info("Calling Refresh..........");
 		categoryList = getExpensesCategories();
+		getTotalUnApprovedPurchasesByCategoryList(categoryList);
 		categoryIncomeList = getBudgetCategories();
 		categoryAllList = getAllExpensesCategories();
 		categoryAllIncomeList = getAllBudgetCategories();
+	}
+	public Integer getTotalUnApprovedPurchasesByCategoryList(List<CategoryVO> categoryList)
+	{
+		totalUnApprovedPurchases=0;
+		for(int i=0;i<categoryList.size();i++)//sum un Approved Purchase For all Categories 
+		{
+			totalUnApprovedPurchases+=categoryList.get(i).getUnApprovedPurchaseCount();
+		}
+		return totalUnApprovedPurchases;
 	}
 
 	public List<CategoryVO> getCategoryList() {
@@ -529,5 +541,14 @@ public double getCategoryLimitValue() {
 public void setCategoryLimitValue(double categoryLimitValue) {
 	this.categoryLimitValue = categoryLimitValue;
 }
+
+public Integer getTotalUnApprovedPurchases() {
+	return totalUnApprovedPurchases;
+}
+
+public void setTotalUnApprovedPurchases(Integer totalUnApprovedPurchases) {
+	this.totalUnApprovedPurchases = totalUnApprovedPurchases;
+}
+
 
 }

@@ -12,6 +12,7 @@ public class CategoryVO extends DataObjectVO{
 	private double percentageExpenses;
 	private double limitValue;
 	private String statusDate;
+	private Integer unApprovedPurchaseCount=0;
 	public String getStatusDate() {
 		return statusDate;
 	}
@@ -144,4 +145,12 @@ public class CategoryVO extends DataObjectVO{
 	}
 
 	int categoryStatus;
+	public Integer getUnApprovedPurchaseCount() {
+		return unApprovedPurchaseCount;
+	}
+
+	public void setUnApprovedPurchaseCount(Integer unApprovedPurchaseCount) {
+		this.unApprovedPurchaseCount = unApprovedPurchaseCount;
+	}
+	
 }

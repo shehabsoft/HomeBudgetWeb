@@ -79,7 +79,7 @@ public class SecurityFilter implements Filter {
         	if(session.getAttribute("UserVo")==null)
 	        {
 	        	System.out.println("Invalid Authorization");
-	        	response.sendRedirect(request.getContextPath() + "/web/login.jsf");
+	            response.sendRedirect(request.getContextPath() + "/web/login.jsf");
 	        }else
 	        {
 	        	System.out.println(session.getAttribute("UserVo"));
@@ -103,6 +103,6 @@ public class SecurityFilter implements Filter {
      */
     private boolean isPublicAccessPage(String uri) {
         // Check public pages URL's
-        return uri.contains("login");
+        return (uri.contains("login")||uri.contains("BuildProfile"));
     }
 }
